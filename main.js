@@ -119,57 +119,92 @@ document.head.appendChild(style);
 document.addEventListener('DOMContentLoaded', () => {
   renderTags();
   renderPosts();
-  runMatrix();
+  runMatrix();           // background rain (always on)
+  runMatrixIntro();      // fullscreen intro rain (fades out, then typewriter starts)
 });
 
-function runMatrix() {
-  const canvas = document.getElementById('matrix-canvas');
-  if (!canvas) {
-    setTimeout(typeWriter, 500);
-    return;
-  }
+function runMatrixIntro() {
+  const canvas = document.getElementById('matrix-intro');
+  if (!canvas) { setTimeout(typeWriter, 500); return; }
   const ctx = canvas.getContext('2d');
-  
+
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  
-  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\\\|{}<>[]^~';
-  const fontSize = 16;
-  const columns = canvas.width / fontSize;
-  
-  const drops = [];
-  for(let x = 0; x < columns; x++) {
-    drops[x] = 1;
-  }
-  
+
+  const letters = 'アイウエオカキクケコサシスセソABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const fontSize = 14;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = Array(columns).fill(1);
+
   function draw() {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.fillStyle = '#00FF41';
     ctx.font = fontSize + 'px monospace';
-    
-    for(let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        
-        if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-        }
-        drops[i]++;
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters.charAt(Math.floor(Math.random() * letters.length));
+      ctx.fillStyle = drops[i] === 1 ? '#ccffcc' : '#00FF41';
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
     }
   }
-  
-  const matrixInterval = setInterval(draw, 33);
-  
-  // Fade out canvas after 2.5 seconds
+
+  const interval = setInterval(draw, 40);
+
+  // After 2.5s, fade out the intro overlay
   setTimeout(() => {
     canvas.style.opacity = '0';
     setTimeout(() => {
-      clearInterval(matrixInterval);
+      clearInterval(interval);
       canvas.remove();
-      // Start typewriter after matrix clears out
       setTimeout(typeWriter, 100);
-    }, 1500);
+    }, 1500); // wait for fade transition to finish
   }, 2500);
+}
+
+function runMatrix() {
+  const canvas = document.getElementById('matrix-canvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const letters = 'アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const fontSize = 14;
+
+  let columns = Math.floor(canvas.width / fontSize);
+  const drops = Array(columns).fill(1);
+
+  window.addEventListener('resize', () => {
+    columns = Math.floor(canvas.width / fontSize);
+    drops.length = columns;
+    drops.fill(1);
+  });
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters.charAt(Math.floor(Math.random() * letters.length));
+      // Bright head character
+      ctx.fillStyle = drops[i] === 1 ? '#ccffcc' : '#00FF41';
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  setInterval(draw, 40);
 }

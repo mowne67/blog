@@ -52,9 +52,19 @@ body, html {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  z-index: 0;
   pointer-events: none;
-  opacity: 1;
+  opacity: 0.7;
+}
+
+#matrix-intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 200;
+  pointer-events: none;
   background: #000;
   transition: opacity 1.5s ease-out;
 }
@@ -63,12 +73,19 @@ body, html {
   display: flex;
   justify-content: center;
   padding: 3rem 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .blog-wrap {
   width: 100%;
   max-width: 760px;
   animation: fade-in 1s ease-out;
+  background: rgba(13, 13, 13, 0.92);
+  border-left: 1px solid #1a1a1a;
+  border-right: 1px solid #1a1a1a;
+  padding: 2rem;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
 }
 
 @keyframes fade-in {
