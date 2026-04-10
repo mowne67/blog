@@ -141,7 +141,7 @@ function runMatrix() {
     columns = Math.floor(canvas.width / fontSize);
     drops = [];
     for(let x = 0; x < columns; x++) {
-      drops[x] = Math.random() * canvas.height / fontSize; // Start at random positions
+      drops[x] = 1; // Start from the top again for the 'initial rain' look
     }
   }
 
@@ -170,4 +170,9 @@ function runMatrix() {
   
   // Start typewriter independently
   setTimeout(typeWriter, 500);
+
+  // Transition from full-screen burst to subtle background on sides
+  setTimeout(() => {
+    canvas.style.opacity = '0.15';
+  }, 3000);
 }
