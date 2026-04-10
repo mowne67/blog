@@ -125,28 +125,22 @@ document.addEventListener('DOMContentLoaded', () => {
 function runMatrix() {
   const canvas = document.getElementById('matrix-canvas');
   if (!canvas) {
-    typeWriter();
+    setTimeout(typeWriter, 500);
     return;
   }
   const ctx = canvas.getContext('2d');
   
-  let fontSize = 16;
-  let columns;
-  let drops = [];
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\\\|{}<>[]^~';
-
-  function init() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    columns = Math.floor(canvas.width / fontSize);
-    drops = [];
-    for(let x = 0; x < columns; x++) {
-      drops[x] = 1; // Start from the top again for the 'initial rain' look
-    }
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+  
+  const drops = [];
+  for(let x = 0; x < columns; x++) {
+    drops[x] = 1;
   }
-
-  window.addEventListener('resize', init);
-  init();
   
   function draw() {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
@@ -166,13 +160,16 @@ function runMatrix() {
     }
   }
   
-  setInterval(draw, 33);
+  const matrixInterval = setInterval(draw, 33);
   
-  // Start typewriter independently
-  setTimeout(typeWriter, 500);
-
-  // Transition from full-screen burst to subtle background on sides
+  // Fade out canvas after 2.5 seconds
   setTimeout(() => {
-    canvas.style.opacity = '0.15';
-  }, 3000);
+    canvas.style.opacity = '0';
+    setTimeout(() => {
+      clearInterval(matrixInterval);
+      canvas.remove();
+      // Start typewriter after matrix clears out
+      setTimeout(typeWriter, 100);
+    }, 1500);
+  }, 2500);
 }

@@ -13,12 +13,11 @@
 body, html {
   margin: 0;
   padding: 0;
-  background-color: transparent; /* Allow canvas at z-index -1 to be seen */
+  background-color: var(--bg-color);
   color: var(--text-main);
   font-family: 'JetBrains Mono', monospace;
   height: 100%;
   overflow-x: hidden;
-  background-color: var(--bg-color); /* Root background stays dark */
 }
 
 /* CRT EFFECTS */
@@ -53,10 +52,11 @@ body, html {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  z-index: 100;
   pointer-events: none;
-  opacity: 1; /* Start at full opacity for the burst */
-  transition: opacity 2s ease-in-out;
+  opacity: 1;
+  background: #000;
+  transition: opacity 1.5s ease-out;
 }
 
 .page-container {
@@ -67,14 +67,8 @@ body, html {
 
 .blog-wrap {
   width: 100%;
-  max-width: 800px;
-  background-color: var(--bg-color);
-  padding: 2.5rem;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-  box-shadow: 0 0 100px rgba(0, 0, 0, 1);
+  max-width: 760px;
   animation: fade-in 1s ease-out;
-  position: relative;
 }
 
 @keyframes fade-in {
