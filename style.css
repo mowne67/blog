@@ -4,8 +4,8 @@
   --bg-color: #0d0d0d;
   --text-main: #f4f4f4;
   --text-muted: #888888;
-  --accent: #00FF41;
-  --accent-glow: rgba(0, 255, 65, 0.5);
+  --accent: #20C20E;
+  --accent-glow: rgba(32, 194, 14, 0.5);
   --border: #333333;
   --bg-hover: #1e1e1e;
 }
@@ -82,10 +82,10 @@ body, html {
   max-width: 760px;
   animation: fade-in 1s ease-out;
   background: rgba(13, 13, 13, 0.92);
-  border-left: 1px solid #1a1a1a;
-  border-right: 1px solid #1a1a1a;
+  border: 1px solid #20C20E;
+  border-radius: 4px;
   padding: 2rem;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 24px rgba(32, 194, 14, 0.15), 0 0 60px rgba(0, 0, 0, 0.8);
 }
 
 @keyframes fade-in {

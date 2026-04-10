@@ -142,7 +142,7 @@ function runMatrixIntro() {
     ctx.font = fontSize + 'px monospace';
     for (let i = 0; i < drops.length; i++) {
       const text = letters.charAt(Math.floor(Math.random() * letters.length));
-      ctx.fillStyle = drops[i] === 1 ? '#ccffcc' : '#00FF41';
+      ctx.fillStyle = drops[i] === 1 ? '#7dff7d' : '#20C20E';
       ctx.fillText(text, i * fontSize, drops[i] * fontSize);
       if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
       drops[i]++;
@@ -196,7 +196,7 @@ function runMatrix() {
     for (let i = 0; i < drops.length; i++) {
       const text = letters.charAt(Math.floor(Math.random() * letters.length));
       // Bright head character
-      ctx.fillStyle = drops[i] === 1 ? '#ccffcc' : '#00FF41';
+      ctx.fillStyle = drops[i] === 1 ? '#7dff7d' : '#20C20E';
       ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
       if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
