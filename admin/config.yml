@@ -1,0 +1,51 @@
+backend:
+  name: github
+  repo: mowne67/blog
+  branch: main # Branch to update
+  base_url: https://mowne67.github.io
+  auth_endpoint: auth
+
+# These lines setup media loading
+media_folder: "public/images/uploads" # Media files will be stored in the repo under public/images/uploads
+public_folder: "/images/uploads" # The src attribute for uploaded media will begin with /images/uploads
+
+collections:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Blog Posts" # Used in the UI
+    folder: "posts" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "settings"
+    label: "Settings"
+    editor:
+      preview: false
+    files:
+      - label: "Profile Information"
+        name: "profile"
+        file: "data/profile.json"
+        fields:
+          - {label: "Tagline", name: "tagline", widget: "string"}
+          - {label: "Intro Text", name: "intro_text", widget: "text", hint: "You can use <span class='highlight'>word</span> to make it green"}
+          - label: "Experience"
+            name: "experience"
+            widget: "list"
+            fields:
+              - {label: "Date/Duration", name: "date", widget: "string"}
+              - {label: "Company", name: "company", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}
+          - label: "Skills"
+            name: "skills"
+            widget: "list"
+            field: {label: "Skill", name: "skill", widget: "string"}
+          - label: "Certifications"
+            name: "certifications"
+            widget: "list"
+            fields:
+              - {label: "Badge/Date", name: "date", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}

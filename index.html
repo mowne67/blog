@@ -6,6 +6,7 @@
   <meta name="description" content="Personal blog terminal style focusing on AI, cricket, and digital minimalism." />
   <title>~/Mowne - Terminal Blog</title>
   <link rel="stylesheet" href="./style.css" />
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script type="module" src="./main.js" defer></script>
 </head>
 <body>
@@ -14,11 +15,12 @@
   <canvas id="matrix-intro"></canvas>
   <canvas id="matrix-canvas"></canvas>
   <main class="page-container">
-    <div class="blog-wrap">
+    <div class="blog-wrap" style="animation-delay: 2.3s;">
       <nav class="nav">
         <span class="nav-brand">~/Mowne</span>
         <div class="nav-links">
-          <a href="#" class="nav-link" aria-label="Projects">projects</a>
+          <a href="./index.html" class="nav-link" aria-label="Profile">~/profile</a>
+          <a href="./blog.html" class="nav-link" aria-label="Blog">~/blog</a>
           <a href="mailto:aksmownetharan@gmail.com" class="nav-link" aria-label="Email">email</a>
           <a href="https://linkedin.com/in/mowne" target="_blank" class="nav-link" aria-label="LinkedIn">linkedin</a>
           <a href="https://github.com/mowne67" target="_blank" class="nav-link" aria-label="GitHub">github</a>
@@ -34,34 +36,20 @@
 ░██       ░██  ░██   ░██  ░████   ░████ ░██   ░████ ░██         
 ░██       ░██   ░██████   ░███     ░███ ░██    ░███ ░██████████</pre>
 
-      <p class="tagline">// Data Scientist · Full Stack AI Engineer · IITM Alum</p>
+      <p class="tagline" id="tagline"></p>
 
       <div class="intro" id="typewriter-container">
         <span id="typewriter"></span>
       </div>
 
       <h2 class="section-label">experience & education</h2>
+      <ul class="post-list" id="experience-list" style="margin-bottom: 2.5rem;"></ul>
 
-      <ul class="post-list" style="margin-bottom: 2.5rem;">
-        <li class="post-item" style="pointer-events: none;">
-          <span class="post-date">Present</span>
-          <div class="post-title">
-            <span class="highlight">Genpact</span> — Data Scientist
-          </div>
-        </li>
-        <li class="post-item" style="pointer-events: none;">
-          <span class="post-date">2022 - 2024</span>
-          <div class="post-title">
-            <span class="highlight">IQVIA</span> — Analyst
-          </div>
-        </li>
-        <li class="post-item" style="pointer-events: none;">
-          <span class="post-date">Class of 2022</span>
-          <div class="post-title">
-            <span class="highlight">IIT Madras</span> — B.Tech Aerospace Eng + Data Science
-          </div>
-        </li>
-      </ul>
+      <h2 class="section-label">skills & toolset</h2>
+      <div class="tag-row" id="skills-list" style="margin-bottom: 2.5rem;"></div>
+
+      <h2 class="section-label">certifications</h2>
+      <ul class="post-list" id="certifications-list" style="margin-bottom: 2.5rem;"></ul>
 
       <h2 class="section-label">recent projects</h2>
 

@@ -1,3 +1,5 @@
+import profileData from './data/profile.json';
+
 const _posts = [
   { id: '01', title: 'YouTube Knowledge Bank', tags: ['ai', 'python'], date: 'Open Source' },
   { id: '02', title: 'Enterprise Resource Planning AI Chatbot', tags: ['langgraph', 'ai'], date: 'Project' },
@@ -70,7 +72,7 @@ function renderTags() {
   });
 }
 
-const typeText = "hello. i'm Mownetharan A K S — Data Scientist & Full Stack AI Engineer.<br>building scalable solutions at the intersection of <span class='highlight'>data</span>, <span class='highlight'>AI</span>, and <span class='highlight'>business process acceleration</span>.";
+const typeText = profileData.intro_text || "";
 let typeIndex = 0;
 const typeSpeed = 15;
 
@@ -117,6 +119,43 @@ style.textContent = `
 document.head.appendChild(style);
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Populate Profile Data
+  const taglineEl = document.getElementById('tagline');
+  if (taglineEl) taglineEl.innerHTML = profileData.tagline;
+
+  const expList = document.getElementById('experience-list');
+  if (expList && profileData.experience) {
+    profileData.experience.forEach(exp => {
+      expList.innerHTML += `
+        <li class="post-item" style="pointer-events: none;">
+          <span class="post-date">${exp.date}</span>
+          <div class="post-title">
+            <span class="highlight">${exp.company}</span> — ${exp.title}
+          </div>
+        </li>
+      `;
+    });
+  }
+
+  const skillsList = document.getElementById('skills-list');
+  if (skillsList && profileData.skills) {
+    profileData.skills.forEach(skill => {
+      skillsList.innerHTML += `<span class="tag">${skill}</span>`;
+    });
+  }
+
+  const certsList = document.getElementById('certifications-list');
+  if (certsList && profileData.certifications) {
+    profileData.certifications.forEach(cert => {
+      certsList.innerHTML += `
+        <li class="post-item" style="pointer-events: none;">
+          <span class="post-date">${cert.date}</span>
+          <div class="post-title"><span class="highlight">${cert.title}</span></div>
+        </li>
+      `;
+    });
+  }
+
   renderTags();
   renderPosts();
   runMatrix();           // background rain (always on)
@@ -131,13 +170,13 @@ function runMatrixIntro() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const letters = 'アイウエオカキクケコサシスセソABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const letters = 'அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறனABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const fontSize = 14;
   const columns = Math.floor(canvas.width / fontSize);
   const drops = Array(columns).fill(1);
 
   function draw() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillStyle = 'rgba(22, 22, 22, 0.05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.font = fontSize + 'px monospace';
     for (let i = 0; i < drops.length; i++) {
@@ -175,7 +214,7 @@ function runMatrix() {
   resize();
   window.addEventListener('resize', resize);
 
-  const letters = 'アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const letters = 'அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறனABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const fontSize = 14;
 
   let columns = Math.floor(canvas.width / fontSize);
@@ -188,7 +227,7 @@ function runMatrix() {
   });
 
   function draw() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillStyle = 'rgba(22, 22, 22, 0.05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.font = fontSize + 'px monospace';

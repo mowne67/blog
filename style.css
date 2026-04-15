@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
-  --bg-color: #0d0d0d;
+  --bg-color: #161616;
   --text-main: #f4f4f4;
-  --text-muted: #888888;
+  --text-muted: #aaaaaa;
   --accent: #20C20E;
   --accent-glow: rgba(32, 194, 14, 0.5);
-  --border: #333333;
-  --bg-hover: #1e1e1e;
+  --border: #3a3a3a;
+  --bg-hover: #2b2b2b;
 }
 
 body, html {
@@ -16,6 +16,7 @@ body, html {
   background-color: var(--bg-color);
   color: var(--text-main);
   font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
   height: 100%;
   overflow-x: hidden;
 }
@@ -65,7 +66,7 @@ body, html {
   height: 100vh;
   z-index: 200;
   pointer-events: none;
-  background: #000;
+  background: #161616;
   transition: opacity 1.5s ease-out;
 }
 
@@ -80,17 +81,20 @@ body, html {
 .blog-wrap {
   width: 100%;
   max-width: 760px;
-  animation: fade-in 1s ease-out;
-  background: rgba(13, 13, 13, 0.92);
+  animation: line-expand 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  background: #242424;
   border: 1px solid #20C20E;
   border-radius: 4px;
-  padding: 2rem;
-  box-shadow: 0 0 24px rgba(32, 194, 14, 0.15), 0 0 60px rgba(0, 0, 0, 0.8);
+  padding: 1.5rem;
+  box-shadow: 0 0 35px rgba(32, 194, 14, 0.2), 0 0 80px #161616;
+  transform-origin: center center;
+  opacity: 0;
 }
 
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes line-expand {
+  0% { transform: scaleY(0.005); opacity: 0; box-shadow: 0 0 50px var(--accent); }
+  25% { transform: scaleY(0.005); opacity: 1; box-shadow: 0 0 30px var(--accent); background: var(--accent); }
+  100% { transform: scaleY(1); opacity: 1; box-shadow: 0 0 35px rgba(32, 194, 14, 0.2), 0 0 80px #161616; background: #242424; }
 }
 
 a {
@@ -107,10 +111,10 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 16px;
-  margin-bottom: 2.5rem;
+  font-size: 14px;
+  margin-bottom: 2rem;
   border-bottom: 1px solid var(--border);
-  padding-bottom: 1rem;
+  padding-bottom: 0.8rem;
 }
 
 .nav-brand {
@@ -164,19 +168,19 @@ a:hover {
 }
 
 .tagline {
-  font-size: 15px;
+  font-size: 13px;
   color: var(--text-muted);
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   letter-spacing: 0.5px;
 }
 
 .intro {
-  font-size: 16px;
+  font-size: 14px;
   color: #e0e0e0;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2.5rem;
   max-width: 600px;
-  line-height: 1.8;
-  min-height: 80px;
+  line-height: 1.6;
+  min-height: 70px;
 }
 
 .highlight {
@@ -197,11 +201,11 @@ a:hover {
 @keyframes blink { 50% { opacity: 0; box-shadow: none; } }
 
 .section-label {
-  font-size: 14px;
+  font-size: 12px;
   color: #aaaaaa;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   border-bottom: 1px dashed var(--border);
   padding-bottom: 0.5rem;
   font-weight: normal;
@@ -211,7 +215,7 @@ a:hover {
 .post-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 3.5rem;
+  margin: 0 0 2.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -220,7 +224,7 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem 0.8rem;
+  padding: 0.8rem 0.6rem;
   border-bottom: 1px solid var(--bg-hover);
   transition: transform 0.2s ease, background 0.3s ease;
   cursor: pointer;
@@ -234,13 +238,13 @@ a:hover {
 
 .post-num {
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 12px;
   min-width: 30px;
 }
 
 .post-title {
   color: var(--text-main);
-  font-size: 16px;
+  font-size: 14px;
   flex: 1;
 }
 
@@ -250,11 +254,11 @@ a:hover {
 }
 
 .post-tag {
-  font-size: 13px;
+  font-size: 11px;
   color: var(--text-muted);
   background: transparent;
   border: 1px solid var(--border);
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 14px;
   transition: all 0.3s ease;
 }
@@ -265,24 +269,24 @@ a:hover {
 }
 
 .post-date {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--text-muted);
-  min-width: 90px;
+  min-width: 80px;
   text-align: right;
   opacity: 0.9;
 }
 
 .tag-row {
   display: flex;
-  gap: 1rem;
+  gap: 0.8rem;
   flex-wrap: wrap;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .tag {
-  font-size: 14px;
+  font-size: 12px;
   border: 1px solid var(--border);
-  padding: 6px 16px;
+  padding: 4px 12px;
   border-radius: 20px;
   color: var(--text-muted);
   cursor: pointer;
@@ -305,9 +309,9 @@ a:hover {
 }
 
 .footer {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--text-muted);
-  padding-top: 2rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--bg-hover);
   text-align: center;
 }
