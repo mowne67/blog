@@ -1,111 +1,21 @@
 import profileData from './data/profile.json';
+import { marked } from 'marked';
 
-const _posts = [
-  { id: '01', title: 'YouTube Knowledge Bank', tags: ['ai', 'python'], date: 'Open Source' },
-  { id: '02', title: 'Enterprise Resource Planning AI Chatbot', tags: ['langgraph', 'ai'], date: 'Project' },
-  { id: '03', title: 'LLM Apps: Movie Scripts & RAG', tags: ['gemini', 'llama3'], date: 'Project' },
-  { id: '04', title: 'OCR Streamlit App', tags: ['gemini', 'vision'], date: 'Project' },
-  { id: '05', title: 'YOLO Object Customer Detection', tags: ['computer-vision'], date: 'Project' },
-  { id: '06', title: 'Transfer Learning for NLP', tags: ['nlp', 'tensorflow'], date: 'Project' },
-  { id: '07', title: 'pyinterpret', tags: ['python', 'open-source'], date: 'Library' },
-  { id: '08', title: 'Instagram AI Scraper', tags: ['python', 'wip'], date: 'Upcoming' },
-];
+async function fetchGitHubReadme() {
+  const readmeContainer = document.getElementById('github-readme');
+  if (!readmeContainer) return;
 
-const _tags = [
-  { id: 'all', name: 'all' },
-  { id: 'ai', name: 'ai' },
-  { id: 'python', name: 'python' },
-  { id: 'gemini', name: 'gemini' },
-  { id: 'computer-vision', name: 'computer-vision' },
-  { id: 'nlp', name: 'nlp' },
-];
-
-function renderPosts(filterTag = 'all') {
-  const postList = document.getElementById('post-list');
-  postList.innerHTML = '';
-  
-  const filteredPosts = _posts.filter(post => 
-    filterTag === 'all' || post.tags.includes(filterTag)
-  );
-
-  filteredPosts.forEach((post, index) => {
-    const li = document.createElement('li');
-    li.className = 'post-item';
-    li.style.animation = `fadeInUp 0.4s ease forwards`;
-    li.style.animationDelay = `${index * 0.1}s`;
-    li.style.opacity = '0';
-    li.style.transform = 'translateY(10px)';
-
-    const tagDisplay = post.tags.join(' · ');
-
-    li.innerHTML = `
-      <span class="post-num">${post.id}</span>
-      <a class="post-title" href="https://github.com/mowne67" target="_blank">${post.title}</a>
-      <span class="post-tag">${tagDisplay}</span>
-      <span class="post-date">${post.date}</span>
-    `;
-    postList.appendChild(li);
-  });
-}
-
-function renderTags() {
-  const tagRow = document.getElementById('tag-row');
-  tagRow.innerHTML = '';
-
-  _tags.forEach(tag => {
-    const count = tag.id === 'all' 
-      ? _posts.length 
-      : _posts.filter(p => p.tags.includes(tag.id)).length;
-
-    const span = document.createElement('span');
-    span.className = tag.id === 'all' ? 'tag active' : 'tag';
-    span.dataset.id = tag.id;
-    span.textContent = `${tag.name} (${count})`;
-    
-    span.addEventListener('click', () => {
-      document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
-      span.classList.add('active');
-      renderPosts(tag.id);
-    });
-
-    tagRow.appendChild(span);
-  });
-}
-
-const typeText = profileData.intro_text || "";
-let typeIndex = 0;
-const typeSpeed = 15;
-
-function typeWriter() {
-  const el = document.getElementById('typewriter');
-  let currentHTML = "";
-  let isTag = false;
-  
-  function type() {
-      if (typeIndex < typeText.length) {
-          const char = typeText.charAt(typeIndex);
-          if (char === '<') isTag = true;
-          
-          currentHTML += char;
-          
-          if (char === '>') isTag = false;
-          
-          el.innerHTML = currentHTML + '<span class="cursor"></span>';
-          typeIndex++;
-          
-          if (isTag) {
-              type(); 
-          } else {
-              setTimeout(type, typeSpeed);
-          }
-      } else {
-          el.innerHTML = currentHTML + '<span class="cursor"></span>'; 
-      }
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/mowne67/mowne67/main/README.md');
+    if (!res.ok) throw new Error('Failed to fetch README');
+    const text = await res.text();
+    readmeContainer.innerHTML = marked(text);
+  } catch (err) {
+    readmeContainer.innerHTML = '<span style="color: red;">[ERR] failed to fetch github readme</span>';
   }
-  
-  el.innerHTML = "";
-  type();
 }
+
+
 
 const style = document.createElement('style');
 style.textContent = `
@@ -123,48 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const taglineEl = document.getElementById('tagline');
   if (taglineEl) taglineEl.innerHTML = profileData.tagline;
 
-  const expList = document.getElementById('experience-list');
-  if (expList && profileData.experience) {
-    profileData.experience.forEach(exp => {
-      expList.innerHTML += `
-        <li class="post-item" style="pointer-events: none;">
-          <span class="post-date">${exp.date}</span>
-          <div class="post-title">
-            <span class="highlight">${exp.company}</span> — ${exp.title}
-          </div>
-        </li>
-      `;
-    });
-  }
-
-  const skillsList = document.getElementById('skills-list');
-  if (skillsList && profileData.skills) {
-    profileData.skills.forEach(skill => {
-      skillsList.innerHTML += `<span class="tag">${skill}</span>`;
-    });
-  }
-
-  const certsList = document.getElementById('certifications-list');
-  if (certsList && profileData.certifications) {
-    profileData.certifications.forEach(cert => {
-      certsList.innerHTML += `
-        <li class="post-item" style="pointer-events: none;">
-          <span class="post-date">${cert.date}</span>
-          <div class="post-title"><span class="highlight">${cert.title}</span></div>
-        </li>
-      `;
-    });
-  }
-
-  renderTags();
-  renderPosts();
+  fetchGitHubReadme();
   runMatrix();           // background rain (always on)
   runMatrixIntro();      // fullscreen intro rain (fades out, then typewriter starts)
 });
 
 function runMatrixIntro() {
   const canvas = document.getElementById('matrix-intro');
-  if (!canvas) { setTimeout(typeWriter, 500); return; }
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
   canvas.width = window.innerWidth;
@@ -196,7 +72,6 @@ function runMatrixIntro() {
     setTimeout(() => {
       clearInterval(interval);
       canvas.remove();
-      setTimeout(typeWriter, 100);
     }, 1500); // wait for fade transition to finish
   }, 2500);
 }
