@@ -69,8 +69,8 @@ function runMatrixIntro() {
     setTimeout(() => {
       clearInterval(interval);
       canvas.remove();
-    }, 1500); // wait for fade transition to finish
-  }, 2500);
+    }, 1200); // wait for fade transition to finish
+  }, 2000);
 }
 
 function runMatrix() {
