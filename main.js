@@ -1,4 +1,4 @@
-import profileData from './data/profile.json';
+
 import { marked } from 'marked';
 
 async function fetchGitHubReadme() {
@@ -29,9 +29,6 @@ style.textContent = `
 document.head.appendChild(style);
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Populate Profile Data
-  const taglineEl = document.getElementById('tagline');
-  if (taglineEl) taglineEl.innerHTML = profileData.tagline;
 
   fetchGitHubReadme();
   runMatrix();           // background rain (always on)
