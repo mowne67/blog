@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="ink" data-theme="sheet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mowne — data scientist and full stack AI engineer. Writing on AI, cricket and digital minimalism." />
+  <meta name="theme-color" content="#17171a" />
+  <title>Mowne — data scientist, full stack AI engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="./theme.css" />
+  <!-- inline so the chosen ground is applied before first paint -->
+  <script>/* same GROUND table as chrome.js — keep in step */var G={ink:'sheet',paper:'spark'},d=document.documentElement,m;try{m=localStorage.getItem('ground')}catch(e){}if(!G[m])m='ink';d.dataset.mode=m;d.dataset.theme=G[m]</script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script type="module" src="./main.js" defer></script>
+</head>
+<body>
+  <canvas id="rain-intro" aria-hidden="true"></canvas>
+  <div class="frame">
+    <nav class="nav">
+      <a class="lock" href="./index.html"><b>mowne</b><i>~/profile</i></a>
+      <div class="sp"></div>
+      <a class="lnk" href="./index.html" aria-current="page">Profile</a>
+      <a class="lnk" href="./blog.html">Blog</a>
+      <a class="lnk" href="https://linkedin.com/in/mowne" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="ico" href="https://github.com/mowne67" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.64 7.64 0 0 1 8 3.87c.68 0 1.36.09 2 .26 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" /></svg>
+      </a>
+      <div class="mode">
+        <button type="button" data-ground="ink" aria-pressed="true">ink</button>
+        <button type="button" data-ground="paper" aria-pressed="false">paper</button>
+      </div>
+      <a class="btn" href="mailto:mownetharan@gmail.com">Email</a>
+      <button type="button" class="menu" id="nav-menu" aria-expanded="false" aria-controls="nav-sheet" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="sheet" id="nav-sheet">
+      <a href="./index.html">Profile</a>
+      <a href="./blog.html">Blog</a>
+      <a href="https://linkedin.com/in/mowne">LinkedIn</a>
+      <a href="https://github.com/mowne67">GitHub</a>
+      <a href="mailto:mownetharan@gmail.com">Email</a>
+    </div>
+
+    <header class="hero">
+      <div class="eyebrow"><s></s>data science &amp; applied AI</div>
+      <h1>I build the <em>systems</em> that make models useful.</h1>
+      <p class="lede">Data scientist and full stack AI engineer, IITM alum. I work the whole line — data in, model trained, service shipped — and <b>write about what actually held up in production.</b></p>
+      <div class="go">
+        <div class="cmd">
+          <code id="contact-cmd"><b>$</b>mail mownetharan@gmail.com</code>
+          <button type="button" id="copy-btn" aria-label="Copy email address">copy</button>
+        </div>
+      </div>
+      <div class="meta">Bengaluru, India · open to interesting problems &nbsp;—&nbsp; <a href="./blog.html">read the blog →</a></div>
+    </header>
+
+    <div class="strip">
+      <a class="stat" href="./blog.html">
+        <b id="n-posts">—</b>
+        <span>posts published</span>
+      </a>
+      <a class="stat" href="https://github.com/mowne67" target="_blank" rel="noopener">
+        <b id="n-repos">—</b>
+        <span>public repos</span>
+      </a>
+      <div class="stat">
+        <b>IITM</b>
+        <span>alum</span>
+      </div>
+      <div class="stat">
+        <b>AI</b>
+        <span>data · full stack</span>
+      </div>
+    </div>
+
+    <div class="marks">
+      <span class="lbl">worked at</span>
+      <a class="mark" href="https://itohealth.org" target="_blank" rel="noopener" aria-label="ITO Health"><i class="m-ito"></i></a>
+      <a class="mark" href="https://www.genpact.com" target="_blank" rel="noopener" aria-label="Genpact"><i class="m-genpact"></i></a>
+      <a class="mark" href="https://indivia.ai" target="_blank" rel="noopener"><i class="m-indivia"></i>Indivia AI</a>
+      <a class="mark" href="https://www.iqvia.com" target="_blank" rel="noopener" aria-label="IQVIA"><i class="m-iqvia"></i></a>
+    </div>
+
+    <section class="fig">
+      <div class="fighd">
+        <span>github ./readme</span>
+        <span class="r">live from mowne67/mowne67</span>
+      </div>
+      <div class="plate">
+        <div id="github-readme" class="prose">loading…</div>
+      </div>
+      <p class="figcap">Pulled straight from the profile README at load, so this page can't drift from what the repo says.</p>
+    </section>
+
+    <div class="head"><span>elsewhere</span><span class="r">four doors</span></div>
+    <div class="rows">
+      <a class="row" href="./blog.html">
+        <div class="n">01</div>
+        <div>
+          <h3>The blog.<span class="arw">&#8594;</span></h3>
+          <p>Notes on agentic AI, the parts of a pipeline nobody writes down, cricket, and cutting things until they fit in one head.</p>
+        </div>
+        <div class="ev">
+          <div class="ev-row"><span>posts</span><b data-posts>—</b></div>
+          <div class="ev-row"><span>latest</span><b data-latest>—</b></div>
+        </div>
+      </a>
+      <a class="row" href="https://github.com/mowne67" target="_blank" rel="noopener">
+        <div class="n">02</div>
+        <div>
+          <h3>Code.<span class="arw">&#8594;</span></h3>
+          <p>Everything I can open, opened. Pipelines, model services, and the small tools that came out of them.</p>
+        </div>
+        <div class="ev">
+          <div class="ev-row"><span>github.com</span><b>@mowne67</b></div>
+        </div>
+      </a>
+      <a class="row" href="https://linkedin.com/in/mowne" target="_blank" rel="noopener">
+        <div class="n">03</div>
+        <div>
+          <h3>The long version.<span class="arw">&#8594;</span></h3>
+          <p>Roles, dates and the formal account of the work, kept where recruiters expect to find it.</p>
+        </div>
+        <div class="ev">
+          <div class="ev-row"><span>linkedin.com</span><b>/in/mowne</b></div>
+        </div>
+      </a>
+      <a class="row" href="mailto:mownetharan@gmail.com">
+        <div class="n">04</div>
+        <div>
+          <h3>Say something.<span class="arw">&#8594;</span></h3>
+          <p>Consulting, a problem worth arguing about, or a correction to something I wrote. All welcome.</p>
+        </div>
+        <div class="ev">
+          <div class="ev-row"><span>email</span><b>mownetharan@gmail.com</b></div>
+        </div>
+      </a>
+    </div>
+
+    <footer class="foot">
+      <a href="./index.html">profile</a>
+      <a href="./blog.html">blog</a>
+      <a href="/admin">admin</a>
+      <span>built in the terminal · © 2026 Mowne</span>
+      <span class="out">
+        <a href="https://github.com/mowne67">github</a>
+        <a href="https://linkedin.com/in/mowne">linkedin</a>
+      </span>
+    </footer>
+  </div>
+</body>
+</html>

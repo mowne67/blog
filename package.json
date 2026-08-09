@@ -1,0 +1,18 @@
+{
+  "name": "terminal-blog",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "front-matter": "^4.0.2",
+    "marked": "^18.0.0"
+  }
+}

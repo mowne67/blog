@@ -1,0 +1,41 @@
+/* ─────────────────────────────────────────────────────────────
+   Both designs ship, and the ground attribute picks one.
+
+     html[data-theme="sheet"]  hairline grid, editorial, one accent
+     html[data-theme="spark"]  chunky pills, hard shadows, stickers
+
+   Every rule inside themes/*.css is scoped to its own data-theme,
+   so the two can sit in one bundle without colliding. The mapping
+   from ground to design lives in ONE place — GROUND in chrome.js —
+   and both attributes are written together, so they can never
+   disagree. Nothing here selects a design; don't add a switch.
+   ───────────────────────────────────────────────────────────── */
+
+@import './themes/sheet.css';
+@import './themes/spark.css';
+
+/* ── focus, shared by both themes ──
+   react.gg's double ring, done with an outline rather than its stacked
+   box-shadows: the offset gap shows page ground between element and ring, so
+   it reads on either ground and can't fight the drop shadows spark uses.
+   :focus-visible, so it appears for keyboard users and not on click.
+   Not theme-specific — being able to see where you are isn't a style. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 3px solid var(--spot);
+  outline-offset: 3px;
+}
+
+/* ── shared by both themes ──
+   The company marks are masked silhouettes painted in currentColor, so they
+   follow whatever the active theme sets as text colour. Sizes are per logo:
+   one shared height would squash the ones with a different aspect ratio. */
+.marks i {
+  display: block; flex: 0 0 auto; background: currentColor;
+  -webkit-mask: var(--m) center/contain no-repeat;
+  mask: var(--m) center/contain no-repeat;
+}
+.m-ito { --m: url('./assets/logos/ito.svg'); width: 44px; height: 32px; }
+.m-genpact { --m: url('./assets/logos/genpact.svg'); width: 76px; height: 33px; }
+.m-iqvia { --m: url('./assets/logos/iqvia.svg'); width: 92px; height: 30px; }
+/* a symbol rather than a wordmark, so this one carries its name in text */
+.m-indivia { --m: url('./assets/logos/indivia.png'); width: 29px; height: 26px; }

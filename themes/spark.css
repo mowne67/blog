@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Outfit:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+/* ─────────────────────────────────────────────────────────────
+   spark — chunky pills, hard offset shadows, playful display type.
+   Same markup and same token contract as themes/sheet.css.
+   ───────────────────────────────────────────────────────────── */
+html[data-theme="spark"],
+html[data-theme="spark"][data-mode="ink"] {
+  --bg: #12100f; --panel: #201d1c; --mass: #2b2725;
+  --ink: #f7f1de; --dim: #ded7c4; --faint: #b3ab98; --faint2: #8a8271;
+  --line: #2b2725; --line2: #3b3633;
+  --spot: #4fc3f7; --spot-ink: #16130f;
+  --grid: transparent;
+  /* Rim and hard shadow of every raised object. On this ground it has to be
+     LIGHTER than the page, not black — a black offset against a near-black
+     background is invisible, which killed the raised look in dark mode. */
+  --edge: #3f3a36;
+  /* blue is the accent now, so the amber it displaced takes the c1 card slot —
+     otherwise c1 and the accent would be the same colour and the four-card
+     rotation would read as three */
+  --c1: #ffc24b; --c2: #7bdc8a; --c3: #ff8a5c; --c4: #f79ac0;
+}
+html[data-theme="spark"][data-mode="paper"] {
+  --bg: #fbf6e6; --panel: #ffffff; --mass: #efe7cf;
+  --ink: #221f1e; --dim: #4a4442; --faint: #756d68; --faint2: #938a83;
+  --line: #efe7cf; --line2: #ddd2b6;
+  --spot: #6b4fa3; --spot-ink: #ffffff;
+  --grid: transparent;
+  --edge: #221f1e;
+  --c1: #1b9fd8; --c2: #2f9e57; --c3: #e2622a; --c4: #d4638f;
+}
+html[data-theme="spark"] {
+  --disp: "Paytone One", system-ui, sans-serif;
+  --body: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --gut: 28px;
+}
+html[data-theme="spark"] * { box-sizing: border-box; }
+html[data-theme="spark"] body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: 16px; line-height: 1.6;
+  overflow-x: clip; padding-bottom: 40px;
+}
+html[data-theme="spark"] ::selection { background: var(--spot); color: var(--spot-ink); }
+html[data-theme="spark"] a { color: inherit; }
+/* Intro rain: same behaviour in both themes, only the colours differ. */
+html[data-theme="spark"] #rain-intro {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  z-index: 60; pointer-events: none; background: var(--bg);
+  transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.4, 0, .2, 1);
+}
+html[data-theme="spark"] #rain-intro.gone { opacity: 0; transform: translateX(38%); }
+/* No sheet, no rules — the container just holds the column. */
+html[data-theme="spark"] .frame { max-width: 1180px; margin: 0 auto; padding: 0 var(--gut); }
+/* ── nav ── */
+html[data-theme="spark"] .nav { display: flex; align-items: center; gap: 14px; padding: 26px 0 8px; flex-wrap: wrap; }
+html[data-theme="spark"] .nav .lock { display: flex; align-items: baseline; gap: 9px; text-decoration: none; margin-right: auto; }
+html[data-theme="spark"] .nav .lock b { font-family: var(--disp); font-size: 25px; color: var(--ink); }
+html[data-theme="spark"] .nav .lock i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--faint2); }
+html[data-theme="spark"] .nav .sp { display: none; }
+html[data-theme="spark"] .nav a.lnk {
+  padding: 8px 17px; border-radius: 999px; text-decoration: none;
+  font-size: 13px; font-weight: 600; color: var(--dim);
+}
+html[data-theme="spark"] .nav a.lnk:hover { background: var(--mass); color: var(--ink); }
+html[data-theme="spark"] .nav a.lnk[aria-current="page"] { background: var(--mass); color: var(--ink); }
+/* the raised pill: 2px edge plus a hard offset shadow, pressed on hover */
+html[data-theme="spark"] .nav .btn {
+  padding: 9px 22px; border: 2px solid var(--edge); border-radius: 999px;
+  background: var(--spot); color: var(--spot-ink); text-decoration: none;
+  font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: .02em;
+  box-shadow: 4px 4px 0 var(--edge);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+html[data-theme="spark"] .nav .btn:hover { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--edge); }
+html[data-theme="spark"] .nav .ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; flex: 0 0 auto; border-radius: 999px;
+  background: var(--mass); color: var(--dim); text-decoration: none;
+}
+html[data-theme="spark"] .nav .ico svg { width: 16px; height: 16px; fill: currentColor; }
+html[data-theme="spark"] .nav .ico:hover { background: var(--spot); color: var(--spot-ink); }
+html[data-theme="spark"] .mode { display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--mass); }
+html[data-theme="spark"] .mode button {
+  background: none; border: 0; border-radius: 999px; color: var(--faint); cursor: pointer;
+  font-family: var(--body); font-weight: 600; font-size: 12px; padding: 5px 13px;
+}
+html[data-theme="spark"] .mode button:hover { color: var(--ink); }
+html[data-theme="spark"] .mode button[aria-pressed="true"] { background: var(--spot); color: var(--spot-ink); }
+html[data-theme="spark"] .nav .menu {
+  display: none; align-items: center; justify-content: center; gap: 4px;
+  flex-direction: column; width: 40px; height: 40px; flex: 0 0 auto; padding: 0;
+  border: 0; border-radius: 999px; background: var(--mass); color: var(--dim); cursor: pointer;
+}
+html[data-theme="spark"] .nav .menu span { display: block; width: 15px; height: 2px; border-radius: 2px; background: currentColor; }
+html[data-theme="spark"] .nav .menu[aria-expanded="true"] { background: var(--spot); color: var(--spot-ink); }
+html[data-theme="spark"] .sheet { display: none; margin-top: 10px; padding: 8px; border-radius: 20px; background: var(--panel); }
+html[data-theme="spark"] .sheet.open { display: block; }
+html[data-theme="spark"] .sheet a {
+  display: block; padding: 12px 16px; border-radius: 14px;
+  text-decoration: none; color: var(--ink); font-weight: 600; font-size: 15px;
+}
+html[data-theme="spark"] .sheet a:hover { background: var(--mass); }
+/* ── hero ── */
+html[data-theme="spark"] .hero { padding: 46px 0 40px; }
+html[data-theme="spark"] .eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 7px 16px; border-radius: 999px; background: var(--mass);
+  color: var(--spot); font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .09em;
+}
+html[data-theme="spark"] .eyebrow s { width: 16px; height: 3px; border-radius: 3px; background: var(--spot); text-decoration: none; }
+html[data-theme="spark"] h1 {
+  font-family: var(--disp); font-weight: 400; text-transform: uppercase;
+  line-height: .95; letter-spacing: -.01em;
+  font-size: clamp(38px, 6vw, 86px); margin: 26px 0 0; max-width: 18ch; color: var(--ink);
+}
+html[data-theme="spark"] h1 em { font-style: normal; color: var(--spot); }
+html[data-theme="spark"] .lede { color: var(--dim); font-size: 20px; line-height: 1.55; max-width: 46ch; margin: 24px 0 0; }
+html[data-theme="spark"] .lede b { color: var(--ink); font-weight: 600; }
+html[data-theme="spark"] .go { display: flex; align-items: center; gap: 18px; margin-top: 32px; flex-wrap: wrap; }
+html[data-theme="spark"] .cmd {
+  display: inline-flex; align-items: center; border: 2px solid var(--edge);
+  border-radius: 999px; background: var(--panel); overflow: hidden;
+  box-shadow: 5px 5px 0 var(--edge);
+}
+html[data-theme="spark"] .cmd code { padding: 13px 22px; font-size: 14px; font-family: var(--mono); color: var(--ink); }
+html[data-theme="spark"] .cmd code b { color: var(--spot); font-weight: 700; margin-right: 10px; }
+html[data-theme="spark"] .cmd button {
+  align-self: stretch; padding: 13px 20px; border: 0; border-left: 2px solid var(--edge);
+  background: var(--spot); color: var(--spot-ink); cursor: pointer;
+  font-family: var(--body); font-weight: 800; font-size: 12px;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+html[data-theme="spark"] .cmd button:hover { filter: brightness(1.08); }
+html[data-theme="spark"] .meta { margin-top: 22px; color: var(--faint); font-size: 14px; }
+html[data-theme="spark"] .meta a { color: var(--spot); text-decoration: none; font-weight: 600; }
+html[data-theme="spark"] .meta a:hover { text-decoration: underline; }
+/* ── the numbers: four raised cards, each its own colour ── */
+html[data-theme="spark"] .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 30px 0 30px; }
+html[data-theme="spark"] .stat {
+  display: block; text-decoration: none; padding: 22px 20px 20px;
+  border: 2px solid var(--edge); border-radius: 20px; background: var(--panel);
+  box-shadow: 5px 5px 0 var(--edge);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+html[data-theme="spark"] .stat:hover { transform: translate(5px, 5px); box-shadow: 0 0 0 var(--edge); }
+html[data-theme="spark"] .stat b {
+  display: block; font-family: var(--disp); font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 1; color: var(--ink);
+}
+html[data-theme="spark"] .stat span { display: block; margin-top: 10px; color: var(--faint); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+/* each card takes a different accent, so the row reads as a set */
+html[data-theme="spark"] .stat:nth-child(1) b { color: var(--spot); }
+html[data-theme="spark"] .stat:nth-child(2) b { color: var(--c1); }
+html[data-theme="spark"] .stat:nth-child(3) b { color: var(--c2); }
+html[data-theme="spark"] .stat:nth-child(4) b { color: var(--c3); }
+/* ── stickers ──
+   Native emoji as ::after content, not image assets: nothing to download or
+   license, they render in the reader's own emoji font, and because they live
+   entirely in this theme the shared markup stays untouched — sheet.css simply
+   never declares them. Absolutely positioned so they can't become grid items
+   and disturb the card columns they hang off. */
+html[data-theme="spark"] .stat,
+html[data-theme="spark"] .rows > .row,
+html[data-theme="spark"] .plate { position: relative; }
+html[data-theme="spark"] .stat::after,
+html[data-theme="spark"] .rows > .row::after,
+html[data-theme="spark"] .plate::after {
+  position: absolute; z-index: 2;
+  display: grid; place-items: center;
+  width: 46px; height: 46px; border-radius: 999px;
+  border: 2px solid var(--edge); background: var(--panel);
+  box-shadow: 3px 3px 0 var(--edge);
+  font-size: 23px; line-height: 1;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+html[data-theme="spark"] .stat::after { top: -19px; right: 13px; transform: rotate(8deg); }
+html[data-theme="spark"] .rows > .row::after { top: -17px; left: -17px; transform: rotate(-9deg); }
+html[data-theme="spark"] .plate::after { bottom: -20px; right: 26px; transform: rotate(7deg); }
+/* each sticker answers the card it sits on */
+html[data-theme="spark"] .stat:nth-child(1)::after { content: "📝"; }
+html[data-theme="spark"] .stat:nth-child(2)::after { content: "🐙"; }
+html[data-theme="spark"] .stat:nth-child(3)::after { content: "🎓"; }
+html[data-theme="spark"] .stat:nth-child(4)::after { content: "🧠"; }
+html[data-theme="spark"] .plate::after { content: "🐙"; }
+/* cycles every four, so a blog list of any length keeps getting stickers */
+html[data-theme="spark"] .rows > .row:nth-child(4n + 1)::after { content: "✍️"; }
+html[data-theme="spark"] .rows > .row:nth-child(4n + 2)::after { content: "⚡"; }
+html[data-theme="spark"] .rows > .row:nth-child(4n + 3)::after { content: "📄"; }
+html[data-theme="spark"] .rows > .row:nth-child(4n)::after { content: "👋"; }
+/* ── worked at: the band tilts, the contents tilt back level ── */
+html[data-theme="spark"] .marks {
+  display: flex; align-items: center; gap: 34px; flex-wrap: wrap;
+  padding: 20px 26px; margin: 0 0 34px; border-radius: 22px;
+  background: var(--panel); border: 2px solid var(--edge);
+  transform: rotate(-1.2deg);
+}
+html[data-theme="spark"] .marks > * { transform: rotate(1.2deg); }
+html[data-theme="spark"] .marks .lbl { color: var(--faint); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; }
+html[data-theme="spark"] .marks .mark {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+  color: var(--dim); font-size: 14px; font-weight: 600;
+}
+html[data-theme="spark"] .marks .mark:hover { color: var(--spot); }
+/* ── plate ── */
+html[data-theme="spark"] .fig { padding: 6px 0 34px; }
+html[data-theme="spark"] .fighd {
+  display: flex; align-items: baseline; gap: 14px; padding: 0 4px 12px;
+  color: var(--faint); font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .09em;
+}
+html[data-theme="spark"] .fighd .r { margin-left: auto; text-align: right; }
+html[data-theme="spark"] .plate {
+  border: 2px solid var(--edge); border-radius: 24px; background: var(--panel);
+  padding: 28px 32px; box-shadow: 6px 6px 0 var(--edge);
+}
+html[data-theme="spark"] .figcap { margin: 14px 4px 0; color: var(--faint); font-size: 13px; max-width: 70ch; }
+/* ── rows: raised cards with a big colour-coded number ── */
+html[data-theme="spark"] .rows { display: grid; gap: 16px; margin-bottom: 34px; }
+html[data-theme="spark"] .rows > .row {
+  display: grid; grid-template-columns: 78px minmax(0, 1fr) minmax(0, 320px);
+  gap: 6px 26px; align-items: center; text-decoration: none; cursor: pointer;
+  padding: 22px 24px; border: 2px solid var(--edge); border-radius: 22px;
+  background: var(--panel); box-shadow: 5px 5px 0 var(--edge);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+html[data-theme="spark"] .rows > .row:hover { transform: translate(5px, 5px); box-shadow: 0 0 0 var(--edge); }
+html[data-theme="spark"] .rows .n { font-family: var(--disp); font-size: 42px; line-height: 1; color: var(--spot); }
+/* same four-step cycle as the stickers, so number and sticker stay in step */
+html[data-theme="spark"] .rows > .row:nth-child(4n + 2) .n { color: var(--c1); }
+html[data-theme="spark"] .rows > .row:nth-child(4n + 3) .n { color: var(--c2); }
+html[data-theme="spark"] .rows > .row:nth-child(4n) .n { color: var(--c3); }
+html[data-theme="spark"] .rows h3 {
+  margin: 0; font-family: var(--disp); font-weight: 400; font-size: 23px;
+  text-transform: uppercase; line-height: 1.1; color: var(--ink);
+}
+html[data-theme="spark"] .rows h3 .arw { margin-left: 6px; font-family: var(--body); font-weight: 700; font-size: 17px; color: var(--spot); transition: margin-left .12s ease; }
+html[data-theme="spark"] .rows > .row:hover .arw { margin-left: 12px; }
+html[data-theme="spark"] .rows p { margin: 8px 0 0; color: var(--dim); font-size: 15px; }
+html[data-theme="spark"] .rows .ev {
+  justify-self: end; width: 100%;
+  border-radius: 14px; background: var(--mass);
+  padding: 13px 16px; font-family: var(--mono); font-size: 12px; color: var(--faint);
+}
+html[data-theme="spark"] .rows .ev-row { display: flex; align-items: center; gap: 12px; padding: 4px 0; }
+html[data-theme="spark"] .rows .ev-row > span { color: var(--dim); }
+html[data-theme="spark"] .rows .ev-row b { margin-left: auto; font-weight: 400; color: var(--ink); }
+/* section heads */
+html[data-theme="spark"] .head {
+  display: flex; align-items: baseline; gap: 14px; padding: 10px 4px 16px;
+  color: var(--faint); font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .09em;
+}
+html[data-theme="spark"] .head .r { margin-left: auto; }
+/* ── prose ── */
+html[data-theme="spark"] .prose { line-height: 1.7; color: var(--dim); font-size: 16px; }
+html[data-theme="spark"] .prose > *:first-child { margin-top: 0; }
+html[data-theme="spark"] .prose h1,
+html[data-theme="spark"] .prose h2,
+html[data-theme="spark"] .prose h3 {
+  font-family: var(--disp); font-weight: 400; text-transform: uppercase;
+  color: var(--ink); margin: 1.9em 0 .5em; line-height: 1.15;
+}
+html[data-theme="spark"] .prose h1 { font-size: 32px; }
+html[data-theme="spark"] .prose h2 { font-size: 24px; }
+html[data-theme="spark"] .prose h3 { font-size: 19px; }
+html[data-theme="spark"] .prose a { color: var(--spot); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+html[data-theme="spark"] .prose code { font-family: var(--mono); font-size: .86em; color: var(--ink); background: var(--mass); padding: .18em .45em; border-radius: 6px; }
+html[data-theme="spark"] .prose pre {
+  font-family: var(--mono); font-size: 13px; line-height: 1.65;
+  background: var(--mass); border-radius: 16px; padding: 18px 20px; overflow-x: auto;
+}
+html[data-theme="spark"] .prose pre code { background: none; padding: 0; color: var(--dim); }
+html[data-theme="spark"] .prose blockquote { margin: 1.4em 0; padding: 2px 0 2px 18px; border-left: 4px solid var(--spot); border-radius: 2px; color: var(--faint); }
+html[data-theme="spark"] .prose img { max-width: 100%; border-radius: 12px; }
+html[data-theme="spark"] .prose hr { border: 0; border-top: 2px solid var(--line2); margin: 2.2em 0; }
+html[data-theme="spark"] .prose table { border-collapse: collapse; width: 100%; font-size: 14px; }
+html[data-theme="spark"] .prose th,
+html[data-theme="spark"] .prose td { border: 1px solid var(--line2); padding: 9px 13px; text-align: left; }
+/* article view */
+html[data-theme="spark"] .article { padding: 34px 0 50px; }
+html[data-theme="spark"] .article .back {
+  background: var(--mass); border: 0; border-radius: 999px; padding: 8px 17px; cursor: pointer;
+  color: var(--dim); font-family: var(--body); font-weight: 600; font-size: 13px;
+}
+html[data-theme="spark"] .article .back:hover { background: var(--spot); color: var(--spot-ink); }
+html[data-theme="spark"] .article h1.title { font-size: clamp(30px, 4.6vw, 58px); margin: 24px 0 0; max-width: 22ch; }
+html[data-theme="spark"] .article .byline {
+  margin: 16px 0 34px; color: var(--faint);
+  font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em;
+}
+html[data-theme="spark"] .article .prose { max-width: 70ch; }
+/* ── footer ── */
+html[data-theme="spark"] .foot {
+  margin-top: 10px; padding: 22px 26px; border-radius: 22px; background: var(--panel);
+  display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+  color: var(--faint); font-size: 13px;
+}
+html[data-theme="spark"] .foot a { color: var(--dim); text-decoration: none; font-weight: 600; }
+html[data-theme="spark"] .foot a:hover { color: var(--spot); }
+html[data-theme="spark"] .foot .out { margin-left: auto; display: flex; gap: 16px; align-items: center; }
+@media (max-width: 900px) {
+html[data-theme="spark"] .nav a.lnk,
+html[data-theme="spark"] .nav .mode { display: none; }
+html[data-theme="spark"] .nav .menu { display: inline-flex; }
+html[data-theme="spark"] .strip { grid-template-columns: 1fr 1fr; }
+html[data-theme="spark"] .rows > .row { grid-template-columns: 56px minmax(0, 1fr); }
+html[data-theme="spark"] .rows .n { font-size: 32px; }
+html[data-theme="spark"] .rows .ev { grid-column: 2; justify-self: stretch; margin-top: 14px; }
+html[data-theme="spark"] .hero { padding: 34px 0 30px; }
+}
+@media (max-width: 560px) {
+html[data-theme="spark"] { --gut: 16px; }
+html[data-theme="spark"] .strip { grid-template-columns: 1fr; }
+html[data-theme="spark"] .rows > .row::after { left: -8px; }
+html[data-theme="spark"] .marks { transform: none; }
+html[data-theme="spark"] .marks > * { transform: none; }
+html[data-theme="spark"] .cmd { width: 100%; }
+html[data-theme="spark"] .cmd code { flex: 1; padding: 12px 16px; font-size: 12.5px; }
+html[data-theme="spark"] .foot .out { margin-left: 0; }
+}
