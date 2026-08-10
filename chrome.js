@@ -15,7 +15,7 @@ export function wireChrome() {
       b.setAttribute('aria-pressed', String(b.dataset.ground === mode))
     );
   };
-  sync(GROUND[document.documentElement.dataset.mode] ? document.documentElement.dataset.mode : 'ink');
+  sync(GROUND[document.documentElement.dataset.mode] ? document.documentElement.dataset.mode : 'paper');
 
   document.querySelectorAll('.mode button').forEach((b) =>
     b.addEventListener('click', () => {

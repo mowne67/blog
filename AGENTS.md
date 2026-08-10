@@ -7,10 +7,15 @@ Personal site: profile page + markdown blog. Vite, no framework, three JS module
 The site ships **two complete designs**, and the ground toggle in the nav picks
 between them. They are not independent settings:
 
-| Ground  | Design  | Look                                            |
-| ------- | ------- | ----------------------------------------------- |
-| `ink`   | `sheet` | dark, hairline grid, editorial, one accent      |
-| `paper` | `spark` | light, chunky pills, hard shadows, emoji stickers |
+| Ground            | Design  | Look                                              |
+| ----------------- | ------- | ------------------------------------------------- |
+| `paper` (default) | `spark` | light, chunky pills, hard shadows, emoji stickers |
+| `ink`             | `sheet` | dark, hairline grid, editorial, one accent        |
+
+The default is set in four places and they must agree: the `data-mode` /
+`data-theme` pair on `<html>`, the `m='paper'` fallback in the `<head>` script,
+the fallback in `wireChrome()`, and the `aria-pressed` on the two toggle
+buttons. `<meta name="theme-color">` should match the default ground's `--bg`.
 
 **`data-mode` and `data-theme` must always be written together.** One without
 the other is a broken state: the page would take one design's layout and the

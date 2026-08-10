@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap');
-/* Ink is the default ground; paper is opt-in and remembered in localStorage. */
+/* Paper is the default ground (and so spark is the default design); ink is
+   opt-in and remembered in localStorage. See AGENTS.md. */
 html[data-theme="sheet"],
 html[data-theme="sheet"][data-mode="ink"] {
   --bg: #17171a; --panel: #1e1e22; --mass: #26262b;
