@@ -46,10 +46,13 @@ function introRain() {
   // an unskippable full-page animation is exactly what reduced-motion means
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return c.remove();
 
-  const stop = runMatrix(c, { bg: '--bg', prefill: true });
+  const rain = runMatrix(c, { bg: '--bg', prefill: true });
   setTimeout(() => {
+    // the rain drains downward on its own; the canvas itself never moves, so
+    // there is no edge sliding across the page
+    rain.drain();
     c.classList.add('gone');
-    c.addEventListener('transitionend', () => { stop(); c.remove(); }, { once: true });
+    c.addEventListener('transitionend', () => { rain.stop(); c.remove(); }, { once: true });
   }, 1900);
 }
 

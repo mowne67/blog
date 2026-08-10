@@ -35,7 +35,7 @@ html[data-theme="sheet"] body {
 }
 html[data-theme="sheet"] ::selection { background: var(--spot); color: var(--spot-ink); }
 html[data-theme="sheet"] a { color: inherit; }
-/* Intro rain: covers the page on open, then falls away downward and fades.
+/* Intro rain: covers the page on open, then drains downward and fades.
    Its own opaque background, so frame one isn't a flash of the page beneath. */
 html[data-theme="sheet"] #rain-intro {
   /* canvas is a replaced element: inset alone leaves it at its intrinsic
@@ -43,9 +43,9 @@ html[data-theme="sheet"] #rain-intro {
   position: fixed; inset: 0; width: 100%; height: 100%;
   z-index: 60; pointer-events: none;
   background: var(--bg);
-  transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.4, 0, .2, 1);
+  transition: opacity 1.1s ease;
 }
-html[data-theme="sheet"] #rain-intro.gone { opacity: 0; transform: translateY(45%); }
+html[data-theme="sheet"] #rain-intro.gone { opacity: 0; }
 /* The sheet: one bounded frame on the ground, closed on three sides. */
 html[data-theme="sheet"] .frame {
   max-width: 1440px; margin: 0 auto; background: var(--bg); position: relative;

@@ -1,11 +1,12 @@
 // Tamil matrix rain. Sized to its container (not the window) and painted from
 // the ground's own CSS variables, so it follows the ink/paper toggle.
-const GLYPHS = 'அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறனABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const GLYPHS = 'அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறன0123456789';
 const FONT = 16;
-const TICK = 55; // ms between rows
+const TICK = 55;       // ms between rows
+const DRAIN_TICK = 16; // one row per frame once it's leaving
 
-// Returns a stop(); the intro overlay needs it, or its rAF loop keeps painting
-// into a detached canvas after the element is removed.
+// Returns { stop, drain }. stop() is required for the intro overlay, or its rAF
+// loop keeps painting into a detached canvas after the element is removed.
 export function runMatrix(canvas, { bg = '--panel', prefill = false } = {}) {
   const ctx = canvas.getContext('2d');
   // asked for no motion: seed a full field, paint it once, never animate
@@ -34,10 +35,11 @@ export function runMatrix(canvas, { bg = '--panel', prefill = false } = {}) {
 
   let last = 0;
   let stopped = false;
+  let draining = false;
   function frame(now) {
     if (stopped) return;
     if (!still) requestAnimationFrame(frame); // rAF, not setInterval: pauses with the tab
-    if (now - last < TICK) return;
+    if (now - last < (draining ? DRAIN_TICK : TICK)) return;
     last = now;
 
     const { width, height } = canvas.getBoundingClientRect();
@@ -52,11 +54,18 @@ export function runMatrix(canvas, { bg = '--panel', prefill = false } = {}) {
     for (let i = 0; i < drops.length; i++) {
       ctx.fillStyle = drops[i] < 1 ? head : tail;
       ctx.fillText(GLYPHS[Math.floor(Math.random() * GLYPHS.length)], i * FONT, drops[i] * FONT);
-      if (drops[i] * FONT > height && Math.random() > 0.975) drops[i] = 0;
+      // Draining: columns fall past the bottom and are never sent back to the
+      // top, so the field empties from the top down. That is what makes the
+      // exit seamless — translating the canvas instead drags its top edge
+      // across the page as a hard line where the glyphs are cut off.
+      if (!draining && drops[i] * FONT > height && Math.random() > 0.975) drops[i] = 0;
       drops[i]++;
     }
   }
   requestAnimationFrame(frame);
 
-  return () => { stopped = true; ro.disconnect(); };
+  return {
+    stop: () => { stopped = true; ro.disconnect(); },
+    drain: () => { draining = true; },
+  };
 }
