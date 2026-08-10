@@ -42,13 +42,14 @@ html[data-theme="spark"] body {
 }
 html[data-theme="spark"] ::selection { background: var(--spot); color: var(--spot-ink); }
 html[data-theme="spark"] a { color: inherit; }
-/* Intro rain: same behaviour in both themes, only the colours differ. */
+/* Intro rain: covers the page on open, then falls away downward and fades,
+   carrying on the direction the glyphs were already moving. */
 html[data-theme="spark"] #rain-intro {
   position: fixed; inset: 0; width: 100%; height: 100%;
   z-index: 60; pointer-events: none; background: var(--bg);
   transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.4, 0, .2, 1);
 }
-html[data-theme="spark"] #rain-intro.gone { opacity: 0; transform: translateX(38%); }
+html[data-theme="spark"] #rain-intro.gone { opacity: 0; transform: translateY(45%); }
 /* No sheet, no rules — the container just holds the column. */
 html[data-theme="spark"] .frame { max-width: 1180px; margin: 0 auto; padding: 0 var(--gut); }
 /* ── nav ── */
