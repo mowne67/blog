@@ -34,6 +34,14 @@
   -webkit-mask: var(--m) center/contain no-repeat;
   mask: var(--m) center/contain no-repeat;
 }
+/* the contribution graph is a fixed-ratio SVG; it just needs to scroll rather
+   than squash once the plate is narrower than a year of weeks */
+.chart { display: block; overflow-x: auto; }
+.chart img { display: block; width: 100%; min-width: 620px; }
+/* the service hardcodes #EEE for empty days, which glares on a dark ground —
+   inverting drops those to near-black and the hue-rotate keeps the green green */
+html[data-mode="ink"] .chart img { filter: invert(1) hue-rotate(180deg); }
+
 .m-ito { --m: url('./assets/logos/ito.svg'); width: 44px; height: 32px; }
 .m-genpact { --m: url('./assets/logos/genpact.svg'); width: 76px; height: 33px; }
 .m-iqvia { --m: url('./assets/logos/iqvia.svg'); width: 92px; height: 30px; }
