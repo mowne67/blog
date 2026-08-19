@@ -21,7 +21,7 @@ export function runMatrix(canvas, { bg = '--panel', prefill = false } = {}) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     // Stagger the starts so the field doesn't fall as one solid line. Seeding
     // down the height instead of above it means the field is already full on
-    // frame one — the intro is too short to wait for rain to fall from the top.
+    // frame one; the intro is too short to wait for rain to fall from the top.
     const span = still || prefill ? height / FONT : -40;
     drops = Array.from({ length: Math.ceil(width / FONT) }, () => Math.random() * span);
   }
@@ -56,7 +56,7 @@ export function runMatrix(canvas, { bg = '--panel', prefill = false } = {}) {
       ctx.fillText(GLYPHS[Math.floor(Math.random() * GLYPHS.length)], i * FONT, drops[i] * FONT);
       // Draining: columns fall past the bottom and are never sent back to the
       // top, so the field empties from the top down. That is what makes the
-      // exit seamless — translating the canvas instead drags its top edge
+      // exit seamless; translating the canvas instead drags its top edge
       // across the page as a hard line where the glyphs are cut off.
       if (!draining && drops[i] * FONT > height && Math.random() > 0.975) drops[i] = 0;
       drops[i]++;

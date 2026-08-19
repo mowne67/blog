@@ -6,7 +6,7 @@
 
    Every rule inside themes/*.css is scoped to its own data-theme,
    so the two can sit in one bundle without colliding. The mapping
-   from ground to design lives in ONE place — GROUND in chrome.js —
+   from ground to design lives in ONE place, GROUND in chrome.js,
    and both attributes are written together, so they can never
    disagree. Nothing here selects a design; don't add a switch.
    ───────────────────────────────────────────────────────────── */
@@ -19,7 +19,7 @@
    box-shadows: the offset gap shows page ground between element and ring, so
    it reads on either ground and can't fight the drop shadows spark uses.
    :focus-visible, so it appears for keyboard users and not on click.
-   Not theme-specific — being able to see where you are isn't a style. */
+   Not theme-specific: being able to see where you are isn't a style. */
 :where(a, button, [tabindex]):focus-visible {
   outline: 3px solid var(--spot);
   outline-offset: 3px;
@@ -35,7 +35,7 @@
   mask: var(--m) center/contain no-repeat;
 }
 /* on a work card the mark sits in the number slot, so it gives up its natural
-   width when the column is narrower than the wordmark — contain keeps the ratio */
+   width when the column is narrower than the wordmark; contain keeps the ratio */
 .rows .n i { max-width: 100%; }
 .marks .mark svg { flex: 0 0 auto; width: 17px; height: 17px; fill: currentColor; }
 /* the contribution graph is a fixed-ratio SVG; it just needs to scroll rather

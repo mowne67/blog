@@ -168,7 +168,7 @@ html[data-theme="sheet"] .plate { border: 1px solid var(--line2); background: va
 /* ── worked at ──
    Masked silhouettes in currentColor rather than the brand artwork: three
    palettes fighting each other (and a white Genpact mark invisible on paper)
-   read as debris. No text label beside them — all three logos are wordmarks,
+   read as debris. No text label beside them: all three logos are wordmarks,
    so the name is already in the mark; the accessible name is on the link. */
 html[data-theme="sheet"] .marks {
   display: flex; align-items: center; gap: 44px; flex-wrap: wrap;

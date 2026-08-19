@@ -2,7 +2,7 @@ import { marked } from 'marked';
 import { wireChrome } from './chrome.js';
 import { runMatrix } from './matrix.js';
 
-// Paths only — filenames carry the date, so the strip never loads a post body.
+// Paths only; filenames carry the date, so the strip never loads a post body.
 const postPaths = Object.keys(import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' }));
 
 async function fetchGitHubReadme() {
@@ -32,7 +32,7 @@ async function fillStats() {
   document.querySelectorAll('[data-posts]').forEach((n) => (n.textContent = postPaths.length));
   document.querySelectorAll('[data-latest]').forEach((n) => (n.textContent = latest || 'none yet'));
 
-  // unauthenticated and rate-limited; the cell just stays "—" when it fails
+  // unauthenticated and rate-limited; the cell just stays "…" when it fails
   try {
     const res = await fetch('https://api.github.com/users/mowne67');
     if (!res.ok) throw new Error(res.status);
