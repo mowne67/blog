@@ -190,6 +190,15 @@ html[data-theme="spark"] .rows > .row:nth-child(4n + 1)::after { content: "✍�
 html[data-theme="spark"] .rows > .row:nth-child(4n + 2)::after { content: "⚡"; }
 html[data-theme="spark"] .rows > .row:nth-child(4n + 3)::after { content: "📄"; }
 html[data-theme="spark"] .rows > .row:nth-child(4n)::after { content: "👋"; }
+/* the work list answers to its own companies, not the blog rotation */
+html[data-theme="spark"] .rows.work > .row:nth-child(1)::after { content: "🏥"; }
+html[data-theme="spark"] .rows.work > .row:nth-child(2)::after { content: "🏦"; }
+html[data-theme="spark"] .rows.work > .row:nth-child(3)::after { content: "🚀"; }
+html[data-theme="spark"] .rows.work > .row:nth-child(4)::after { content: "💊"; }
+html[data-theme="spark"] .rows.work > .row:nth-child(5)::after { content: "🎨"; }
+/* a .row that isn't a link doesn't lift or offer a pointer */
+html[data-theme="spark"] .rows > div.row { cursor: default; }
+html[data-theme="spark"] .rows > div.row:hover { transform: none; box-shadow: 5px 5px 0 var(--edge); }
 /* ── worked at: the band tilts, the contents tilt back level ── */
 html[data-theme="spark"] .marks {
   display: flex; align-items: center; gap: 34px; flex-wrap: wrap;
