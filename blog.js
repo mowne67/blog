@@ -6,7 +6,7 @@ const postModules = import.meta.glob('./posts/*.md', { query: '?raw', import: 'd
 
 const DATE_FMT = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
-// First real paragraph, minus fences, headings and inline markup — enough for a row.
+// First real paragraph, minus fences, headings and inline markup, enough for a row.
 function excerpt(body) {
   const para = body
     .replace(/```[\s\S]*?```/g, '')
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.scrollTo(0, 0);
   }
 
-  // one renderer, driven by the hash — clicks are plain links, back works for free
+  // one renderer, driven by the hash; clicks are plain links, back works for free
   addEventListener('hashchange', render);
   document.getElementById('back-btn').addEventListener('click', () => {
     history.pushState(null, '', location.pathname);
