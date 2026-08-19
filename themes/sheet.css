@@ -197,6 +197,8 @@ html[data-theme="sheet"] .rows .n {
   font-family: var(--disp); font-weight: 900; font-size: 44px;
   letter-spacing: -.05em; line-height: 1; color: var(--mass); transition: color .12s ease;
 }
+html[data-theme="sheet"] .rows.work .n { color: var(--dim); }
+html[data-theme="sheet"] .rows .n.sm { font-size: 19px; }
 html[data-theme="sheet"] .rows > .row:hover .n { color: var(--line2); }
 html[data-theme="sheet"] .rows h3 {
   margin: 0; font-family: var(--disp); font-weight: 800; font-size: 21px;

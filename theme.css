@@ -29,11 +29,15 @@
    The company marks are masked silhouettes painted in currentColor, so they
    follow whatever the active theme sets as text colour. Sizes are per logo:
    one shared height would squash the ones with a different aspect ratio. */
-.marks i {
+.m-ito, .m-genpact, .m-iqvia, .m-indivia {
   display: block; flex: 0 0 auto; background: currentColor;
   -webkit-mask: var(--m) center/contain no-repeat;
   mask: var(--m) center/contain no-repeat;
 }
+/* on a work card the mark sits in the number slot, so it gives up its natural
+   width when the column is narrower than the wordmark — contain keeps the ratio */
+.rows .n i { max-width: 100%; }
+.marks .mark svg { flex: 0 0 auto; width: 17px; height: 17px; fill: currentColor; }
 /* the contribution graph is a fixed-ratio SVG; it just needs to scroll rather
    than squash once the plate is narrower than a year of weeks */
 .m-ito { --m: url('./assets/logos/ito.svg'); width: 44px; height: 32px; }

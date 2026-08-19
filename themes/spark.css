@@ -236,6 +236,8 @@ html[data-theme="spark"] .rows > .row {
 }
 html[data-theme="spark"] .rows > .row:hover { transform: translate(5px, 5px); box-shadow: 0 0 0 var(--edge); }
 html[data-theme="spark"] .rows .n { font-family: var(--disp); font-size: 42px; line-height: 1; color: var(--spot); }
+html[data-theme="spark"] .rows.work > .row { grid-template-columns: 104px minmax(0, 1fr) minmax(0, 320px); }
+html[data-theme="spark"] .rows .n.sm { font-size: 18px; }
 /* same four-step cycle as the stickers, so number and sticker stay in step */
 html[data-theme="spark"] .rows > .row:nth-child(4n + 2) .n { color: var(--c1); }
 html[data-theme="spark"] .rows > .row:nth-child(4n + 3) .n { color: var(--c2); }
