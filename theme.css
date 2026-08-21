@@ -38,6 +38,18 @@
    width when the column is narrower than the wordmark; contain keeps the ratio */
 .rows .n i { max-width: 100%; }
 .marks .mark svg { flex: 0 0 auto; width: 17px; height: 17px; fill: currentColor; }
+/* A hero that carries a clip beside the hook. Scoped to .split so the about
+   and blog heroes, which have no clip, keep stacking normally. The wrapper is
+   design-neutral: both themes lay the pair out the same way and only the
+   padding differs. Below 900px it wraps and the clip drops under the text. */
+.hero.split { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+.hero.split .hd { flex: 1 1 380px; min-width: 0; }
+/* width, not just flex-basis: a replaced element's automatic minimum size is
+   its intrinsic width (926px here), so basis alone never shrinks it */
+.hero.split .clip { display: block; flex: 0 0 auto; width: 300px; height: auto; min-width: 0; }
+@media (max-width: 900px) {
+  .hero.split .clip { width: 260px; }
+}
 /* the contribution graph is a fixed-ratio SVG; it just needs to scroll rather
    than squash once the plate is narrower than a year of weeks */
 .m-ito { --m: url('./assets/logos/ito.svg'); width: 44px; height: 32px; }

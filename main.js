@@ -1,25 +1,8 @@
-import { marked } from 'marked';
 import { wireChrome } from './chrome.js';
 import { runMatrix } from './matrix.js';
 
 // Paths only; filenames carry the date, so the strip never loads a post body.
 const postPaths = Object.keys(import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' }));
-
-async function fetchGitHubReadme() {
-  const el = document.getElementById('github-readme');
-  if (!el) return;
-  try {
-    // raw.githubusercontent can take seconds or hang; without the timeout the
-    // plate sits on "loading…" forever instead of admitting it failed
-    const res = await fetch('https://raw.githubusercontent.com/mowne67/mowne67/main/README.md', {
-      signal: AbortSignal.timeout(10000),
-    });
-    if (!res.ok) throw new Error(res.status);
-    el.innerHTML = marked(await res.text());
-  } catch (err) {
-    el.innerHTML = 'Could not reach GitHub. The profile README lives at <a href="https://github.com/mowne67">github.com/mowne67</a>.';
-  }
-}
 
 async function fillStats() {
   const dates = postPaths
@@ -56,6 +39,14 @@ function introRain() {
   }, 1900);
 }
 
+function wireClip() {
+  const v = document.getElementById('agents-clip');
+  if (!v || !matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  v.autoplay = false;
+  v.controls = true;
+  v.pause();
+}
+
 function wireCopy() {
   const btn = document.getElementById('copy-btn');
   btn?.addEventListener('click', async () => {
@@ -74,7 +65,7 @@ function wireCopy() {
 document.addEventListener('DOMContentLoaded', () => {
   wireChrome();
   wireCopy();
+  wireClip();
   introRain();
   fillStats();
-  fetchGitHubReadme();
 });

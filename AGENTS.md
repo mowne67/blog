@@ -2,6 +2,10 @@
 
 Personal site: profile page + markdown blog. Vite, no framework, three JS modules.
 
+For facts about Mowne (roles, dates, what he built), see
+[SOURCES.md](SOURCES.md). Do not write a claim into the site that does not
+trace back to one of the sources listed there.
+
 ## Ground and design are one switch
 
 The site ships **two complete designs**, and the ground toggle in the nav picks
@@ -19,12 +23,12 @@ buttons. `<meta name="theme-color">` should match the default ground's `--bg`.
 
 **`data-mode` and `data-theme` must always be written together.** One without
 the other is a broken state: the page would take one design's layout and the
-other's palette. There is no code path that sets only one — keep it that way.
+other's palette. There is no code path that sets only one; keep it that way.
 
 ### Where the mapping lives
 
 ```js
-// chrome.js — the one source of truth
+// chrome.js, the one source of truth
 export const GROUND = { ink: 'sheet', paper: 'spark' };
 ```
 
@@ -34,7 +38,7 @@ from that table on load and on every toggle click.
 It is duplicated in one other place on purpose: the inline `<script>` in the
 `<head>` of `index.html` and `blog.html`. That runs before first paint so the
 saved choice doesn't flash the wrong design. **Changing the mapping means
-editing three places** — `chrome.js` and both `<head>` scripts.
+editing three places**: `chrome.js` and both `<head>` scripts.
 
 To remap (e.g. spark on dark), change the table values. Both themes carry a
 full `ink` and `paper` palette, so any pairing works without touching CSS.
@@ -66,8 +70,8 @@ Both themes must define all of these, or the shared rules and the matrix rain
 break: `--bg --panel --mass --ink --dim --faint --faint2 --line --line2
 --spot --spot-ink --grid --disp --body --mono --gut`.
 
-Anything reading colour outside a theme file — the intro rain in `matrix.js`,
-the focus ring in `theme.css` — reads these variables, which is why it
+Anything reading colour outside a theme file (the intro rain in `matrix.js`,
+the focus ring in `theme.css`) reads these variables, which is why it
 recolours per design for free.
 
 ## Markup is shared
@@ -78,15 +82,15 @@ carry both looks.
 
 **Don't add design-specific markup.** If one design needs an element the other
 doesn't, express it in CSS. Spark's stickers are `::after` content with emoji
-for exactly this reason — sheet simply never declares them, and the HTML stays
+for exactly this reason: sheet simply never declares them, and the HTML stays
 neutral.
 
 ## JS
 
-- `chrome.js` — ground/design toggle + mobile sheet. Shared by both pages.
-- `main.js` — profile page: intro rain, GitHub README fetch, live stats, copy button.
-- `blog.js` — blog: loads `posts/*.md` via `import.meta.glob`, hash routing.
-- `matrix.js` — Tamil matrix rain. Intro overlay only, ~1.9s, then removed.
+- `chrome.js` - ground/design toggle + mobile sheet. Shared by both pages.
+- `main.js` - profile page: intro rain, live stats, copy button.
+- `blog.js` - blog: loads `posts/*.md` via `import.meta.glob`, hash routing.
+- `matrix.js` - Tamil matrix rain. Intro overlay only, ~1.9s, then removed.
   Returns a `stop()`; call it or the rAF loop keeps painting into a detached canvas.
 
 Gotchas that have already bitten:
@@ -106,5 +110,5 @@ expected.
 
 ## Checks
 
-`npm run build` must pass. There are no tests — verify visually in **both**
+`npm run build` must pass. There are no tests; verify visually in **both**
 grounds, since switching ground now switches the whole design.
