@@ -185,11 +185,6 @@ html[data-theme="spark"] .stat:nth-child(2)::after { content: "🐙"; }
 html[data-theme="spark"] .stat:nth-child(3)::after { content: "🎓"; }
 html[data-theme="spark"] .stat:nth-child(4)::after { content: "🧠"; }
 html[data-theme="spark"] .plate::after { content: "🧭"; }
-/* the clip is dark art on a cream ground; give it the same raised edge
-   every other spark object has, or it reads as a hole in the page */
-html[data-theme="spark"] .clip {
-  border: 2px solid var(--edge); border-radius: 14px; box-shadow: 5px 5px 0 var(--edge);
-}
 /* cycles every four, so a blog list of any length keeps getting stickers */
 html[data-theme="spark"] .rows > .row:nth-child(4n + 1)::after { content: "✍️"; }
 html[data-theme="spark"] .rows > .row:nth-child(4n + 2)::after { content: "⚡"; }
@@ -210,6 +205,19 @@ html[data-theme="spark"] .strip.me .stat:nth-child(1)::after { content: "✈️"
 html[data-theme="spark"] .strip.me .stat:nth-child(2)::after { content: "🛠️"; }
 html[data-theme="spark"] .strip.me .stat:nth-child(3)::after { content: "🗣️"; }
 html[data-theme="spark"] .strip.me .stat:nth-child(4)::after { content: "📍"; }
+/* ── hero diagram, styled as a sticker ── */
+/* The art has a transparent backing (drawn for a dark canvas), so it needs its
+   own fixed background or it takes on whatever ground is behind it. Same
+   language as every other spark card: thick border, hard offset shadow,
+   rounded corners; the rotation plus a dark backing sells "printed sticker
+   stuck on the page" rather than "image in a box". Sheet skips this on
+   purpose, same as the emoji stickers: editorial doesn't do badges. */
+html[data-theme="spark"] .hero.split .diagram {
+  background: #12100f; padding: 16px;
+  border: 2px solid var(--edge); border-radius: 20px;
+  box-shadow: 6px 6px 0 var(--edge);
+  transform: rotate(-3deg);
+}
 /* ── worked at: the band tilts, the contents tilt back level ── */
 html[data-theme="spark"] .marks {
   display: flex; align-items: center; gap: 34px; flex-wrap: wrap;

@@ -39,14 +39,6 @@ function introRain() {
   }, 1900);
 }
 
-function wireClip() {
-  const v = document.getElementById('agents-clip');
-  if (!v || !matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  v.autoplay = false;
-  v.controls = true;
-  v.pause();
-}
-
 function wireCopy() {
   const btn = document.getElementById('copy-btn');
   btn?.addEventListener('click', async () => {
@@ -65,7 +57,6 @@ function wireCopy() {
 document.addEventListener('DOMContentLoaded', () => {
   wireChrome();
   wireCopy();
-  wireClip();
   introRain();
   fillStats();
 });
