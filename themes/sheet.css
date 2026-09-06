@@ -190,7 +190,6 @@ html[data-theme="sheet"] .rows > .row {
 }
 html[data-theme="sheet"] .rows > .row:last-child { border-bottom: 0; }
 html[data-theme="sheet"] .rows > .row:hover { background: color-mix(in srgb, var(--spot) 4%, transparent); }
-html[data-theme="sheet"] .clip { border: 1px solid var(--line2); }
 html[data-theme="sheet"] .rows > div.row { cursor: default; }
 html[data-theme="sheet"] .rows > div.row:hover { background: transparent; }
 html[data-theme="sheet"] .rows > .row:hover h3 { color: var(--spot); }
