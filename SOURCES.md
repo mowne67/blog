@@ -14,6 +14,7 @@ that sounds better than what it says.
 | LinkedIn profile      | https://linkedin.com/in/mowne                                               | The live version of the above. Beats the local dump when they differ |
 | GitHub profile README | https://github.com/mowne67 (repo `mowne67/mowne67`)                         | Self-described current role and framing, in his own words       |
 | GitHub                | https://github.com/mowne67                                                  | Code, repo count, what is actually public                       |
+| Health Eligible README | `../Health-Eligible-Backend/README.md` (private, not in this repo)          | What was built at ITO Health: programs, architecture, features  |
 | This site             | `index.html` (work section), `about.html`                                   | The edited version. Downstream of everything above              |
 
 ## Precedence
@@ -46,7 +47,8 @@ rather than pick**. Publishing a wrong employment date is worse than waiting.
 ## Things no source covers
 
 The resume says nothing about what was built at **ITO Health** or **Indivia
-AI**. The site's cards for those two are deliberately thin. They need Mowne's
-own words, not a plausible guess.
+AI**. ITO Health is now covered by the Health Eligible README (see the table);
+the work card traces to that and nothing else. **Indivia AI is still thin** and
+needs Mowne's own words, not a plausible guess.
 
 See [AGENTS.md](AGENTS.md) for how the site itself is built.
