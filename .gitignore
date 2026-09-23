@@ -4,3 +4,8 @@ venv
 .env
 .env.*
 !.env.example
+
+# personal sources: local only, they carry contact details (see SOURCES.md)
+Profile.pdf
+profile_dump*.txt
+output/

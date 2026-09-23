@@ -11,7 +11,9 @@ async function fillStats() {
     .sort();
   const latest = dates.at(-1);
 
-  document.getElementById('n-posts').textContent = postPaths.length;
+  const nPosts = document.getElementById('n-posts');
+  nPosts.textContent = postPaths.length;
+  nPosts.nextElementSibling.textContent = postPaths.length === 1 ? 'post published' : 'posts published';
   document.querySelectorAll('[data-posts]').forEach((n) => (n.textContent = postPaths.length));
   document.querySelectorAll('[data-latest]').forEach((n) => (n.textContent = latest || 'none yet'));
 
@@ -28,6 +30,11 @@ function introRain() {
   if (!c) return;
   // an unskippable full-page animation is exactly what reduced-motion means
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return c.remove();
+  // once per session; reloads and return visits go straight to the page
+  try {
+    if (sessionStorage.getItem('rain')) return c.remove();
+    sessionStorage.setItem('rain', '1');
+  } catch (e) { /* storage blocked: just play it */ }
 
   const rain = runMatrix(c, { bg: '--bg', prefill: true });
   setTimeout(() => {

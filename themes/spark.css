@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Outfit:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
 /* ─────────────────────────────────────────────────────────────
    spark: chunky pills, hard offset shadows, playful display type.
    Same markup and same token contract as themes/sheet.css.
@@ -180,10 +179,10 @@ html[data-theme="spark"] .stat::after { top: -19px; right: 13px; transform: rota
 html[data-theme="spark"] .rows > .row::after { top: -17px; left: -17px; transform: rotate(-9deg); }
 html[data-theme="spark"] .plate::after { bottom: -20px; right: 26px; transform: rotate(7deg); }
 /* each sticker answers the card it sits on */
-html[data-theme="spark"] .stat:nth-child(1)::after { content: "📝"; }
-html[data-theme="spark"] .stat:nth-child(2)::after { content: "🐙"; }
-html[data-theme="spark"] .stat:nth-child(3)::after { content: "🎓"; }
-html[data-theme="spark"] .stat:nth-child(4)::after { content: "🧠"; }
+html[data-theme="spark"] .stat:nth-child(1)::after { content: "🐙"; }
+html[data-theme="spark"] .stat:nth-child(2)::after { content: "🎓"; }
+html[data-theme="spark"] .stat:nth-child(3)::after { content: "🧠"; }
+html[data-theme="spark"] .stat:nth-child(4)::after { content: "📝"; }
 html[data-theme="spark"] .plate::after { content: "🧭"; }
 /* cycles every four, so a blog list of any length keeps getting stickers */
 html[data-theme="spark"] .rows > .row:nth-child(4n + 1)::after { content: "✍️"; }
@@ -331,8 +330,7 @@ html[data-theme="spark"] .foot a { color: var(--dim); text-decoration: none; fon
 html[data-theme="spark"] .foot a:hover { color: var(--spot); }
 html[data-theme="spark"] .foot .out { margin-left: auto; display: flex; gap: 16px; align-items: center; }
 @media (max-width: 900px) {
-html[data-theme="spark"] .nav a.lnk,
-html[data-theme="spark"] .nav .mode { display: none; }
+html[data-theme="spark"] .nav a.lnk { display: none; }
 html[data-theme="spark"] .nav .menu { display: inline-flex; }
 html[data-theme="spark"] .strip { grid-template-columns: 1fr 1fr; }
 html[data-theme="spark"] .rows > .row { grid-template-columns: 56px minmax(0, 1fr); }
@@ -341,7 +339,10 @@ html[data-theme="spark"] .rows .ev { grid-column: 2; justify-self: stretch; marg
 html[data-theme="spark"] .hero { padding: 34px 0 30px; }
 }
 @media (max-width: 560px) {
+html[data-theme="spark"] .nav .ico,
+html[data-theme="spark"] .nav .btn { display: none; }
 html[data-theme="spark"] { --gut: 16px; }
+html[data-theme="spark"] .nav { gap: 10px; }
 html[data-theme="spark"] .strip { grid-template-columns: 1fr; }
 html[data-theme="spark"] .rows > .row::after { left: -8px; }
 html[data-theme="spark"] .marks { transform: none; }
