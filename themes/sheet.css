@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap');
 /* Paper is the default ground (and so spark is the default design); ink is
    opt-in and remembered in localStorage. See AGENTS.md. */
 html[data-theme="sheet"],
@@ -280,8 +279,7 @@ html[data-theme="sheet"] .foot a { color: var(--dim); text-decoration: none; }
 html[data-theme="sheet"] .foot a:hover { color: var(--spot); }
 html[data-theme="sheet"] .foot .out { margin-left: auto; display: flex; gap: 18px; align-items: center; }
 @media (max-width: 900px) {
-html[data-theme="sheet"] .nav a.lnk,
-html[data-theme="sheet"] .nav .mode { display: none; }
+html[data-theme="sheet"] .nav a.lnk { display: none; }
 html[data-theme="sheet"] .nav .menu { display: inline-flex; }
 html[data-theme="sheet"] .strip { grid-template-columns: 1fr 1fr; }
 html[data-theme="sheet"] .stat { border-bottom: 1px solid var(--line); }
@@ -293,6 +291,8 @@ html[data-theme="sheet"] .rows .ev { grid-column: 2; justify-self: stretch; max-
 html[data-theme="sheet"] .hero { padding: 54px var(--gut) 44px; }
 }
 @media (max-width: 560px) {
+html[data-theme="sheet"] .nav .ico,
+html[data-theme="sheet"] .nav .btn { display: none; }
 html[data-theme="sheet"] { --gut: 20px; }
 html[data-theme="sheet"] body { background-size: 40px 40px; padding-bottom: 40px; }
 html[data-theme="sheet"] .frame { border-left: 0; border-right: 0; }
