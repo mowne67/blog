@@ -26,7 +26,7 @@ match paper's `--bg`.
 `:root` holds paper, `html[data-mode="ink"]` overrides it. Both must define:
 `--bg --panel --mass --ink --head --dim --faint --faint2 --line --line2 --spot
 --spot-ink --grid --hi --edge` and the sky set `--sky-top --sky-bot --cloud
---cloud-shade --hill-far --hill --hill-dark --star` (`--star: #000` means no
+--cloud-shade --hill-far --hill --hill-dark --star --trunk --leaf --flower` (`--star: #000` means no
 stars). Anything painting colour outside CSS (the intro rain in `matrix.js`,
 the sky in `sky.js`) reads these, which is why it recolours with the toggle.
 `--bg` must stay a 6-digit hex: the rain appends an alpha to it.
@@ -38,7 +38,10 @@ scaled up with `image-rendering: pixelated`. It is procedural and seeded, not
 an image, so it is the same scene on every paint. The hills are measured up
 from the bottom in rows, which is why `.hero:has(> .sky)` keeps ~270px of
 bottom padding. Clouds and stars skip the `.hd` text block so white type
-always sits on clear sky. The hero is pulled up under the sticky nav, and
+always sits on clear sky; trees that would reach into it shrink or drop out.
+The trees, grass and flowers sway at 8fps in whole-pixel steps; the still
+layer is painted once and only the plant cells are redrawn each frame. The
+animation pauses off screen, and reduced motion gets a single still frame. The hero is pulled up under the sticky nav, and
 `wireSky()` toggles `.nav.over` (transparent, glass pills) while the sky is
 under it. `index.html` ships the nav with `over` already set so it doesn't
 flash solid before JS runs.
