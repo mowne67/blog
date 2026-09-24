@@ -16,6 +16,7 @@
   /* the pixel sky (sky.js reads these); --star black means no stars */
   --sky-top: #2c6bd3; --sky-bot: #6ab2ee; --cloud: #eef6fc; --cloud-shade: #bcd5ee;
   --hill-far: #4d8f6c; --hill: #62ad41; --hill-dark: #438a33; --star: #000;
+  --trunk: #7a5434; --leaf: #8fd352; --flower: #f6c945;
 
   --disp: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
   --body: var(--disp);
@@ -37,6 +38,7 @@ html[data-mode="ink"] {
   --hi: rgba(255, 255, 255, .04); --edge: rgba(255, 255, 255, .09);
   --sky-top: #0a1230; --sky-bot: #293a6c; --cloud: #3b4a78; --cloud-shade: #2a3660;
   --hill-far: #1b3739; --hill: #20472b; --hill-dark: #16341f; --star: #e6ebff;
+  --trunk: #2e2620; --leaf: #2f6038; --flower: #d8cf8e;
 }
 
 * { box-sizing: border-box; }
