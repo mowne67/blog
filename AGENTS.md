@@ -48,7 +48,7 @@ flash solid before JS runs.
 ## JS
 
 - `chrome.js` - ground toggle + mobile sheet. Shared by every page.
-- `main.js` - profile page: intro rain, sky, live stats, copy button.
+- `main.js` - profile page: intro rain, sky, copy button.
 - `sky.js` - the pixel sky behind each page's hero, and the nav's `.over` state.
 - `blog.js` - blog: loads `posts/*.md` via `import.meta.glob`, hash routing.
 - `matrix.js` - Tamil matrix rain. Intro overlay only, ~1.9s, then removed.
