@@ -261,7 +261,7 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 #post-list .ev-row > span, #post-list .ev-row b { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--faint); }
 #post-list .ev-row b { margin-left: 0; }
 
-/* ── about: the long version ── */
+/* ── profile: the long version ── */
 .fig { padding: 0 var(--wrap); }
 .fighd {
   display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; padding: 104px 0 28px;
@@ -281,7 +281,7 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 .marks .mark:hover { box-shadow: var(--card-up); }
 .marks .mark svg { flex: 0 0 auto; width: 15px; height: 15px; fill: var(--dim); }
 
-/* ── prose (about + post bodies) ── */
+/* ── prose (profile + post bodies) ── */
 .prose { color: var(--dim); font-size: 16.5px; line-height: 1.7; }
 .prose > *:first-child { margin-top: 0; }
 .prose p { margin: 0 0 1.15em; }

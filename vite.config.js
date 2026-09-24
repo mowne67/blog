@@ -9,7 +9,6 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         blog: resolve(__dirname, 'blog.html'),
-        about: resolve(__dirname, 'about.html'),
         admin: resolve(__dirname, 'admin/index.html')
       }
     }
