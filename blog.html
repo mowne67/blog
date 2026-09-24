@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif&display=swap" />
   <link rel="stylesheet" href="./theme.css" />
-  <script>var m;try{m=localStorage.getItem('ground')}catch(e){}document.documentElement.dataset.mode=m==='ink'?'ink':'paper'</script>
+  <script>var m;try{m=localStorage.getItem('ground')}catch(e){}document.documentElement.dataset.mode=m==='ink'||(m!=='paper'&&matchMedia('(prefers-color-scheme: dark)').matches)?'ink':'paper';document.querySelector('meta[name="theme-color"]').content=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()</script>
   <script type="module" src="./blog.js" defer></script>
 </head>
 <body>
