@@ -47,7 +47,7 @@ export function runMatrix(canvas, { bg = '--panel', prefill = false } = {}) {
     // the panel fills with static instead of reading as falling columns
     ctx.fillStyle = css(bg) + '40';
     ctx.fillRect(0, 0, width, height);
-    ctx.font = `${FONT}px "JetBrains Mono", monospace`;
+    ctx.font = `${FONT}px ${css('--mono')}`;
 
     const head = css('--ink');
     const tail = css('--spot');
