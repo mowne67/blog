@@ -1,8 +1,10 @@
-// Pixel-art sky behind the profile hero: banded sky, clouds, two hills, and a
-// dithered edge that dissolves into the page. Painted at 1/PX resolution and
-// scaled up with image-rendering: pixelated, so every "pixel" is a PX block.
-// Colours come from the --sky-* tokens, so the ground toggle turns day to night.
+// Pixel-art sky behind each hero: banded sky, clouds, two hills, a dithered
+// edge that dissolves into the page, and trees, grass and flowers that sway in
+// the wind. Painted at 1/PX resolution and scaled up with image-rendering:
+// pixelated, so every "pixel" is a PX block. Colours come from the --sky-*
+// tokens, so the ground toggle turns day to night.
 const PX = 6;
+const FPS = 8; // the wind moves in whole pixels, so a low, stepped rate reads as pixel art
 
 // seeded, so the scene is the same composition on every paint and resize
 function rng(seed) {
@@ -16,7 +18,10 @@ function rng(seed) {
 // 4x4 ordered dither threshold, 0..1
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((v) => (v + 0.5) / 16);
 
-export function paintSky(canvas) {
+// Builds the scene for the canvas's current size and palette. The still layer
+// is painted once into an ImageData; returns draw(t), which puts that layer
+// back and paints the plants on top with their wind offset at time t (seconds).
+export function buildSky(canvas) {
   const ctx = canvas.getContext('2d');
   // any CSS colour to [r, g, b], by letting the canvas parse it
   const rgb = (name) => {
@@ -27,12 +32,13 @@ export function paintSky(canvas) {
 
   const W = Math.ceil(canvas.clientWidth / PX);
   const H = Math.ceil(canvas.clientHeight / PX);
-  if (!W || !H) return;
+  if (!W || !H) return () => {};
   canvas.width = W;
   canvas.height = H;
 
-  const [top, bot, cloud, shade, far, hill, hill2, star, bg] =
-    ['--sky-top', '--sky-bot', '--cloud', '--cloud-shade', '--hill-far', '--hill', '--hill-dark', '--star', '--bg'].map(rgb);
+  const [top, bot, cloud, shade, far, hill, hill2, star, bg, trunk, leaf, flower] =
+    ['--sky-top', '--sky-bot', '--cloud', '--cloud-shade', '--hill-far', '--hill', '--hill-dark', '--star', '--bg',
+     '--trunk', '--leaf', '--flower'].map(rgb);
   const img = ctx.createImageData(W, H);
   const put = (x, y, c) => { const i = (y * W + x) * 4; img.data.set(c, i); img.data[i + 3] = 255; };
   const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
@@ -89,19 +95,84 @@ export function paintSky(canvas) {
       put(x, y, c);
     }
   }
-  ctx.putImageData(img, 0, 0);
+
+  // ── plants: cells [x, y, colour, sway weight, wave phase] ──
+  const plants = [];
+  const dark = (c) => c.map((v) => Math.round(v * 0.7));
+  const bark = dark(trunk);
+  // a tree: a trunk, and a canopy of overlapping discs lit from the upper left.
+  // Leaves sway more the higher they sit, and each row gets its own phase, so
+  // the canopy ripples instead of sliding as one block.
+  function tree(bx, size) {
+    const by = Math.round(nearY(bx)) + 2, th = Math.round(size * 0.8), cy = by - th - size * 0.25;
+    const lobes = Array.from({ length: 7 }, () => [bx + (r() - 0.5) * size * 0.9, cy + (r() - 0.5) * size * 0.5, size * (0.3 + r() * 0.2)]);
+    const reach = size * 0.9;
+    // shrink or drop a tree that would reach into the text block
+    if (!clear(bx, cy, reach)) return size > 8 ? tree(bx, size * 0.75) : null;
+    for (let y = Math.floor(cy - reach); y < by; y++) {
+      for (let x = Math.floor(bx - reach); x < bx + reach; x++) {
+        const d = BAYER[((y + 64) % 4) * 4 + ((x + 64) % 4)];
+        const w = Math.max(0, (by - y) / (by - cy + reach));
+        if (lobes.some(([lx, ly, lr]) => (x - lx) ** 2 + ((y - ly) * 1.2) ** 2 < lr * lr)) {
+          const lit = (x - bx + (y - cy) * 1.3) / reach; // -1 upper left .. 1 lower right
+          plants.push([x, y, lit < -0.35 + d * 0.3 ? leaf : lit > 0.25 + d * 0.3 ? hill2 : hill, w, y * 0.45]);
+        } else if (y > cy && Math.abs(x + 0.5 - bx) < Math.max(1.5, size * 0.09)) {
+          plants.push([x, y, x < bx ? trunk : bark, w * 0.3, 0]);
+        }
+      }
+    }
+    return true;
+  }
+  tree(Math.round(W - 12), Math.min(26, H * 0.3)); // the big one on the right edge
+  tree(Math.round(W * 0.72), Math.min(15, H * 0.18));
+  tree(Math.round(W * 0.07), Math.min(12, H * 0.15));
+  // grass tufts along the near hill, and a few flowers among them
+  for (let x = 0; x < W; x += 2 + Math.floor(r() * 3)) {
+    const base = Math.round(nearY(x)), h = 1 + Math.floor(r() * 3);
+    for (let k = 1; k <= h; k++) plants.push([x, base - k, k === h ? leaf : hill2, k / 3, x * 0.18]);
+    if (r() < 0.12) {
+      const fx = x + 1, fb = Math.round(nearY(fx)), fh = 3 + Math.floor(r() * 2);
+      for (let k = 1; k < fh; k++) plants.push([fx, fb - k, hill2, k / fh, fx * 0.18]);
+      plants.push([fx, fb - fh, flower, 1, fx * 0.18]);
+    }
+  }
+  const cols = new Map(); // one fillStyle string per colour, not per cell
+  const css = (c) => cols.get(c) ?? (cols.set(c, `rgb(${c})`), cols.get(c));
+
+  return (t) => {
+    ctx.putImageData(img, 0, 0);
+    for (const [x, y, c, w, ph] of plants) {
+      // two sines: a slow gust and a quicker flutter
+      const dx = Math.round((Math.sin(t * 1.4 + ph) * 1.1 + Math.sin(t * 3.1 + ph * 1.7) * 0.4) * w);
+      ctx.fillStyle = css(c);
+      ctx.fillRect(x + dx, y, 1, 1);
+    }
+  };
 }
 
-// Paint, and repaint on resize and on the ground toggle.
+// Build, rebuild on resize and on the ground toggle, and animate the wind while
+// the sky is on screen. Reduced motion gets one still frame.
 export function wireSky(canvas) {
   if (!canvas) return;
-  const paint = () => paintSky(canvas);
-  new ResizeObserver(paint).observe(canvas);
-  new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['data-mode'] });
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let draw = () => {}, onScreen = true, last = 0;
+  const build = () => { draw = buildSky(canvas); draw(last / 1000); };
+  new ResizeObserver(build).observe(canvas);
+  new MutationObserver(build).observe(document.documentElement, { attributes: true, attributeFilter: ['data-mode'] });
+
+  // rAF, so it also stops with the tab
+  const tick = (now) => {
+    requestAnimationFrame(tick);
+    if (!onScreen || now - last < 1000 / FPS) return;
+    last = now;
+    draw(now / 1000);
+  };
+  if (!still) requestAnimationFrame(tick);
 
   // the nav reads as part of the sky until the hero scrolls out from under it
   const nav = document.querySelector('.nav');
   new IntersectionObserver(([e]) => nav.classList.toggle('over', e.isIntersecting), {
     rootMargin: `-${nav.offsetHeight}px 0px 0px 0px`,
   }).observe(canvas);
+  new IntersectionObserver(([e]) => (onScreen = e.isIntersecting)).observe(canvas);
 }
