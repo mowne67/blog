@@ -2,30 +2,6 @@ import { wireChrome } from './chrome.js';
 import { runMatrix } from './matrix.js';
 import { wireSky } from './sky.js';
 
-// Paths only; filenames carry the date, so the strip never loads a post body.
-const postPaths = Object.keys(import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' }));
-
-async function fillStats() {
-  const dates = postPaths
-    .map((p) => (p.match(/(\d{4}-\d{2}-\d{2})/) || [])[1])
-    .filter(Boolean)
-    .sort();
-  const latest = dates.at(-1);
-
-  const nPosts = document.getElementById('n-posts');
-  nPosts.textContent = postPaths.length;
-  nPosts.nextElementSibling.textContent = postPaths.length === 1 ? 'post published' : 'posts published';
-  document.querySelectorAll('[data-posts]').forEach((n) => (n.textContent = postPaths.length));
-  document.querySelectorAll('[data-latest]').forEach((n) => (n.textContent = latest || 'none yet'));
-
-  // unauthenticated and rate-limited; the cell just stays "…" when it fails
-  try {
-    const res = await fetch('https://api.github.com/users/mowne67');
-    if (!res.ok) throw new Error(res.status);
-    document.getElementById('n-repos').textContent = (await res.json()).public_repos;
-  } catch (err) { /* leave the placeholder */ }
-}
-
 function introRain() {
   const c = document.getElementById('rain-intro');
   if (!c) return;
@@ -67,5 +43,4 @@ document.addEventListener('DOMContentLoaded', () => {
   wireSky(document.querySelector('.hero > .sky'));
   wireCopy();
   introRain();
-  fillStats();
 });
