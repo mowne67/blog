@@ -15,7 +15,7 @@ that sounds better than what it says.
 | GitHub profile README | https://github.com/mowne67 (repo `mowne67/mowne67`)                         | Self-described current role and framing, in his own words       |
 | GitHub                | https://github.com/mowne67                                                  | Code, repo count, what is actually public                       |
 | Health Eligible README | `../Health-Eligible-Backend/README.md` (private, not in this repo)          | What was built at ITO Health: programs, architecture, features  |
-| This site             | `index.html` (work section), `about.html`                                   | The edited version. Downstream of everything above              |
+| This site             | `index.html` (work section and the long version)                                | The edited version. Downstream of everything above              |
 
 ## Precedence
 
