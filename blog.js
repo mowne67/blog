@@ -1,6 +1,7 @@
 import { marked } from 'marked';
 import fm from 'front-matter';
 import { wireChrome } from './chrome.js';
+import { wireSky } from './sky.js';
 
 const postModules = import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' });
 
@@ -41,6 +42,7 @@ async function loadPosts() {
 
 document.addEventListener('DOMContentLoaded', async () => {
   wireChrome();
+  wireSky(document.querySelector('.hero > .sky'));
 
   const blogView = document.getElementById('blog-view');
   const postView = document.getElementById('post-view');

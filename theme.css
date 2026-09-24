@@ -183,9 +183,11 @@ h1 em { font-style: normal; color: var(--faint); }
    hills and the dissolve that sky.js paints there. */
 .hero:has(> .sky) {
   position: relative; isolation: isolate;
-  margin-top: calc(-1 * var(--nav-h)); padding: calc(var(--nav-h) + 76px) var(--wrap) 230px;
+  margin-top: calc(-1 * var(--nav-h)); padding: calc(var(--nav-h) + 76px) var(--wrap) 270px;
   color: #fff; text-shadow: 0 1px 14px rgba(12, 40, 90, .28);
 }
+/* the text column; sky.js keeps clouds and stars out of it */
+.hero .hd { max-width: 640px; }
 .hero > .sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; image-rendering: pixelated; }
 .hero:has(> .sky) .eyebrow { color: rgba(255, 255, 255, .85); }
 .hero:has(> .sky) h1 { color: #fff; }
@@ -201,12 +203,6 @@ h1 em { font-style: normal; color: var(--faint); }
 .hero:has(> .sky) .cmd button:hover { background: rgba(18, 28, 44, .36); }
 .hero:has(> .sky) .meta { color: rgba(255, 255, 255, .8); }
 .hero:has(> .sky) .meta a { color: #fff; text-decoration-color: rgba(255, 255, 255, .5); }
-/* the diagram floats over the sky like a window on the desk; it stays light
-   at night because its label chips are dark */
-.hero.split .diagram {
-  width: 380px; padding: 14px; border-radius: 14px; background: #fbfbf8;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 2px 1px #fff inset, 0 24px 48px rgba(10, 30, 60, .22);
-}
 
 /* ── the numbers: a row of small cards, like cofounder's customer logos ── */
 .strip { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; padding: 40px var(--wrap) 8px; }
@@ -345,18 +341,10 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 /* a symbol rather than a wordmark, so this one carries its name in text */
 .m-indivia { --m: url('./assets/logos/indivia.png'); width: 29px; height: 26px; }
 
-/* A hero that carries a figure beside the hook. Below 900px it wraps and the
-   figure drops under the text. Width, not flex-basis, on the image: a replaced
-   element's automatic minimum size is its intrinsic width (1288px here), so
-   basis alone would never shrink it. */
-.hero.split { display: flex; align-items: center; gap: 56px; flex-wrap: wrap; }
-.hero.split .hd { flex: 1 1 380px; min-width: 0; }
-.hero.split .diagram { display: block; flex: 0 0 auto; height: auto; min-width: 0; }
 
 @media (max-width: 900px) {
   .nav a.lnk { display: none; }
   .nav .menu { display: inline-flex; }
-  .hero.split .diagram { width: min(380px, 100%); }
   .rows > .row { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 26px 24px; }
   .rows .ev { margin-top: 4px; }
   .stat { width: calc(50% - 6px); }
@@ -365,7 +353,7 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
   :root { --gut: 16px; --nav-h: 68px; }
   .nav .ico, .nav .btn, .nav .lock i { display: none; }
   .hero { padding-top: 52px; }
-  .hero:has(> .sky) { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 200px; }
+  .hero:has(> .sky) { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 250px; }
   .cmd code { font-size: 12px; padding: 0 12px; }
   .head, .fighd { padding-top: 80px; }
   .foot .out { margin-left: 0; }

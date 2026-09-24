@@ -11,7 +11,7 @@ trace back to one of the sources listed there.
 One design, modelled on [cofounder.co](https://cofounder.co): warm off-white
 ground, Hanken Grotesk with two-tone headings (`h1 em` and `.head .r` step back
 to `--faint`), IBM Plex Mono eyebrows, soft cards (`--card` shadow: white inner
-highlight plus a hairline edge), and a pixel-art sky over the profile hero.
+highlight plus a hairline edge), and a pixel-art sky over every page's hero.
 Everything lives in `theme.css`.
 
 The ground toggle in the nav only swaps the palette: `paper` (day, default)
@@ -33,10 +33,10 @@ the sky in `sky.js`) reads these, which is why it recolours with the toggle.
 
 ### The sky
 
-`sky.js` paints the profile hero's `<canvas class="sky">` at 1/6 resolution,
+`sky.js` paints the hero `<canvas class="sky">` on every page at 1/6 resolution,
 scaled up with `image-rendering: pixelated`. It is procedural and seeded, not
 an image, so it is the same scene on every paint. The hills are measured up
-from the bottom in rows, which is why `.hero:has(> .sky)` keeps ~230px of
+from the bottom in rows, which is why `.hero:has(> .sky)` keeps ~270px of
 bottom padding. Clouds and stars skip the `.hd` text block so white type
 always sits on clear sky. The hero is pulled up under the sticky nav, and
 `wireSky()` toggles `.nav.over` (transparent, glass pills) while the sky is
@@ -47,7 +47,7 @@ flash solid before JS runs.
 
 - `chrome.js` - ground toggle + mobile sheet. Shared by every page.
 - `main.js` - profile page: intro rain, sky, live stats, copy button.
-- `sky.js` - the pixel sky behind the profile hero, and the nav's `.over` state.
+- `sky.js` - the pixel sky behind each page's hero, and the nav's `.over` state.
 - `blog.js` - blog: loads `posts/*.md` via `import.meta.glob`, hash routing.
 - `matrix.js` - Tamil matrix rain. Intro overlay only, ~1.9s, then removed.
   Returns a `stop()`; call it or the rAF loop keeps painting into a detached canvas.
