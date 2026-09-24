@@ -1,5 +1,6 @@
 import { wireChrome } from './chrome.js';
 import { runMatrix } from './matrix.js';
+import { wireSky } from './sky.js';
 
 // Paths only; filenames carry the date, so the strip never loads a post body.
 const postPaths = Object.keys(import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' }));
@@ -63,6 +64,7 @@ function wireCopy() {
 
 document.addEventListener('DOMContentLoaded', () => {
   wireChrome();
+  wireSky(document.querySelector('.hero > .sky'));
   wireCopy();
   introRain();
   fillStats();
