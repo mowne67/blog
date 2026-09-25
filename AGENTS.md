@@ -14,12 +14,11 @@ to `--faint`), IBM Plex Mono eyebrows, soft cards (`--card` shadow: white inner
 highlight plus a hairline edge), and a pixel-art sky over every page's hero.
 Everything lives in `theme.css`.
 
-The ground toggle in the nav only swaps the palette: `paper` (day, default)
-or `ink` (night). `data-mode` on `<html>` is the only attribute. The default is
-set in three places and they must agree: `data-mode` on `<html>`, the fallback
-in the `<head>` script, and the fallback in `wireChrome()`, plus the
-`aria-pressed` on the two toggle buttons. `<meta name="theme-color">` should
-match paper's `--bg`.
+The ground toggle in the nav only swaps the palette: `paper` (day) or `ink`
+(night). A saved choice wins; otherwise the `<head>` script uses the system
+colour scheme. `data-mode` on `<html>` and the toggle buttons start in paper
+as the no-JS fallback; `wireChrome()` syncs the buttons to the chosen mode.
+`<meta name="theme-color">` follows the active `--bg`.
 
 ### Token contract
 
@@ -49,7 +48,7 @@ flash solid before JS runs.
 ## JS
 
 - `chrome.js` - ground toggle + mobile sheet. Shared by every page.
-- `main.js` - profile page: intro rain, sky, live stats, copy button.
+- `main.js` - profile page: intro rain, sky, copy button.
 - `sky.js` - the pixel sky behind each page's hero, and the nav's `.over` state.
 - `blog.js` - blog: loads `posts/*.md` via `import.meta.glob`, hash routing.
 - `matrix.js` - Tamil matrix rain. Intro overlay only, ~1.9s, then removed.
