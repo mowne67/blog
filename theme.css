@@ -206,7 +206,7 @@ h1 em { font-style: normal; color: var(--faint); }
 .hero:has(> .sky) .meta { color: rgba(255, 255, 255, .8); }
 .hero:has(> .sky) .meta a { color: #fff; text-decoration-color: rgba(255, 255, 255, .5); }
 
-/* section heads read as a two-tone heading: "Selected work / five places" */
+/* section heads read as a two-tone heading: "Selected work / four places" */
 .head { padding: 104px var(--wrap) 28px; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.15; letter-spacing: -.015em; }
 .head span { display: block; color: var(--head); }
 .head span::first-letter { text-transform: uppercase; }
@@ -221,7 +221,6 @@ h1 em { font-style: normal; color: var(--faint); }
 }
 a.row:hover { box-shadow: var(--card-up); }
 .rows .n { color: var(--dim); padding-top: 4px; }
-.rows .n.sm { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
 .rows h3 { margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -.01em; line-height: 1.25; color: var(--head); }
 .rows h3 .arw { display: inline-block; margin-left: 8px; font-weight: 400; color: var(--faint2); transition: transform .2s ease, color .2s ease; }
 a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
@@ -234,8 +233,8 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 .rows .ev-row b { margin-left: auto; font-size: 14px; font-weight: 500; text-align: right; color: var(--ink); }
 
 /* work cards sit side by side as columns: mark, copy, then facts pinned to the foot.
-   Five across is narrow, so each fact stacks its label over its value. */
-.work { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+   Four across is narrow, so each fact stacks its label over its value. */
+.work { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .work > .row { display: flex; flex-direction: column; align-items: stretch; gap: 18px; padding: 24px 20px; }
 .work .n { padding-top: 0; }
 .work h3 { font-size: 18px; }
