@@ -177,7 +177,7 @@ h1 em { font-style: normal; color: var(--faint); }
 }
 .cmd button:hover { background: var(--line2); }
 .meta { margin-top: 22px; color: var(--faint); font-size: 14px; }
-.meta a { color: var(--ink); text-decoration-color: var(--line2); text-underline-offset: 3px; }
+.meta a { color: var(--ink); text-decoration-color: var(--line2); text-underline-offset: 3px; white-space: nowrap; }
 .meta a:hover { text-decoration-color: currentColor; }
 
 /* The profile hero sits on the pixel sky. It is pulled up under the sticky
@@ -268,6 +268,12 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 }
 .fighd .r { margin-left: auto; }
 .plate .prose { max-width: 66ch; }
+
+/* ── booking ── */
+.booking { padding: 0 var(--wrap); scroll-margin-top: var(--nav-h); }
+.booking .head { padding-left: 0; padding-right: 0; }
+.booking-card { padding: 12px; border-radius: 14px; background: var(--panel); box-shadow: var(--card); }
+#my-cal-inline-chat { width: 100%; min-height: 700px; overflow: auto; }
 
 /* ── elsewhere: a row of light buttons ── */
 .marks { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 96px var(--wrap) 0; }
