@@ -69,7 +69,7 @@
             <button type="button" id="copy-btn" aria-label="Copy email address">copy</button>
           </div>
         </div>
-        <div class="meta">Bengaluru, India · open to interesting problems &nbsp;·&nbsp; <a href="./blog.html">read the blog →</a></div>
+        <div class="meta">Bengaluru, India · open to interesting problems &nbsp;·&nbsp; <a href="#chat">book a chat ↓</a> &nbsp;·&nbsp; <a href="./blog.html">read the blog →</a></div>
       </div>
     </header>
 
@@ -139,6 +139,13 @@
       </div>
     </section>
 
+    <section class="booking" id="chat" aria-label="Book a chat">
+      <div class="head"><span>Let's talk</span><span class="r">book a chat</span></div>
+      <div class="booking-card">
+        <div id="my-cal-inline-chat"></div>
+      </div>
+    </section>
+
     <div class="marks">
       <span class="lbl">elsewhere</span>
       <a class="mark" href="./blog.html"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3Zm3.5 2.146a.5.5 0 0 0-.708.708L5.939 8l-2.147 2.146a.5.5 0 0 0 .708.708l2.5-2.5a.5.5 0 0 0 0-.708l-2.5-2.5ZM8.5 10a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Z"/></svg> blog</a>
@@ -158,6 +165,34 @@
       </span>
     </footer>
   </div>
+  <script>
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "chat", { origin: "https://app.cal.com" });
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    const calTheme = (mode) => mode === 'ink' ? 'dark' : 'light';
+    Cal.ns.chat("inline", {
+      elementOrSelector: "#my-cal-inline-chat",
+      config: { layout: "month_view", useSlotsViewOnSmallScreen: true, theme: calTheme(document.documentElement.dataset.mode) },
+      calLink: "mowne/chat",
+    });
+    const setCalTheme = (mode) => {
+      const theme = calTheme(mode);
+      Cal.ns.chat("ui", { hideEventTypeDetails: false, layout: "month_view", theme });
+      const iframe = document.querySelector('#my-cal-inline-chat iframe.cal-embed');
+      if (iframe) {
+        const url = new URL(iframe.src);
+        if (url.searchParams.get('theme') !== theme) {
+          url.searchParams.set('theme', theme);
+          iframe.src = url;
+        }
+      }
+    };
+    setCalTheme(document.documentElement.dataset.mode);
+    document.querySelectorAll('.mode button').forEach((button) =>
+      button.addEventListener('click', () => setCalTheme(button.dataset.ground))
+    );
+  </script>
   <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="mowne" data-description="Support me on Buy me a coffee!" data-message="" data-color="#8FD352" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 </html>
