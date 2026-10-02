@@ -260,20 +260,31 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 #post-list .ev-row > span, #post-list .ev-row b { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--faint); }
 #post-list .ev-row b { margin-left: 0; }
 
-/* ── profile: the long version ── */
-.fig { padding: 0 var(--wrap); }
-.fighd {
-  display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; padding: 104px 0 28px;
-  font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint);
-}
-.fighd .r { margin-left: auto; }
-.plate .prose { max-width: 66ch; }
-
-/* ── booking ── */
-.booking { padding: 0 var(--wrap); scroll-margin-top: var(--nav-h); }
-.booking .head { padding-left: 0; padding-right: 0; }
+/* ── project capabilities + booking ── */
+.project-chat { padding: 0 var(--wrap); }
+.project-chat .head { margin: 0; padding-left: 0; padding-right: 0; font-weight: 400; }
+.fig .prose { max-width: 44ch; font-size: 18px; line-height: 1.75; }
+.fig .prose strong { display: block; margin-bottom: 20px; font-size: 24px; line-height: 1.45; font-weight: 400; color: var(--head); }
+.example { display: block; margin-top: 32px; padding: 24px; border-radius: 14px; background: var(--panel); box-shadow: var(--card); text-decoration: none; transition: box-shadow .2s ease; }
+.example:hover { box-shadow: var(--card-up); }
+.example .eyebrow { text-transform: uppercase; }
+.example h3 { display: flex; justify-content: space-between; gap: 16px; margin: 16px 0 10px; font-size: 22px; font-weight: 500; line-height: 1.25; color: var(--head); }
+.example h3 span { color: var(--faint); }
+.example p { margin: 0; color: var(--dim); font-size: 15px; line-height: 1.65; }
+.example .url { display: block; margin-top: 20px; font-family: var(--mono); font-size: 12px; }
+.booking { scroll-margin-top: var(--nav-h); }
 .booking-card { padding: 12px; border-radius: 14px; background: var(--panel); box-shadow: var(--card); }
 #my-cal-inline-chat { width: 100%; min-height: 700px; overflow: auto; }
+#my-cal-inline-chat iframe.cal-embed { zoom: .765; width: calc(100% / .765) !important; }
+
+@media (min-width: 1024px) {
+  .project-chat { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; }
+  .project-chat > section { min-width: 0; }
+  .booking { display: flex; flex-direction: column; }
+  .booking .head { flex: none; }
+  .booking-card { flex: 1; min-height: 0; contain: size; overflow: auto; }
+  #my-cal-inline-chat { min-height: 0; }
+}
 
 /* ── elsewhere: a row of light buttons ── */
 .marks { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 96px var(--wrap) 0; }
@@ -362,6 +373,6 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
   .hero { padding-top: 52px; }
   .hero:has(> .sky) { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 250px; }
   .cmd code { font-size: 12px; padding: 0 12px; }
-  .head, .fighd { padding-top: 80px; }
+  .head { padding-top: 80px; }
   .foot .out { margin-left: 0; }
 }
