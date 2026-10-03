@@ -14,6 +14,7 @@ that sounds better than what it says.
 | LinkedIn profile      | https://linkedin.com/in/mowne                                               | The live version of the above. Beats the local dump when they differ |
 | GitHub profile README | https://github.com/mowne67 (repo `mowne67/mowne67`)                         | Self-described current role and framing, in his own words       |
 | GitHub                | https://github.com/mowne67                                                  | Code, repo count, what is actually public                       |
+| Tools showcase snapshot | https://github.com/mowne67/tools/tree/f43a1655ca22f801c7c2134e0eb18648a5b194ff | Existing project descriptions imported into `tools/` |
 | Health Eligible README | `../Health-Eligible-Backend/README.md` (private, not in this repo)          | What was built at ITO Health: programs, architecture, features  |
 | Health Eligible public site | https://healtheligible.org                                            | Public production example, confirmed by Mowne in conversation (Oct 2026) |
 | This site             | `index.html` (work section and project capabilities)                           | The edited version. Downstream of everything above              |

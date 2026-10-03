@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Solid tile, glyph knocked out: a bare glyph would vanish against a
+       matching tab bar, and the tab icon can't follow the site's own
+       ink/paper toggle. One mark that holds on any chrome. -->
+  <rect width="32" height="32" rx="7" fill="#6b4fa3"/>
+  <text x="11" y="23" text-anchor="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="21" font-weight="700" fill="#fbf6e6">$</text>
+  <rect x="19" y="10" width="7" height="13" rx="1" fill="#fbf6e6"/>
+</svg>
