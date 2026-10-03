@@ -1,0 +1,9 @@
+{
+  "name": "website",
+  "compatibility_date": "2026-10-03",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "none"
+  },
+  "previews": {}
+}
