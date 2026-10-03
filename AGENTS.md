@@ -2,6 +2,11 @@
 
 Personal site: profile page + markdown blog. Vite, no framework, a handful of small JS modules.
 
+`tools/` is a separately deployed static showcase imported from `mowne67/tools`.
+It has its own styles and chrome and needs no build step. The design and Vite
+instructions below describe the profile and blog at the repository root. See
+[README.md](README.md) for the two Cloudflare Pages project settings.
+
 For facts about Mowne (roles, dates, what he built), see
 [SOURCES.md](SOURCES.md). Do not write a claim into the site that does not
 trace back to one of the sources listed there.
