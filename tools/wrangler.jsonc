@@ -1,6 +1,11 @@
 {
   "name": "tools",
   "compatibility_date": "2026-10-03",
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [
+    { "pattern": "tools.mowne.co.in", "custom_domain": true }
+  ],
   "assets": {
     "directory": "."
   },

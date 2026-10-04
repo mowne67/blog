@@ -41,18 +41,18 @@ neither site needs a Worker script.
 | Enable Preview builds | On | On |
 | Protect with Cloudflare Access | Off (public previews) | Off (public previews) |
 | Assets directory (in Wrangler config) | `./dist` | `.` |
-| Custom domain | `mowne.co.in` | `tools.mowne.co.in` |
+| Custom domains | `mowne.co.in`, `www.mowne.co.in` | `tools.mowne.co.in` |
 
 Check both generated `*.workers.dev` deployments before attaching the custom
 domains. See [Cloudflare's Workers monorepo guide](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/),
 [preview configuration](https://developers.cloudflare.com/workers/previews/configuration/),
 and [custom domain setup](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
 
-The existing GitHub Pages workflow and root `public/CNAME` remain in place
-until the hosting cutover. Workers ignores `CNAME` during asset upload using
-`public/.assetsignore`. Tools excludes its README and Wrangler configuration
-using its own `.assetsignore`. After both custom domains work on Cloudflare, remove
-that workflow and `public/CNAME` and disable the old GitHub Pages deployments.
+Both sites now use Cloudflare Workers. The Wrangler configurations declare their
+custom domains and keep Worker and preview URLs enabled across deployments.
+The old GitHub Pages workflow and `CNAME` have been removed. Keep GitHub Pages
+disabled in the old repositories and do not point DNS at GitHub Pages.
+Tools excludes its README and Wrangler configuration using its `.assetsignore`.
 
 ## Checks
 
