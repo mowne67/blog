@@ -191,5 +191,18 @@
     );
   </script>
   <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="mowne" data-description="Support me on Buy me a coffee!" data-message="" data-color="#8FD352" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+  <button class="upi-support" id="upi-support" type="button" aria-haspopup="dialog" aria-controls="upi-dialog" hidden>Support via UPI</button>
+  <dialog class="upi-dialog" id="upi-dialog" aria-labelledby="upi-title" aria-describedby="upi-description">
+    <button class="upi-close" id="upi-close" type="button" aria-label="Close UPI support" autofocus>×</button>
+    <span class="eyebrow">A little support</span>
+    <h2 id="upi-title">Support via UPI</h2>
+    <p id="upi-description">Scan with your UPI app and choose any amount.</p>
+    <img id="upi-qr" width="240" height="240" alt="Scan to support Mowne via UPI" hidden />
+    <p class="upi-recipient" id="upi-recipient"></p>
+    <div class="upi-id-row"><code id="upi-id"></code><button id="upi-copy" type="button">Copy ID</button></div>
+    <a class="upi-pay" id="upi-pay">Open UPI app</a>
+    <p class="upi-hint">On your phone, open a UPI app. You can also copy the ID and pay in your app.</p>
+    <p class="upi-status" id="upi-status" role="status" aria-live="polite"></p>
+  </dialog>
 </body>
 </html>
