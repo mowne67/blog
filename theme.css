@@ -297,6 +297,37 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 .marks .mark:hover { box-shadow: var(--card-up); }
 .marks .mark svg { flex: 0 0 auto; width: 15px; height: 15px; fill: var(--dim); }
 
+/* UPI support sits just above the Buy Me a Coffee launcher. */
+.upi-support {
+  position: fixed; right: 18px; bottom: 94px; z-index: 40;
+  border: 0; border-radius: 24px; padding: 12px 18px; cursor: pointer;
+  font: 500 14px var(--body); color: var(--ink); background: var(--panel); box-shadow: var(--card);
+}
+.upi-support:hover { box-shadow: var(--card-up); }
+.upi-support[hidden] { display: none; }
+.upi-dialog {
+  width: min(390px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto;
+  padding: 30px 24px 16px; border: 1px solid var(--line2); border-radius: 18px;
+  color: var(--ink); background: var(--panel); box-shadow: var(--card-up); text-align: center;
+}
+.upi-dialog::backdrop { background: rgba(0, 0, 0, .55); }
+.upi-close {
+  position: absolute; top: 8px; right: 8px; width: 36px; height: 36px;
+  border: 0; border-radius: 8px; background: transparent; color: var(--dim); font: 26px var(--body); cursor: pointer;
+}
+.upi-close:hover { background: var(--mass); }
+.upi-dialog h2 { margin: 12px 0 8px; font-size: 28px; font-weight: 500; color: var(--head); }
+.upi-dialog p { margin: 0 0 18px; color: var(--dim); font-size: 15px; }
+.upi-dialog img { display: block; width: 240px; max-width: 100%; height: auto; margin: 0 auto 16px; border-radius: 8px; }
+.upi-dialog img[hidden] { display: none; }
+.upi-dialog .upi-recipient { margin-bottom: 10px; color: var(--ink); }
+.upi-id-row { display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--mass); border-radius: 8px; }
+.upi-id-row code { flex: 1; min-width: 0; font: 12px var(--mono); overflow-wrap: anywhere; text-align: left; user-select: all; }
+.upi-id-row button { flex: none; border: 0; border-radius: 6px; padding: 8px 10px; font: 500 13px var(--body); color: var(--ink); background: var(--panel); cursor: pointer; box-shadow: var(--card); }
+.upi-pay { display: block; margin: 16px 0 12px; padding: 11px; border-radius: 8px; text-decoration: none; font-weight: 500; color: var(--spot-ink); background: var(--spot); }
+.upi-dialog .upi-hint { font-size: 13px; margin-bottom: 8px; }
+.upi-dialog .upi-status { min-height: 20px; font-size: 13px; margin-bottom: 0; }
+
 /* ── prose (profile + post bodies) ── */
 .prose { color: var(--dim); font-size: 16.5px; line-height: 1.7; }
 .prose > *:first-child { margin-top: 0; }

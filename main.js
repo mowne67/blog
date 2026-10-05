@@ -1,6 +1,7 @@
 import { wireChrome } from './chrome.js';
 import { runMatrix } from './matrix.js';
 import { wireSky } from './sky.js';
+import { wireUpi } from './upi.js';
 
 function introRain() {
   const c = document.getElementById('rain-intro');
@@ -42,5 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
   wireChrome();
   wireSky(document.querySelector('.hero > .sky'));
   wireCopy();
+  wireUpi();
   introRain();
 });
