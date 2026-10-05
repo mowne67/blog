@@ -18,6 +18,7 @@ that sounds better than what it says.
 | Health Eligible README | `../Health-Eligible-Backend/README.md` (private, not in this repo)          | What was built at ITO Health: programs, architecture, features  |
 | Health Eligible code and merged history | `itohealth/Health-Eligible-Backend`, `dev` at `09c9c8998720f06a25e67f96d4d7bb115592af7b` (private; inspected 4 Oct 2026) | Tool inventory in `posts/2026-10-04-tools-behind-health-eligible.md`; code use and experiments, not verification of live vendor configuration |
 | Health Eligible public site | https://healtheligible.org                                            | Public production example, confirmed by Mowne in conversation (Oct 2026) |
+| Indivia AI backend | `indivia-ai/indivia-backend`, `main` at `1756e6a27737a2b7c1fbc48f0b40985de22efcd4` (private; inspected 5 Oct 2026) | Personalized marketing email generation and product recommendations: `CODEBASE_OVERVIEW.md`, `app/services/email_service.py`, `app/api/recommendation_routes.py` |
 | This site             | `index.html` (work section and project capabilities)                           | The edited version. Downstream of everything above              |
 
 ## Precedence
@@ -50,9 +51,8 @@ rather than pick**. Publishing a wrong employment date is worse than waiting.
 ## Things no source covers
 
 The resume says nothing about what was built at **ITO Health** or **Indivia
-AI**. ITO Health is now covered by the Health Eligible README (see the table);
-the work card traces to that and nothing else. **Indivia AI is still thin** and
-needs Mowne's own words, not a plausible guess.
+AI**. Their work cards are now covered by the Health Eligible README and
+Indivia AI backend, respectively (see the table).
 
 See [AGENTS.md](AGENTS.md) for how the site itself is built.
 
