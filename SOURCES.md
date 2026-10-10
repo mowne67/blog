@@ -17,6 +17,7 @@ that sounds better than what it says.
 | Tools showcase snapshot | https://github.com/mowne67/tools/tree/f43a1655ca22f801c7c2134e0eb18648a5b194ff | Existing project descriptions imported into `tools/` |
 | rustpyxl README | https://github.com/mowne67/rustpyxl#readme (inspected 10 Oct 2026) | Streaming XLSX API, openpyxl compatibility bridge, and current limitations in `tools/` |
 | jsonpath-rx README | https://github.com/mowne67/jsonpath-rx#readme (inspected 10 Oct 2026) | Rust/Python JSONPath API, mutations, and compatibility boundaries in `tools/` |
+| pydocx-fast README | https://github.com/mowne67/pydocx-fast#readme (inspected 10 Oct 2026) | Drop-in python-docx performance fixes, the two hot paths fixed, and benchmark figures in `tools/` |
 | Health Eligible README | `../Health-Eligible-Backend/README.md` (private, not in this repo)          | What was built at ITO Health: programs, architecture, features  |
 | Health Eligible code and merged history | `itohealth/Health-Eligible-Backend`, `dev` at `09c9c8998720f06a25e67f96d4d7bb115592af7b` (private; inspected 4 Oct 2026) | Tool inventory in `posts/2026-10-04-tools-behind-health-eligible.md`; code use and experiments, not verification of live vendor configuration |
 | Health Eligible public site | https://healtheligible.org                                            | Public production example, confirmed by Mowne in conversation (Oct 2026) |
