@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ML-Agent, pyinterpret, and ERP-Assistant: open-source Python projects for applied AI and machine learning." />
+  <meta name="description" content="Open-source tools for applied AI, machine learning, streaming Excel files, and JSONPath queries in Python and Rust." />
   <meta name="theme-color" content="#e8e5dc" />
   <title>Tools · Mowne</title>
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://tools.mowne.co.in/" />
   <meta property="og:title" content="Tools · Mowne" />
-  <meta property="og:description" content="Open-source Python projects for applied AI and machine learning." />
+  <meta property="og:description" content="Open-source tools for applied AI, Excel processing, and JSONPath queries in Python and Rust." />
   <meta property="og:image" content="https://tools.mowne.co.in/og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -57,7 +57,7 @@
         <div class="section-copy">
           <p class="kicker">Selected work</p>
           <h2 id="tools-heading">Small tools, clear boundaries.</h2>
-          <p>Each project tackles one practical part of applied AI and keeps the critical decisions visible.</p>
+          <p>Focused projects for applied AI, model explanations, ERP workflows, streaming Excel files, and JSON queries.</p>
         </div>
         <div class="rows tools">
           <a class="row" href="https://github.com/mowne67/ML-Agent" target="_blank" rel="noopener">
@@ -71,6 +71,14 @@
           <a class="row" href="https://github.com/mowne67/ERP-Assistant" target="_blank" rel="noopener">
             <div class="n">03</div><div><h3>ERP-Assistant <span class="arw">↗</span></h3><p>Natural-language operations and interactive org charts for ERP workflows.</p></div>
             <div class="ev"><div class="ev-row"><span>interface</span><b>Streamlit + API</b></div><div class="ev-row"><span>workflow</span><b>LangGraph</b></div></div>
+          </a>
+          <a class="row" href="https://github.com/mowne67/rustpyxl" target="_blank" rel="noopener">
+            <div class="n">04</div><div><h3>rustpyxl <span class="arw">↗</span></h3><p>A Rust streaming XLSX engine with Python bindings and an opt-in openpyxl compatibility bridge.</p></div>
+            <div class="ev"><div class="ev-row"><span>runtime</span><b>Rust + Python</b></div><div class="ev-row"><span>format</span><b>XLSX</b></div></div>
+          </a>
+          <a class="row" href="https://github.com/mowne67/jsonpath-rx" target="_blank" rel="noopener">
+            <div class="n">05</div><div><h3>jsonpath-rx <span class="arw">↗</span></h3><p>JSONPath queries and mutations in Rust and Python, targeting the jsonpath-ng dialect.</p></div>
+            <div class="ev"><div class="ev-row"><span>runtime</span><b>Rust + Python</b></div><div class="ev-row"><span>interface</span><b>library + CLI</b></div></div>
           </a>
         </div>
       </section>
@@ -111,6 +119,37 @@ result = explainer.explain_instance(X.iloc[0])</code></pre>
 streamlit run app.py</code></pre>
           <p>A separate workflow turns unstructured reporting relationships into a typed employee hierarchy and renders an interactive organizational chart with NetworkX and Plotly.</p>
           <p><a href="https://github.com/mowne67/ERP-Assistant" target="_blank" rel="noopener">Read the source and setup guide <span>→</span></a></p>
+        </div></div>
+      </section>
+      <section class="fig" aria-labelledby="rustpyxl-heading">
+        <div class="fighd"><span>04 / rustpyxl</span><span class="r">streaming Excel · familiar Python API</span></div>
+        <div class="plate"><div class="prose">
+          <p class="kicker">Rust-powered XLSX</p><h2 id="rustpyxl-heading">Excel rows in bounded batches.</h2>
+          <p>rustpyxl reads worksheet XML through a Rust streaming core and writes rows to temporary files, avoiding a Python object for every cell. Its standalone Python API supports read-only iteration and write-only workbooks, with batches that can consume generators.</p>
+          <pre><code>from rustpyxl import Workbook
+
+with Workbook(write_only=True) as book:
+    sheet = book.create_sheet("Data")
+    sheet.append_rows(([i, f"item-{i}"] for i in range(100_000)))
+    book.save("data.xlsx")</code></pre>
+          <p>An opt-in compatibility bridge keeps existing openpyxl imports and objects, accelerating supported read-only value iteration while delegating other features to openpyxl. The standalone engine has a narrower API; styles, mutable editing, and full openpyxl parity are still outside its current scope.</p>
+          <p><a href="https://github.com/mowne67/rustpyxl" target="_blank" rel="noopener">Read the source and setup guide <span>→</span></a></p>
+        </div></div>
+      </section>
+
+      <section class="fig" aria-labelledby="jsonpath-rx-heading">
+        <div class="fighd"><span>05 / jsonpath-rx</span><span class="r">query JSON · inspect and update matches</span></div>
+        <div class="plate"><div class="prose">
+          <p class="kicker">JSONPath in Rust and Python</p><h2 id="jsonpath-rx-heading">Structured queries, addressable results.</h2>
+          <p>jsonpath-rx ports the jsonpath-ng query dialect to Rust, with an inspectable syntax tree, base and extended parsers, mutation APIs, a CLI, and Python bindings. Matches expose their values, full paths, and JSON Pointers.</p>
+          <pre><code>import jsonpath_rx as jp
+
+data = {"items": [{"price": 10}, {"price": 25}]}
+query = jp.parse("items[*].price")
+query.values(data)  # [10, 25]
+updated = query.update(data, 30)</code></pre>
+          <p>Queries on plain Python data return a modified copy when updating; a reusable Document supports in-place mutations and repeated queries without converting the whole document each time. This initial port targets JSON values, with documented differences from jsonpath-ng and no claim of complete Python API parity or RFC 9535 conformance.</p>
+          <p><a href="https://github.com/mowne67/jsonpath-rx" target="_blank" rel="noopener">Read the source and setup guide <span>→</span></a></p>
         </div></div>
       </section>
     </main>
