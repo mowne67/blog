@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Open-source tools for applied AI, machine learning, streaming Excel files, and JSONPath queries in Python and Rust." />
+  <meta name="description" content="Open-source tools for applied AI, machine learning, streaming Excel files, Word document processing, and JSONPath queries in Python and Rust." />
   <meta name="theme-color" content="#e8e5dc" />
   <title>Tools · Mowne</title>
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://tools.mowne.co.in/" />
   <meta property="og:title" content="Tools · Mowne" />
-  <meta property="og:description" content="Open-source tools for applied AI, Excel processing, and JSONPath queries in Python and Rust." />
+  <meta property="og:description" content="Open-source tools for applied AI, Excel processing, Word document processing, and JSONPath queries in Python and Rust." />
   <meta property="og:image" content="https://tools.mowne.co.in/og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -57,7 +57,7 @@
         <div class="section-copy">
           <p class="kicker">Selected work</p>
           <h2 id="tools-heading">Small tools, clear boundaries.</h2>
-          <p>Focused projects for applied AI, model explanations, ERP workflows, streaming Excel files, and JSON queries.</p>
+          <p>Focused projects for applied AI, model explanations, ERP workflows, streaming Excel files, Word document processing, and JSON queries.</p>
         </div>
         <div class="rows tools">
           <a class="row" href="https://github.com/mowne67/ML-Agent" target="_blank" rel="noopener">
@@ -79,6 +79,10 @@
           <a class="row" href="https://github.com/mowne67/jsonpath-rx" target="_blank" rel="noopener">
             <div class="n">05</div><div><h3>jsonpath-rx <span class="arw">↗</span></h3><p>JSONPath queries and mutations in Rust and Python, targeting the jsonpath-ng dialect.</p></div>
             <div class="ev"><div class="ev-row"><span>runtime</span><b>Rust + Python</b></div><div class="ev-row"><span>interface</span><b>library + CLI</b></div></div>
+          </a>
+          <a class="row" href="https://github.com/mowne67/pydocx-fast" target="_blank" rel="noopener">
+            <div class="n">06</div><div><h3>pydocx-fast <span class="arw">↗</span></h3><p>Drop-in performance fixes for python-docx: faster reads and writes, byte-identical output.</p></div>
+            <div class="ev"><div class="ev-row"><span>runtime</span><b>Python</b></div><div class="ev-row"><span>format</span><b>DOCX</b></div></div>
           </a>
         </div>
       </section>
@@ -150,6 +154,18 @@ query.values(data)  # [10, 25]
 updated = query.update(data, 30)</code></pre>
           <p>Queries on plain Python data return a modified copy when updating; a reusable Document supports in-place mutations and repeated queries without converting the whole document each time. This initial port targets JSON values, with documented differences from jsonpath-ng and no claim of complete Python API parity or RFC 9535 conformance.</p>
           <p><a href="https://github.com/mowne67/jsonpath-rx" target="_blank" rel="noopener">Read the source and setup guide <span>→</span></a></p>
+        </div></div>
+      </section>
+
+      <section class="fig" aria-labelledby="pydocx-fast-heading">
+        <div class="fighd"><span>06 / pydocx-fast</span><span class="r">drop-in patch · byte-identical</span></div>
+        <div class="plate"><div class="prose">
+          <p class="kicker">python-docx performance</p><h2 id="pydocx-fast-heading">The same document, three times faster.</h2>
+          <p>pydocx-fast fixes two hot paths inside python-docx without changing the API. Every XPath query recompiled its string, which was roughly 80% of read time; it is now compiled once and cached. Finding the trailing sectPr scanned every body child, which made add_paragraph O(n) and document building O(n²); it now walks back from the last child, with a fallback to the upstream scan for non-schema-ordered elements.</p>
+          <pre><code>import pydocx_fast  # once, before use
+from docx import Document</code></pre>
+          <p>On a 50,000-paragraph document, write and save drop from 17.6s to 5.5s, and loading plus reading all text from 1.35s to 0.41s. The test runs upstream and patched in separate processes and asserts identical output.</p>
+          <p><a href="https://github.com/mowne67/pydocx-fast" target="_blank" rel="noopener">Read the source and setup guide <span>→</span></a></p>
         </div></div>
       </section>
     </main>
