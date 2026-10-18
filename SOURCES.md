@@ -10,6 +10,7 @@ that sounds better than what it says.
 | Source                | Where                                                                      | Authoritative for                                              |
 | --------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------- |
 | Resume                | `Profile.pdf` (repo root)                                                   | The formal record: roles, dates, education                      |
+| Public name           | GitHub profile (https://github.com/mowne67) and the conversation, Oct 2026   | "Mownetharan" as the public form of the name, "Mowne" as the handle. Used in the page titles, the footer, the author byline and the `Person` JSON-LD |
 | LinkedIn export       | `profile_dump.txt`, `profile_dump_utf8.txt` (plain-text dump of the resume) | Same content, greppable. What each role actually involved       |
 | LinkedIn profile      | https://linkedin.com/in/mowne                                               | The live version of the above. Beats the local dump when they differ |
 | GitHub profile README | https://github.com/mowne67 (repo `mowne67/mowne67`)                         | Self-described current role and framing, in his own words       |

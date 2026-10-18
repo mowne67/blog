@@ -55,14 +55,42 @@ flash solid before JS runs.
 - `chrome.js` - ground toggle + mobile sheet. Shared by every page.
 - `main.js` - profile page: intro rain, sky, copy button.
 - `sky.js` - the pixel sky behind each page's hero, and the nav's `.over` state.
-- `blog.js` - blog: loads `posts/*.md` via `import.meta.glob`, hash routing.
+- `blog.js` - blog list page: chrome, sky, and the `#slug` links the old
+  hash-routed list left behind, mapped to real pages.
+- `post.js` - a post page: the nav and the sheet, nothing else. No sky.
 - `matrix.js` - Tamil matrix rain. Intro overlay only, ~1.9s, then removed.
   Returns a `stop()`; call it or the rAF loop keeps painting into a detached canvas.
 
+## Blog URLs and SEO
+
+Every post is a real page. `seo.js` - a Vite plugin, wired up in
+`vite.config.js` - reads `posts/*.md` at build time and emits
+`dist/blog/<slug>.html`, the list rows and their count inside `blog.html`, and
+`sitemap.xml`. Public slugs drop the date prefix, so
+`posts/2026-10-04-tools-behind-health-eligible.md` is served at
+`/blog/tools-behind-health-eligible`.
+
+Cloudflare's `html_handling: "auto-trailing-slash"` is what makes those URLs
+extensionless and slashless, so canonicals, the sitemap and internal links all
+use `/`, `/blog` and `/blog/<slug>` - never the `.html` forms, which redirect.
+Each post page carries the usual head plus `BlogPosting` JSON-LD, and the
+profile carries the `Person`/`WebSite` graph that ties name, handle, employer
+and profiles together. What goes into that JSON-LD is copy: it traces to
+[SOURCES.md](SOURCES.md) like anything else on the page.
+
+Read posts at build time, not in the browser: the markdown is no longer shipped
+as a JS chunk, and `marked` and `front-matter` never reach the client.
+
 Gotchas that have already bitten:
 
-- `import.meta.glob` on `.md` **needs `query: '?raw'`**, or rollup parses the
-  markdown as JavaScript and the build fails.
+- Post pages reuse **blog.html's own nav, sheet and footer**, read out of the
+  file by `seo.js`. Keep those three blocks shaped as they are (`nav
+  class="nav over"`, `div class="sheet"`, `footer class="foot"`) and keep page
+  links rooted (`/`, `/blog`), or the build stops with a message.
+- `generateBundle` never runs for the dev server, so `seo.js` also serves post
+  pages from `configureServer`. `/blog` has to be rewritten there as well: Vite
+  resolves it to `blog.js`, and the page's stylesheet needs `?direct` or the
+  dev server hands it back as a JS module.
 - Sort posts on the `Date`, not the formatted string.
 
 ## Assets
@@ -76,3 +104,8 @@ expected.
 
 `npm run build` must pass. There are no tests; verify visually in **both**
 grounds, and at phone width (the sky has to keep clouds off the text).
+
+`npm run dev` serves the generated post pages too, so check `/blog`, a post URL
+and an old `#slug` link there. Cloudflare, not Vite, is what decides those URLs
+in production: run the same three checks on a workers.dev deployment before
+trusting the custom domain.
