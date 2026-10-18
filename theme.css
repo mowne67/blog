@@ -207,7 +207,7 @@ h1 em { font-style: normal; color: var(--faint); }
 .hero:has(> .sky) .meta a { color: #fff; text-decoration-color: rgba(255, 255, 255, .5); }
 
 /* section heads read as a two-tone heading: "Selected work / four places" */
-.head { padding: 104px var(--wrap) 28px; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.15; letter-spacing: -.015em; }
+.head { margin: 0; padding: 104px var(--wrap) 28px; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.15; letter-spacing: -.015em; }
 .head span { display: block; color: var(--head); }
 .head span::first-letter { text-transform: uppercase; }
 .head .r { color: var(--faint); }
@@ -352,12 +352,15 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 .article { padding: 64px var(--wrap) 0; }
 .article .back {
   display: inline-flex; align-items: center; height: 26px; padding: 0 9px; border: 0; border-radius: 6px; cursor: pointer;
-  font-family: var(--body); font-size: 13px; color: var(--dim); background: var(--panel); box-shadow: var(--card);
+  font-family: var(--body); font-size: 13px; color: var(--dim); text-decoration: none; background: var(--panel); box-shadow: var(--card);
 }
 .article .back:hover { color: var(--ink); }
 .article h1.title { font-size: clamp(30px, 3.6vw, 40px); margin: 22px 0 0; max-width: 24ch; }
 .article .byline { margin: 14px 0 36px; font-family: var(--mono); font-size: 12px; color: var(--faint); }
 .article .prose { max-width: 66ch; }
+/* who wrote it and how to reach them, once the reader has finished */
+.article .end { max-width: 66ch; margin: 48px 0 0; padding-top: 22px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; color: var(--faint); }
+.article .end a { color: var(--dim); }
 
 /* ── footer: sits on a faint grid, like cofounder's ── */
 .foot {
