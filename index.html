@@ -23,6 +23,7 @@
   <meta name="twitter:description" content="Mownetharan (Mowne) · applied AI engineer in Bengaluru. I build the systems that make models useful: agents, retrieval, voice, and the evaluation that keeps them honest." />
   <meta name="twitter:image" content="https://mowne.co.in/og.png" />
   <link rel="canonical" href="https://mowne.co.in/" />
+  <link rel="alternate" type="application/atom+xml" title="Mownetharan · blog" href="/feed.xml" />
   <!-- who this is, in the form a search engine can hold on to: name, handle,
        employer, school and the profiles that belong to the same person -->
   <script type="application/ld+json">
@@ -86,7 +87,7 @@
       <a class="ico" href="https://github.com/mowne67" target="_blank" rel="noopener" aria-label="GitHub">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.64 7.64 0 0 1 8 3.87c.68 0 1.36.09 2 .26 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" /></svg>
       </a>
-      <div class="mode">
+      <div class="mode" role="group" aria-label="Colour scheme">
         <button type="button" data-ground="ink" aria-pressed="false">ink</button>
         <button type="button" data-ground="paper" aria-pressed="true">paper</button>
       </div>
@@ -107,6 +108,7 @@
     <header class="hero">
       <canvas class="sky" aria-hidden="true"></canvas>
       <div class="hd">
+        <div class="eyebrow"><s aria-hidden="true"></s>Mownetharan</div>
         <h1>I build the <em>systems</em> that make models useful.</h1>
         <p class="lede">Applied AI engineer, IITM alum. I work the whole line, from data in to model trained to service shipped, and <b>write about what actually held up in production.</b></p>
         <div class="go">
@@ -136,12 +138,14 @@
       <section class="booking" id="chat" aria-label="Book a chat">
         <h2 class="head"><span>Let's talk</span><span class="r">book a chat</span></h2>
         <div class="booking-card" tabindex="0" role="region" aria-label="Booking calendar">
-          <div id="my-cal-inline-chat"></div>
+          <div id="my-cal-inline-chat">
+            <p class="cal-fallback-wrap"><a class="cal-fallback" href="https://cal.com/mowne/chat" target="_blank" rel="noopener">Book a chat on cal.com ↗</a></p>
+          </div>
         </div>
       </section>
     </div>
 
-    <div class="head"><span>Work experience</span></div>
+    <h2 class="head"><span>Work experience</span></h2>
     <div class="rows work">
       <a class="row" href="https://itohealth.org" target="_blank" rel="noopener">
         <div class="n"><i class="m-ito"></i></div>
@@ -208,34 +212,6 @@
       </span>
     </footer>
   </div>
-  <script>
-    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-    Cal("init", "chat", { origin: "https://app.cal.com" });
-    Cal.config = Cal.config || {};
-    Cal.config.forwardQueryParams = true;
-    const calTheme = (mode) => mode === 'ink' ? 'dark' : 'light';
-    Cal.ns.chat("inline", {
-      elementOrSelector: "#my-cal-inline-chat",
-      config: { layout: "month_view", useSlotsViewOnSmallScreen: true, theme: calTheme(document.documentElement.dataset.mode) },
-      calLink: "mowne/chat",
-    });
-    const setCalTheme = (mode) => {
-      const theme = calTheme(mode);
-      Cal.ns.chat("ui", { hideEventTypeDetails: false, layout: "month_view", theme });
-      const iframe = document.querySelector('#my-cal-inline-chat iframe.cal-embed');
-      if (iframe) {
-        const url = new URL(iframe.src);
-        if (url.searchParams.get('theme') !== theme) {
-          url.searchParams.set('theme', theme);
-          iframe.src = url;
-        }
-      }
-    };
-    setCalTheme(document.documentElement.dataset.mode);
-    document.querySelectorAll('.mode button').forEach((button) =>
-      button.addEventListener('click', () => setCalTheme(button.dataset.ground))
-    );
-  </script>
   <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="mowne" data-description="Support me on Buy me a coffee!" data-message="" data-color="#8FD352" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
   <button class="upi-support" id="upi-support" type="button" aria-haspopup="dialog" aria-controls="upi-dialog" hidden>Support via UPI</button>
   <dialog class="upi-dialog" id="upi-dialog" aria-labelledby="upi-title" aria-describedby="upi-description">

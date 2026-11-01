@@ -10,9 +10,11 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import fm from 'front-matter';
-import { marked } from 'marked';
+import { Marked } from 'marked';
 
 const SITE = 'https://mowne.co.in';
+const OG_ALT = 'Mowne — applied AI engineer';
+const FEED_TITLE = 'Mownetharan · blog';
 const NAME = 'Mownetharan';
 const HANDLE = 'Mowne';
 const EMAIL = 'mownetharan@gmail.com';
@@ -51,6 +53,45 @@ function displayDate(day) {
   return `${String(d).padStart(2, '0')} ${MONTHS[m - 1]} ${y}`;
 }
 
+// A front-matter date arrives as a string if quoted, or as a Date if not (YAML
+// reads `2026-10-04` as midnight UTC). Returns a string, or null if unusable.
+function stamp(v) {
+  if (v instanceof Date) return Number.isNaN(v.getTime()) ? null : v.toISOString().slice(0, 10);
+  if (v == null || v === '') return null;
+  return String(v);
+}
+
+// headings in post bodies: stable ids plus a visible # link (styled in theme.css)
+function slugify(text) {
+  return (
+    text
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'section'
+  );
+}
+const plainText = (tokens) => tokens.map((t) => (t.tokens ? plainText(t.tokens) : t.text ?? t.raw ?? '')).join('');
+
+// one parser per post, so ids are de-duplicated within a post only
+function renderMarkdown(body) {
+  const used = new Set();
+  const md = new Marked({
+    renderer: {
+      heading({ tokens, depth }) {
+        if (depth !== 2 && depth !== 3) return false;
+        const base = slugify(plainText(tokens));
+        let id = base;
+        for (let n = 2; used.has(id); n++) id = `${base}-${n}`;
+        used.add(id);
+        return `<h${depth} id="${id}">${this.parser.parseInline(tokens)} <a class="anchor" href="#${id}" aria-hidden="true" tabindex="-1">#</a></h${depth}>\n`;
+      },
+    },
+  });
+  return md.parse(body);
+}
+
 function readPosts(dir) {
   const seen = new Map();
   const posts = readdirSync(dir)
@@ -66,12 +107,12 @@ function readPosts(dir) {
       if (seen.has(slug)) throw new Error(`seo.js: "${base}.md" collides with "${seen.get(slug)}.md" on /blog/${slug}`);
       seen.set(slug, base);
 
-      const date = a.date ? String(a.date) : null;
+      const date = stamp(a.date);
       const day = date?.slice(0, 10) ?? null;
       if (!day || !/^\d{4}-\d{2}-\d{2}$/.test(day) || Number.isNaN(Date.parse(date))) {
         throw new Error(`seo.js: "${base}.md" needs a date like 2026-10-04 or an ISO timestamp`);
       }
-      const updated = a.updated ? String(a.updated) : null;
+      const updated = stamp(a.updated);
       if (updated && Number.isNaN(Date.parse(updated))) throw new Error(`seo.js: "${base}.md" has an unreadable updated date`);
 
       const opening = openingParagraph(body);
@@ -88,10 +129,11 @@ function readPosts(dir) {
         tags,
         description: String(a.description || truncate(opening, 155, '…')),
         excerpt: truncate(opening, 190, '…'),
-        html: marked.parse(body),
+        html: renderMarkdown(body),
       };
     });
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  // newest first by instant; the slug breaks ties so the order is stable
+  return posts.sort((a, b) => Date.parse(b.date) - Date.parse(a.date) || (a.slug < b.slug ? -1 : 1));
 }
 
 // ── the list page's rows, same markup blog.js used to build at runtime ──
@@ -124,12 +166,14 @@ function chromeOf(source) {
   if (!nav || !sheet || !foot) throw new Error('seo.js: nav, sheet or footer missing from blog.html');
   // .over is for sitting on the hero sky; a post has no sky and no sky.js to
   // drop the class, so the nav stays solid
-  const solid = nav[0].replace('class="nav over"', 'class="nav"');
+  // a post sits inside the Blog section, it is not the /blog page itself
+  const section = (html) => html.replaceAll('aria-current="page"', 'aria-current="true"');
+  const solid = section(nav[0].replace('class="nav over"', 'class="nav"'));
   if (solid === nav[0]) throw new Error('seo.js: blog.html\'s nav is not the .over variant');
   // these pages live one directory down, so the shell's page links must be rooted
   const shell = `${nav[0]}${sheet[0]}${foot[0]}`;
   if (/href="\.\//.test(shell)) throw new Error('seo.js: blog.html uses relative page links; a post page needs them rooted (/ and /blog)');
-  return { nav: solid, sheet: sheet[0], foot: foot[0] };
+  return { nav: solid, sheet: section(sheet[0]), foot: foot[0] };
 }
 
 function postPage(post, { css, js, chrome }) {
@@ -146,7 +190,9 @@ function postPage(post, { css, js, chrome }) {
     description: post.description,
     datePublished: post.date,
     ...(post.updated ? { dateModified: post.updated } : {}),
+    image: `${SITE}/og.png`,
     author: { '@type': 'Person', '@id': `${SITE}/#person`, name: NAME, url: `${SITE}/` },
+    publisher: { '@id': `${SITE}/#person` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     ...(post.tags.length ? { keywords: post.tags.join(', ') } : {}),
     inLanguage: 'en',
@@ -170,7 +216,7 @@ function postPage(post, { css, js, chrome }) {
   <meta property="og:image" content="${SITE}/og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="${esc(post.title)}" />
+  <meta property="og:image:alt" content="${OG_ALT}" />
   <meta property="article:published_time" content="${esc(post.date)}" />
   ${post.tags.map((t) => `<meta property="article:tag" content="${esc(t)}" />`).join('\n  ')}
   <meta name="twitter:card" content="summary_large_image" />
@@ -178,6 +224,7 @@ function postPage(post, { css, js, chrome }) {
   <meta name="twitter:description" content="${esc(post.description)}" />
   <meta name="twitter:image" content="${SITE}/og.png" />
   <link rel="canonical" href="${url}" />
+  <link rel="alternate" type="application/atom+xml" title="${FEED_TITLE}" href="/feed.xml" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -225,6 +272,47 @@ ${urls.join('\n')}
 `;
 }
 
+// ── Atom feed ──
+const xml = (s) => esc(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+
+// RFC 3339: date-only -> midnight UTC; zoneless timestamps are read as UTC
+function rfc3339(v) {
+  if (/^\d{4}-\d\d-\d\d$/.test(v)) return `${v}T00:00:00Z`;
+  if (/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(Z|[+-]\d\d:\d\d)$/.test(v)) return v;
+  const zoneless = /^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(:\d\d(\.\d+)?)?$/.test(v);
+  return new Date(Date.parse(zoneless ? `${v.replace(' ', 'T')}Z` : v)).toISOString().replace('.000Z', 'Z');
+}
+
+function feed(posts) {
+  const mod = (p) => rfc3339(p.updated ?? p.date);
+  const newest = posts.map(mod).sort((a, b) => Date.parse(b) - Date.parse(a))[0] ?? '1970-01-01T00:00:00Z';
+  const entries = posts.map((p) => {
+    const url = `${SITE}/blog/${p.slug}`;
+    // the # anchors are for the page, not for a feed reader
+    const content = p.html.replace(/ <a class="anchor"[^>]*>#<\/a>/g, '');
+    return `  <entry>
+    <title>${xml(p.title)}</title>
+    <id>${url}</id>
+    <link rel="alternate" type="text/html" href="${url}" />
+    <published>${rfc3339(p.date)}</published>
+    <updated>${mod(p)}</updated>
+    <summary>${xml(p.description)}</summary>
+    <content type="html">${xml(content)}</content>
+${p.tags.map((t) => `    <category term="${xml(t)}" />`).join('\n')}${p.tags.length ? '\n' : ''}  </entry>`;
+  });
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>${SITE}/blog</id>
+  <title>${xml(FEED_TITLE)}</title>
+  <author><name>${xml(NAME)}</name></author>
+  <link rel="self" type="application/atom+xml" href="${SITE}/feed.xml" />
+  <link rel="alternate" type="text/html" href="${SITE}/blog" />
+  <updated>${newest}</updated>
+${entries.join('\n')}
+</feed>
+`;
+}
+
 export default function seo({ root = process.cwd() } = {}) {
   const postsDir = join(root, 'posts');
   const blogPath = join(root, 'blog.html');
@@ -260,6 +348,15 @@ export default function seo({ root = process.cwd() } = {}) {
       server.middlewares.use(async (req, res, next) => {
         const [path, query] = (req.url || '').split('?');
         const clean = decodeURIComponent(path).replace(/\/+$/, '') || '/';
+        if (clean === '/feed.xml') {
+          try {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/atom+xml; charset=utf-8');
+            return res.end(feed(posts()));
+          } catch (err) {
+            return next(err);
+          }
+        }
         // /blog is the page; without this Vite resolves it to blog.js
         if (clean === '/blog') {
           req.url = `/blog.html${query ? `?${query}` : ''}`;
@@ -304,6 +401,7 @@ export default function seo({ root = process.cwd() } = {}) {
           source: postPage(post, { css, js: `/${chunk.fileName}`, chrome: chrome() }),
         });
       }
+      this.emitFile({ type: 'asset', fileName: 'feed.xml', source: feed(posts()) });
       this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap(posts()) });
     },
   };

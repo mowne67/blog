@@ -22,8 +22,20 @@ export function wireChrome() {
 
   const menu = document.getElementById('nav-menu');
   const sheet = document.getElementById('nav-sheet');
-  menu?.addEventListener('click', () => {
-    const open = sheet.classList.toggle('open');
+  if (!menu || !sheet) return;
+  const setOpen = (open) => {
+    sheet.classList.toggle('open', open);
     menu.setAttribute('aria-expanded', String(open));
+  };
+  menu.addEventListener('click', () => setOpen(!sheet.classList.contains('open')));
+  // closes like a menu: Esc (focus back on the button), a tap outside, or a link
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || !sheet.classList.contains('open')) return;
+    setOpen(false);
+    menu.focus();
   });
+  document.addEventListener('click', (e) => {
+    if (sheet.classList.contains('open') && !sheet.contains(e.target) && !menu.contains(e.target)) setOpen(false);
+  });
+  sheet.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
 }
