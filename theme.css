@@ -2,19 +2,19 @@
    One design, modelled on cofounder.co: warm off-white ground, a
    light grotesk with two-tone headings, mono eyebrows, soft cards
    with a white inner highlight, and a pixel-art sky over the
-   profile hero (sky.js). The ground toggle only swaps the palette:
+   hero of every page with one (sky.js). The toggle swaps the palette:
    paper is day, ink is night. See AGENTS.md.
    ───────────────────────────────────────────────────────────── */
 
 :root {
   --bg: #f5f5f2; --panel: #fbfbf8; --mass: #ecebe6;
-  --ink: #171717; --head: #2f2c2c; --dim: #5a5857; --faint: #7a7874; --faint2: #a3a19d;
+  --ink: #171717; --head: #2f2c2c; --dim: #5a5857; --faint: #6b6965; --faint2: #a3a19d;
   --line: #e6e5e1; --line2: #d7d6d1;
   --spot: #2b6de0; --spot-ink: #fff;
   --grid: #ebeae6;
   --hi: #fff; --edge: rgba(0, 0, 0, .08);
   /* the pixel sky (sky.js reads these); --star black means no stars */
-  --sky-top: #2c6bd3; --sky-bot: #6ab2ee; --cloud: #eef6fc; --cloud-shade: #bcd5ee;
+  --sky-top: #2c6bd3; --sky-bot: #4f97e0; --cloud: #eef6fc; --cloud-shade: #bcd5ee;
   --hill-far: #4d8f6c; --hill: #62ad41; --hill-dark: #438a33; --star: #000;
   --trunk: #7a5434; --leaf: #8fd352; --flower: #f6c945;
 
@@ -186,15 +186,17 @@ h1 em { font-style: normal; color: var(--faint); }
 .hero:has(> .sky) {
   position: relative; isolation: isolate;
   margin-top: calc(-1 * var(--nav-h)); padding: calc(var(--nav-h) + 76px) var(--wrap) 270px;
-  color: #fff; text-shadow: 0 1px 14px rgba(12, 40, 90, .28);
+  color: #fff; text-shadow: 0 1px 2px rgba(12, 40, 90, .35), 0 1px 14px rgba(12, 40, 90, .32);
 }
 /* the text column; sky.js keeps clouds and stars out of it */
 .hero .hd { max-width: 640px; }
 .hero > .sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; image-rendering: pixelated; }
 .hero:has(> .sky) .eyebrow { color: rgba(255, 255, 255, .85); }
 .hero:has(> .sky) h1 { color: #fff; }
-.hero:has(> .sky) h1 em { color: rgba(255, 255, 255, .7); }
-.hero:has(> .sky) .lede { color: rgba(255, 255, 255, .88); }
+.hero:has(> .sky) h1 em { color: rgba(255, 255, 255, .8); }
+.hero:has(> .sky) .lede { color: #fff; }
+.hero:has(> .sky) .lede a { color: #fff; text-decoration-color: rgba(255, 255, 255, .5); text-underline-offset: 3px; }
+.hero:has(> .sky) .lede a:hover { text-decoration-color: currentColor; }
 .hero:has(> .sky) .lede b { color: #fff; }
 .hero:has(> .sky) .cmd code { background: #fbfbf8; color: #171717; box-shadow: 0 1px 2px rgba(0, 0, 0, .12), 0 4px 10px rgba(0, 0, 0, .1); }
 .hero:has(> .sky) .cmd code b { color: #a3a19d; }
@@ -347,6 +349,11 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 .prose hr { border: 0; border-top: 1px solid var(--line); margin: 2.4em 0; }
 .prose table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
 .prose th, .prose td { border-bottom: 1px solid var(--line); padding: 9px 12px 9px 0; text-align: left; }
+/* heading permalinks (seo.js adds them to post h2/h3): quiet until hovered */
+.prose .anchor { margin-left: .2em; color: var(--faint2); text-decoration: none; font-weight: 400; opacity: 0; transition: opacity .15s ease; }
+.prose :is(h2, h3):hover .anchor, .prose .anchor:focus-visible { opacity: 1; }
+.prose :is(h2, h3)[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
+@media (hover: none) { .prose .anchor { opacity: 1; } }
 
 /* ── a single post ── */
 .article { padding: 64px var(--wrap) 0; }
@@ -410,3 +417,10 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
   .head { padding-top: 80px; }
   .foot .out { margin-left: 0; }
 }
+
+/* ── cal fallback ── */
+.cal-fallback-wrap { margin: 0; padding: 28px 16px; text-align: center; font-size: 14px; color: var(--dim); }
+.cal-fallback-wrap[hidden] { display: none; }
+.cal-fallback { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line2); padding-bottom: 1px; }
+.cal-fallback:hover { border-bottom-color: var(--ink); }
+#my-cal-inline-chat:has(iframe.cal-embed) .cal-fallback-wrap { position: absolute; visibility: hidden; pointer-events: none; }

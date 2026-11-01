@@ -1,3 +1,4 @@
+import { wireCal } from './cal.js';
 import { wireChrome } from './chrome.js';
 import { runMatrix } from './matrix.js';
 import { wireSky } from './sky.js';
@@ -25,10 +26,13 @@ function introRain() {
 }
 
 function wireCopy() {
+  // the address is written once, in the nav's mailto link
+  const email = document.querySelector('a.btn[href^="mailto:"]')?.getAttribute('href').slice(7);
   const btn = document.getElementById('copy-btn');
+  if (!email) return;
   btn?.addEventListener('click', async () => {
     try {
-      await navigator.clipboard.writeText('mownetharan@gmail.com');
+      await navigator.clipboard.writeText(email);
       btn.textContent = 'copied';
     } catch (err) {
       // no clipboard permission (or a non-secure origin): select it so ⌘C works
@@ -44,5 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
   wireSky(document.querySelector('.hero > .sky'));
   wireCopy();
   wireUpi();
+  wireCal();
   introRain();
 });

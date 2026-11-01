@@ -53,10 +53,12 @@ flash solid before JS runs.
 ## JS
 
 - `chrome.js` - ground toggle + mobile sheet. Shared by every page.
-- `main.js` - profile page: intro rain, sky, copy button.
+- `main.js` - profile page: intro rain, sky, copy button (reads the address from the nav's mailto link), and `wireCal()`.
+- `cal.js` - lazy Cal.com booking embed in `#chat`. Loads embed.js only when the section is within ~800px of the viewport, or on `#chat` / `a[href="#chat"]`. Syncs the Cal theme to `data-mode`; `.cal-fallback` link stays until the iframe loads.
 - `sky.js` - the pixel sky behind each page's hero, and the nav's `.over` state.
 - `blog.js` - blog list page: chrome, sky, and the `#slug` links the old
   hash-routed list left behind, mapped to real pages.
+- `notfound.js` - the 404 page (`404.html`): chrome and sky, like `blog.js`.
 - `post.js` - a post page: the nav and the sheet, nothing else. No sky.
 - `matrix.js` - Tamil matrix rain. Intro overlay only, ~1.9s, then removed.
   Returns a `stop()`; call it or the rAF loop keeps painting into a detached canvas.
@@ -80,6 +82,17 @@ and profiles together. What goes into that JSON-LD is copy: it traces to
 
 Read posts at build time, not in the browser: the markdown is no longer shipped
 as a JS chunk, and `marked` and `front-matter` never reach the client.
+
+`404.html` is served by Cloudflare (`not_found_handling: "404-page"`) at any
+unknown URL, however deeply nested, so relative asset paths would break. A small
+plugin in `vite.config.js` rewrites its `./` asset URLs to rooted `/` after the
+build; the other pages keep `base: './'`. It is `noindex` with no canonical.
+
+`seo.js` also emits an Atom feed at `/feed.xml` (served by the dev server too),
+linked from blog.html and every post page. Front-matter `date` and `updated`
+may be quoted strings or unquoted YAML dates (`date: 2026-10-04`); the latter
+reach the build as a `Date` and are read as that day in UTC. `h2` and `h3` in a
+post get slug ids and a `.anchor` link.
 
 Gotchas that have already bitten:
 
