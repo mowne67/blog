@@ -29,7 +29,7 @@ export function runMatrix(canvas, { bg = '--panel', prefill = false } = {}) {
   ro.observe(canvas);
   resize();
 
-  // ponytail: assumes --panel is a 6-digit hex so the trail can append alpha.
+  // assumes the bg token (--bg by default here) is a 6-digit hex so the trail can append alpha.
   // If the palette ever moves to oklch(), sample the computed colour instead.
   const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
