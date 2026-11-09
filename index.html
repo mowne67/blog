@@ -159,20 +159,39 @@
           </div>
           <div class="featured-copy"><div class="tool-category">Applied AI / Python</div><h3>ML-Agent <span aria-hidden="true">↗</span></h3><p>AutoML with a boundary around the agent. An LLM proposes experiments; ordinary code validates, runs and selects them.</p><span class="tool-footer">Explore the code <span aria-hidden="true">↗</span></span></div>
         </a>
-        <a class="featured-tool" href="https://github.com/mowne67/rustpyxl" target="_blank" rel="noopener">
-          <div class="tool-figure spreadsheet-figure" aria-hidden="true">
-            <div class="sheet-preview"><div class="sheet-columns"><span></span><span>A</span><span>B</span><span>C</span><span>D</span></div><div class="sheet-data"><span>1</span><i></i><i></i><i></i><i></i><span>2</span><i></i><i></i><i></i><i></i><span>3</span><i></i><i></i><i></i><i></i><span>4</span><i></i><i></i><i></i><i></i></div><div class="sheet-batch">One batch at a time</div></div>
-            <span class="sheet-extension">.xlsx</span>
+        <article class="featured-tool">
+          <figure class="tool-figure benchmark-figure" aria-labelledby="xlsx-benchmark-title">
+            <figcaption id="xlsx-benchmark-title">Reading a million cells<span>Mixed values · standalone streaming API</span></figcaption>
+            <div class="benchmark-series">
+              <h4>Elapsed time <span>lower is better</span></h4>
+              <div class="benchmark-row"><span>openpyxl</span><b>4.921 s</b><i style="--bar:100%" aria-hidden="true"></i></div>
+              <div class="benchmark-row native"><span>rustpyxl</span><b>0.489 s</b><i style="--bar:9.94%" aria-hidden="true"></i></div>
+            </div>
+            <div class="benchmark-series">
+              <h4>Peak process memory</h4>
+              <div class="benchmark-row"><span>openpyxl</span><b>47.1 MiB</b><i style="--bar:100%" aria-hidden="true"></i></div>
+              <div class="benchmark-row native"><span>rustpyxl</span><b>32.8 MiB</b><i style="--bar:69.53%" aria-hidden="true"></i></div>
+            </div>
+          </figure>
+          <div class="featured-copy"><div class="tool-category">Document processing / Rust + Python</div><h3><a href="https://github.com/mowne67/rustpyxl" target="_blank" rel="noopener">rustpyxl <span aria-hidden="true">↗</span></a></h3><p>A streaming Excel engine that reads and writes rows in bounded batches, with an opt-in openpyxl compatibility bridge.</p>
+            <details class="benchmark-setup"><summary>About this benchmark</summary><p>100,000 rows × 10 columns, mixed values. Median of three fresh-process runs on macOS arm64, measured 10 October 2026 with CPython 3.14.5, openpyxl 3.1.5 and rustpyxl 0.1.0.</p><p>Both readers use streaming modes. Timings include reading and Python value conversion; peak memory includes the whole process. These results cover the standalone API. The compatibility bridge has separate measurements; results vary by file and hardware.</p></details>
+            <div class="tool-footer"><a href="https://github.com/mowne67/rustpyxl" target="_blank" rel="noopener">Explore the code <span aria-hidden="true">↗</span></a><a href="https://github.com/mowne67/rustpyxl/blob/40befaa8b51b773c5efa7530d0eedee64a2344fc/docs/benchmarks.md" target="_blank" rel="noopener">Benchmark report <span aria-hidden="true">↗</span></a></div>
           </div>
-          <div class="featured-copy"><div class="tool-category">Document processing / Rust + Python</div><h3>rustpyxl <span aria-hidden="true">↗</span></h3><p>A streaming Excel engine that reads and writes rows in bounded batches, with an opt-in openpyxl compatibility bridge.</p><span class="tool-footer">Explore the code <span aria-hidden="true">↗</span></span></div>
-        </a>
+        </article>
       </div>
 
       <div class="compact-tools">
         <a class="compact-tool" href="https://pypi.org/project/pyinterpret/" target="_blank" rel="noopener"><span class="tool-symbol" aria-hidden="true">ƒ(x)</span><div><h3>pyinterpret <span aria-hidden="true">↗</span></h3><p>One Python API for local and global model explanations.</p><span class="tool-category">Model interpretation / Python</span></div></a>
         <a class="compact-tool" href="https://github.com/mowne67/ERP-Assistant" target="_blank" rel="noopener"><span class="tool-symbol" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="10" y="3" width="8" height="6" rx="1"/><path d="M14 9v6M6 19v-4h16v4"/><rect x="2" y="19" width="8" height="6" rx="1"/><rect x="18" y="19" width="8" height="6" rx="1"/></svg></span><div><h3>ERP-Assistant <span aria-hidden="true">↗</span></h3><p>Natural-language operations and org charts for ERP workflows.</p><span class="tool-category">AI workflows / Python + LangGraph</span></div></a>
         <a class="compact-tool" href="https://github.com/mowne67/jsonpath-rx" target="_blank" rel="noopener"><span class="tool-symbol" aria-hidden="true">{ }</span><div><h3>jsonpath-rx <span aria-hidden="true">↗</span></h3><p>Query, inspect and update JSON with Rust and Python.</p><span class="tool-category">Structured data / Rust + Python</span></div></a>
-        <a class="compact-tool" href="https://github.com/mowne67/pydocx-fast" target="_blank" rel="noopener"><span class="tool-symbol docx-symbol" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2h10l6 6v18H7V2Z"/><path d="M17 2v7h6M11 14h8M11 18h8M11 22h5"/></svg></span><div><h3>pydocx-fast <span aria-hidden="true">↗</span></h3><p>Drop-in performance fixes for python-docx, with byte-identical output.</p><span class="tool-category">Document processing / Python</span></div></a>
+        <article class="compact-tool"><span class="tool-symbol docx-symbol" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2h10l6 6v18H7V2Z"/><path d="M17 2v7h6M11 14h8M11 18h8M11 22h5"/></svg></span><div><h3><a href="https://github.com/mowne67/pydocx-fast" target="_blank" rel="noopener">pydocx-fast <span aria-hidden="true">↗</span></a></h3><p>Drop-in performance fixes for python-docx, with byte-identical output.</p><span class="tool-category">Document processing / Python</span>
+          <details class="compact-benchmark"><summary>See timings · 50,000 paragraphs</summary>
+            <div class="benchmark-series"><h4>Write + save <span>lower is better</span></h4><div class="benchmark-row"><span>python-docx</span><b>17.6 s</b><i style="--bar:100%" aria-hidden="true"></i></div><div class="benchmark-row native"><span>pydocx-fast</span><b>5.5 s</b><i style="--bar:31.25%" aria-hidden="true"></i></div></div>
+            <div class="benchmark-series"><h4>Load + read all text</h4><div class="benchmark-row"><span>python-docx</span><b>1.35 s</b><i style="--bar:100%" aria-hidden="true"></i></div><div class="benchmark-row native"><span>pydocx-fast</span><b>0.41 s</b><i style="--bar:30.37%" aria-hidden="true"></i></div></div>
+            <p class="benchmark-note">Published project timings. The test uses separate processes and checks matching output. Hardware and peak memory were not recorded in the report.</p>
+            <a class="benchmark-source" href="https://github.com/mowne67/pydocx-fast/blob/866aca599ba1bc8969ba322d63208d5a6de84d83/README.md" target="_blank" rel="noopener">Benchmark and test <span aria-hidden="true">↗</span></a>
+          </details>
+        </div></article>
       </div>
 
       <aside class="support-note" id="support" aria-labelledby="support-title">
@@ -191,6 +210,16 @@
           </button>
         </div>
       </aside>
+    </section>
+
+    <section class="about-section" id="introduction" aria-labelledby="introduction-title">
+      <div class="about-identity"><img src="./assets/profile/github-avatar.png" alt="Mownetharan's GitHub avatar" width="128" height="128" loading="lazy" decoding="async" /><span>Mownetharan</span><span>Bengaluru, India</span></div>
+      <div class="about-copy">
+        <h2 class="head" id="introduction-title"><span>From aerospace</span><span class="r">to applied AI.</span></h2>
+        <p>I'm Mownetharan, an applied AI engineer based in Bengaluru. I studied aerospace engineering at IIT Madras, with elective work in data science.</p>
+        <p>My work spans conversational and voice agents, retrieval, and evaluation. I also build open-source Python and Rust tools for model explanations and document processing.</p>
+        <a class="resume-link" href="/resume/Mownetharan-AI-Engineer.pdf" download="Mownetharan-AI-Engineer.pdf">Download résumé <span>PDF · 96 KB</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></a>
+      </div>
     </section>
 
     <section class="experience-section" id="experience" aria-labelledby="experience-title">
@@ -245,8 +274,8 @@
     </section>
 
     <aside class="writing-note" aria-labelledby="writing-title">
-      <div><h2 id="writing-title">Notes from the work.</h2><p>I write about agentic AI, evaluation, and what held up in production.</p></div>
-      <a href="/blog">Read the blog <span aria-hidden="true">↗</span></a>
+      <div class="writing-intro"><h2 id="writing-title">Notes from the work.</h2><p>I write about agentic AI, evaluation, and what held up in production.</p><a href="/blog">All articles <span aria-hidden="true">↗</span></a></div>
+      <div id="latest-article"></div>
     </aside>
 
     <section class="contact-section" id="chat" aria-labelledby="contact-title">
@@ -255,6 +284,7 @@
         <p>I help businesses build AI agents: conversational and voice systems, workflows with tools and retrieval, and the evaluation to see what works before shipping.</p>
         <a class="contact-email" href="mailto:mownetharan@gmail.com"><span id="contact-cmd">mownetharan@gmail.com</span><span aria-hidden="true">↗</span></a>
         <div class="cmd"><button type="button" id="copy-btn" aria-label="Copy email address">copy</button></div>
+        <a class="contact-resume" href="/resume/Mownetharan-AI-Engineer.pdf" download="Mownetharan-AI-Engineer.pdf">Download résumé <span>PDF · 96 KB</span><span aria-hidden="true">↓</span></a>
         <p class="contact-alternative">Prefer a conversation? Pick a time on the calendar.</p>
       </div>
       <div class="booking" aria-label="Book a chat">

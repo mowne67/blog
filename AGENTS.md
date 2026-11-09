@@ -95,6 +95,17 @@ may be quoted strings or unquoted YAML dates (`date: 2026-10-04`); the latter
 reach the build as a `Date` and are read as that day in UTC. `h2` and `h3` in a
 post get slug ids and a `.anchor` link.
 
+The homepage's `#latest-article` slot is rendered from the same date-sorted
+markdown posts in dev and production, including an estimated reading time
+at 220 words per minute. Keep its empty `<div id="latest-article"></div>`
+placeholder in `index.html`; the build fills it without client-side markdown.
+
+The homepage benchmark charts cite fixed repository commits recorded in
+`SOURCES.md`. Do not generalize standalone rustpyxl results to the compatibility
+bridge, or invent missing pydocx-fast environment or memory measurements.
+The public résumé lives at `public/resume/Mownetharan-AI-Engineer.pdf`; use the
+supplied PDF unchanged unless asked to edit it.
+
 Gotchas that have already bitten:
 
 - Post pages reuse **blog.html's own nav, sheet and footer**, read out of the
