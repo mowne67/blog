@@ -276,7 +276,10 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 .example .url { display: block; margin-top: 20px; font-family: var(--mono); font-size: 12px; }
 .booking { scroll-margin-top: var(--nav-h); }
 .booking-card { padding: 12px; border-radius: 14px; background: var(--panel); box-shadow: var(--card); }
-#my-cal-inline-chat { width: 100%; min-height: 700px; overflow: auto; }
+/* Cal sets its iframe height as the booking flow changes. Let that height
+   size the card, so the page remains the only outer scroll container. */
+#my-cal-inline-chat { width: 100%; min-height: 300px; }
+#my-cal-inline-chat:has(iframe.cal-embed) { min-height: 0; }
 #my-cal-inline-chat iframe.cal-embed { zoom: .765; width: calc(100% / .765) !important; }
 
 @media (min-width: 1024px) {
@@ -284,8 +287,7 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
   .project-chat > section { min-width: 0; }
   .booking { display: flex; flex-direction: column; }
   .booking .head { flex: none; }
-  .booking-card { flex: 1; min-height: 0; contain: size; overflow: auto; }
-  #my-cal-inline-chat { min-height: 0; }
+  .booking-card { flex: 1; }
 }
 
 /* ── elsewhere: a row of light buttons ── */
@@ -299,14 +301,7 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 .marks .mark:hover { box-shadow: var(--card-up); }
 .marks .mark svg { flex: 0 0 auto; width: 15px; height: 15px; fill: var(--dim); }
 
-/* UPI support sits just above the Buy Me a Coffee launcher. */
-.upi-support {
-  position: fixed; right: 18px; bottom: 94px; z-index: 40;
-  border: 0; border-radius: 24px; padding: 12px 18px; cursor: pointer;
-  font: 500 14px var(--body); color: var(--ink); background: var(--panel); box-shadow: var(--card);
-}
-.upi-support:hover { box-shadow: var(--card-up); }
-.upi-support[hidden] { display: none; }
+/* UPI opens from the support section under the open-source projects. */
 .upi-dialog {
   width: min(390px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto;
   padding: 30px 24px 16px; border: 1px solid var(--line2); border-radius: 18px;
@@ -424,3 +419,176 @@ a.row:hover .arw { color: var(--ink); transform: translateX(3px); }
 .cal-fallback { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line2); padding-bottom: 1px; }
 .cal-fallback:hover { border-bottom-color: var(--ink); }
 #my-cal-inline-chat:has(iframe.cal-embed) .cal-fallback-wrap { position: absolute; visibility: hidden; pointer-events: none; }
+
+/* Profile + projects. The sky is the big visual moment; the work underneath
+   uses two illustrated features, a compact library collection, and a quiet
+   employment list rather than giving every piece of content the same card. */
+.skip-link { position: fixed; top: 8px; left: 16px; z-index: 70; padding: 10px 16px; border-radius: 6px; color: var(--ink); background: var(--panel); transform: translateY(-160%); }
+.skip-link:focus { transform: none; }
+.profile-page main { display: flow-root; }
+.profile-page :is(#projects, #experience, #chat, #support) { scroll-margin-top: calc(var(--nav-h) + 28px); }
+.profile-page .hero:has(> .sky) { padding-top: calc(var(--nav-h) + 64px); padding-bottom: 258px; }
+.profile-page .hero .hd { max-width: 680px; }
+.profile-page h1 { max-width: 19ch; font-size: clamp(40px, 5vw, 64px); letter-spacing: -.035em; }
+.profile-page .hero .lede { max-width: 48ch; font-size: 18px; }
+.hero-actions { display: flex; align-items: center; gap: 12px; margin-top: 28px; }
+.hero-actions a { display: inline-flex; align-items: center; gap: 24px; min-height: 46px; padding: 0 18px; border-radius: 8px; text-decoration: none; font-size: 15px; font-weight: 500; text-shadow: none; }
+.hero-primary { color: #171717; background: #fbfbf8; box-shadow: 0 3px 8px rgb(12 40 90 / 12%); }
+.hero-secondary { color: #fff; background: rgb(18 28 44 / 24%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%); backdrop-filter: blur(10px); }
+.hero-primary:hover { background: #fff; }
+.hero-secondary:hover { background: rgb(18 28 44 / 38%); }
+.profile-page .hero .meta { margin-top: 24px; font-size: 13px; }
+.portfolio-section, .experience-section, .contact-section { margin: 0 var(--wrap); }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 36px; }
+.profile-page .section-heading .head, .profile-page .contact-copy .head { padding: 0; font-weight: 400; font-size: clamp(30px, 3.3vw, 42px); letter-spacing: -.025em; line-height: 1.14; }
+.section-heading > p { flex: 0 1 350px; margin: 0 0 2px; color: var(--dim); font-size: 15px; line-height: 1.65; }
+.portfolio-section { padding-top: 44px; }
+.production-project { display: grid; grid-template-columns: 1.1fr 1fr; align-items: stretch; overflow: hidden; border-radius: 16px; background: var(--panel); box-shadow: var(--card); text-decoration: none; }
+.production-copy { padding: 40px; }
+.production-copy h3 { display: flex; align-items: center; gap: 14px; margin: 22px 0 14px; font-size: 32px; font-weight: 500; line-height: 1.15; letter-spacing: -.025em; }
+.production-copy h3 > span { color: var(--faint); font-size: 24px; }
+.production-copy p { max-width: 45ch; margin: 0; color: var(--dim); font-size: 16px; line-height: 1.65; }
+.project-destination { display: inline-flex; align-items: center; gap: 24px; margin-top: 28px; font-size: 14px; font-weight: 500; }
+.production-project:hover .project-destination { color: var(--spot); }
+.benefits-map { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; background: color-mix(in srgb, var(--hill) 8%, var(--bg)); }
+.conversation-node { display: flex; align-items: center; justify-content: center; gap: 14px; width: 218px; padding: 18px 16px; background: var(--panel); border: 1px solid var(--line2); border-radius: 10px; color: var(--ink); font-size: 15px; }
+.conversation-node svg { width: 24px; height: 24px; color: var(--dim); }
+.benefits-branches { position: relative; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; max-width: 310px; padding-top: 28px; }
+.benefits-branches::before { content: ""; position: absolute; top: 0; left: 50%; height: 28px; border-left: 1px solid var(--line2); }
+.benefits-branches span { padding: 12px; border-radius: 6px; border: 1px solid var(--line2); text-align: center; font-size: 13px; background: var(--panel); }
+.map-caption { margin-top: 20px; font-size: 12px; color: var(--dim); }
+.collection-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 52px 0 20px; }
+.collection-heading h3 { margin: 0; color: var(--head); font-size: 20px; font-weight: 500; letter-spacing: -.02em; }
+.collection-heading a { color: var(--dim); text-decoration: none; font-size: 13px; }
+.collection-heading a:hover { color: var(--ink); }
+.collection-heading a span { margin-left: 8px; }
+.featured-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.featured-tool { overflow: hidden; display: flex; flex-direction: column; border-radius: 14px; text-decoration: none; background: var(--panel); box-shadow: var(--card); transition: box-shadow .2s ease; }
+.featured-tool:hover { box-shadow: var(--card-up); }
+.tool-figure { position: relative; display: flex; align-items: center; justify-content: center; height: 238px; margin: 8px 8px 0; border-radius: 8px; background: var(--bg); overflow: hidden; }
+.agent-figure { gap: 36px; background: color-mix(in srgb, var(--spot) 4%, var(--bg)); }
+.pipeline-input { display: flex; flex-direction: column; align-items: center; gap: 14px; font-size: 11px; color: var(--dim); }
+.data-grid { display: grid; grid-template-columns: repeat(3, 14px); grid-auto-rows: 12px; gap: 3px; padding: 8px; border: 1px solid var(--line2); background: var(--panel); border-radius: 5px; }
+.data-grid i { background: var(--line2); border-radius: 1px; }
+.data-grid i:nth-child(3n + 1) { background: color-mix(in srgb, var(--spot) 30%, var(--panel)); }
+.agent-boundary { position: relative; width: 210px; border: 1px solid color-mix(in srgb, var(--spot) 28%, var(--line)); border-radius: 9px; background: var(--panel); padding: 12px 16px 34px; }
+.agent-boundary::before { content: ""; position: absolute; left: -37px; top: 50%; width: 36px; border-top: 1px solid var(--line2); }
+.planner-label { display: block; margin: 0 0 12px; padding-bottom: 10px; border-bottom: 1px dashed var(--line2); color: var(--faint); font-size: 11px; }
+.pipeline-step { display: flex; align-items: center; gap: 9px; font-size: 12px; margin-top: 8px; color: var(--dim); }
+.pipeline-step i { width: 5px; height: 5px; background: var(--spot); border-radius: 1px; }
+.code-label { position: absolute; bottom: -10px; right: 14px; padding: 3px 10px; border: 1px solid var(--line2); border-radius: 5px; background: var(--panel); font: 10px var(--mono); color: var(--dim); }
+.spreadsheet-figure { background: color-mix(in srgb, var(--hill) 6%, var(--bg)); }
+.sheet-preview { position: relative; width: 272px; border: 1px solid var(--line2); border-radius: 7px; background: var(--panel); box-shadow: 0 8px 16px rgb(0 0 0 / 3%); }
+.sheet-columns { display: grid; grid-template-columns: 28px repeat(4, 1fr); background: var(--mass); border-radius: 6px 6px 0 0; }
+.sheet-columns span { padding: 6px 0; font: 10px var(--mono); color: var(--dim); text-align: center; border-right: 1px solid var(--line2); }
+.sheet-columns span:last-child { border: 0; }
+.sheet-data { display: grid; grid-template-columns: 28px repeat(4, 1fr); padding-bottom: 8px; }
+.sheet-data > span { padding: 7px 0; text-align: center; font: 10px var(--mono); color: var(--faint); background: var(--bg); }
+.sheet-data i { position: relative; border-left: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.sheet-data i::after { content: ""; position: absolute; height: 3px; top: 12px; left: 8px; right: 12px; background: var(--line2); border-radius: 1px; }
+.sheet-data i:nth-child(5n + 2)::after { right: 22px; }
+.sheet-batch { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 7px 12px; border-radius: 5px; border: 1px solid var(--line2); background: var(--panel); color: var(--dim); font: 10px var(--mono); }
+.sheet-extension { position: absolute; top: 20px; right: 22px; font: 11px var(--mono); color: var(--faint); }
+.featured-copy { display: flex; flex: 1; flex-direction: column; padding: 28px 30px; }
+.tool-category { color: var(--faint); font: 11px/1.6 var(--mono); }
+.featured-copy h3, .compact-tool h3 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 10px 0 12px; color: var(--head); font-size: 26px; font-weight: 500; letter-spacing: -.025em; line-height: 1.2; }
+.featured-copy h3 > span, .compact-tool h3 > span { font-size: 21px; font-weight: 400; color: var(--faint); }
+.featured-copy p { margin: 0 0 24px; color: var(--dim); font-size: 15px; line-height: 1.65; max-width: 49ch; }
+.tool-footer { display: flex; justify-content: space-between; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--dim); }
+.featured-tool:hover .tool-footer { color: var(--spot); }
+.compact-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; margin-top: 24px; }
+.compact-tool { display: flex; gap: 22px; align-items: start; padding: 26px 0; border-bottom: 1px solid var(--line2); text-decoration: none; }
+.tool-symbol { display: flex; align-items: center; justify-content: center; flex: 0 0 48px; height: 48px; margin-top: 2px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; font: 18px var(--mono); color: var(--dim); }
+.tool-symbol svg { width: 25px; height: 25px; }
+.compact-tool > div { flex: 1; min-width: 0; }
+.compact-tool h3 { margin: 0; font-size: 20px; }
+.compact-tool p { max-width: 42ch; margin: 8px 0; font-size: 14px; line-height: 1.6; color: var(--dim); }
+.compact-tool:hover h3 { color: var(--spot); }
+/* Both support methods share one quiet place at the end of the tool list. */
+.support-note { display: flex; align-items: center; justify-content: space-between; gap: 24px 36px; padding-top: 30px; }
+.support-copy h3 { margin: 0; color: var(--head); font-size: 18px; font-weight: 500; letter-spacing: -.015em; }
+.support-copy p { max-width: 46ch; margin: 5px 0 0; color: var(--dim); font-size: 13px; line-height: 1.65; }
+.support-actions { display: flex; flex-shrink: 0; gap: 10px; }
+.support-action { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 11px 15px; border: 1px solid var(--line2); border-radius: 8px; background: var(--panel); color: var(--ink); font: 500 13px/1.5 var(--body); text-decoration: none; cursor: pointer; }
+.support-action > svg { flex: 0 0 20px; width: 20px; height: 20px; color: var(--dim); }
+.support-action .support-external { margin-left: 2px; color: var(--faint); }
+.support-action:hover { border-color: var(--faint2); background: var(--mass); }
+.support-action[hidden] { display: none; }
+.experience-section { padding-top: 112px; }
+.profile-page .work { display: grid; grid-template-columns: 1fr; gap: 0; padding: 0; border-top: 1px solid var(--line2); }
+.profile-page .work > .row { display: grid; grid-template-columns: 112px minmax(0, 1fr) 230px; align-items: center; gap: 30px; padding: 28px 0; border-radius: 0; border-bottom: 1px solid var(--line2); background: none; box-shadow: none; }
+.profile-page .work h3 { font-size: 20px; }
+.profile-page .work p { max-width: 64ch; margin-top: 8px; font-size: 14px; }
+.profile-page .work .ev { margin: 0; padding: 0; background: none; box-shadow: none; }
+.profile-page .work .ev-row { gap: 2px; padding: 5px 0; border: 0; }
+.profile-page .work .ev-row > span { font-size: 10px; }
+.profile-page .work .ev-row b { font-size: 13px; }
+.writing-note { display: flex; align-items: center; justify-content: space-between; gap: 32px; margin: 80px var(--wrap) 0; padding: 30px; background: var(--mass); border-radius: 10px; }
+.writing-note h2 { margin: 0; font-size: 23px; font-weight: 400; letter-spacing: -.02em; color: var(--head); }
+.writing-note p { margin: 6px 0 0; color: var(--dim); font-size: 14px; }
+.writing-note > a { flex-shrink: 0; text-decoration: none; font-size: 14px; font-weight: 500; }
+.writing-note > a span { margin-left: 16px; }
+.writing-note > a:hover { color: var(--spot); }
+.contact-section { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); gap: 64px; padding-top: 112px; }
+.contact-copy > p { max-width: 39ch; margin: 24px 0; font-size: 16px; line-height: 1.75; color: var(--dim); }
+.contact-email { display: flex; justify-content: space-between; align-items: center; gap: 10px; max-width: 360px; margin: 30px 0 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line2); color: var(--head); text-decoration: none; font-size: 19px; letter-spacing: -.02em; }
+.contact-email:hover { color: var(--spot); }
+.contact-copy .cmd button { height: 32px; padding: 0 12px; font-size: 12px; }
+.contact-copy .cmd button::first-letter { text-transform: uppercase; }
+.contact-copy > .contact-alternative { margin-top: 28px; font-size: 13px; color: var(--faint); }
+.booking-label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 14px; font-size: 15px; font-weight: 500; }
+.booking-label > span { padding-top: 3px; color: var(--faint); font: 10px var(--mono); }
+.profile-page .foot { margin-top: 80px; }
+
+@media (max-width: 900px) {
+  .support-note { align-items: start; flex-direction: column; gap: 18px; }
+  .profile-page .work > .row { grid-template-columns: 86px minmax(0, 1fr) 200px; gap: 24px; }
+  .production-copy { padding: 30px; }
+  .benefits-map { padding: 30px 24px; }
+  .agent-figure { gap: 20px; }
+  .agent-boundary { width: 185px; padding-left: 12px; padding-right: 12px; }
+  .agent-boundary::before { left: -21px; width: 20px; }
+  .featured-copy { padding: 24px; }
+  .contact-section { grid-template-columns: 1fr; gap: 40px; }
+  .contact-copy > p { max-width: 60ch; }
+}
+@media (max-width: 680px) {
+  .support-note { padding-top: 26px; }
+  .support-actions { display: grid; grid-template-columns: 1fr; width: 100%; }
+  .profile-page .hero:has(> .sky) { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 248px; }
+  .profile-page h1 { font-size: clamp(37px, 7.8vw, 52px); max-width: 18ch; }
+  .profile-page .hero .lede { font-size: 16px; }
+  .portfolio-section { padding-top: 24px; }
+  .section-heading { display: block; margin-bottom: 26px; }
+  .section-heading > p { max-width: 45ch; margin-top: 18px; font-size: 14px; }
+  .production-project { grid-template-columns: 1fr; }
+  .production-copy { padding: 28px; }
+  .production-copy h3 { font-size: 28px; }
+  .benefits-map { padding: 28px; }
+  .benefits-branches { grid-template-columns: repeat(4, 1fr); gap: 6px; max-width: 420px; }
+  .benefits-branches span { padding: 10px 3px; font-size: 11px; }
+  .map-caption { margin-top: 16px; }
+  .collection-heading { margin-top: 36px; }
+  .featured-tools { grid-template-columns: 1fr; gap: 20px; }
+  .tool-figure { height: 220px; }
+  .agent-figure { gap: 36px; }
+  .agent-boundary { width: 200px; }
+  .agent-boundary::before { left: -37px; width: 36px; }
+  .compact-tools { grid-template-columns: 1fr; margin-top: 12px; }
+  .compact-tool { gap: 18px; padding: 24px 0; }
+  .compact-tool p { max-width: 50ch; }
+  .experience-section, .contact-section { padding-top: 76px; }
+  .profile-page .work > .row { grid-template-columns: 64px minmax(0, 1fr); gap: 18px; align-items: start; padding: 26px 0; }
+  .profile-page .work .n { padding-top: 4px; }
+  .profile-page .work .ev { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: -8px; }
+  .profile-page .work .ev-row b { font-size: 12px; }
+  .profile-page .work .ev-row > span { display: none; }
+  .writing-note { display: block; margin-top: 52px; padding: 24px; }
+  .writing-note > a { display: inline-block; margin-top: 20px; }
+  .contact-section { gap: 32px; }
+  .contact-email { font-size: 18px; }
+  .profile-page .foot { margin-top: 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .featured-tool { transition: none; }
+}
