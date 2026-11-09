@@ -1,5 +1,6 @@
 ---
 title: "The tools I've worked with building Health Eligible"
+description: "The backend, retrieval, voice, evaluation and infrastructure tools I've worked with while building Health Eligible."
 date: "2026-10-04T09:00:00+05:30"
 tags: ["engineering", "ai", "tools"]
 ---

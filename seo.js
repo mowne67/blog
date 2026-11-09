@@ -129,6 +129,7 @@ function readPosts(dir) {
         tags,
         description: String(a.description || truncate(opening, 155, '…')),
         excerpt: truncate(opening, 190, '…'),
+        readingMinutes: Math.max(1, Math.ceil(body.trim().split(/\s+/).length / 220)),
         html: renderMarkdown(body),
       };
     });
@@ -157,6 +158,18 @@ function listRows(posts) {
 }
 
 const listCount = (posts) => `${posts.length} ${posts.length === 1 ? 'entry' : 'entries'}`;
+
+// The homepage uses the same date-sorted posts as the blog, without shipping
+// markdown or a second copy of the article metadata to the browser.
+function latestArticle(post) {
+  if (!post) return '';
+  return `<a class="article-preview" href="/blog/${post.slug}">
+    <div class="article-meta"><span>Latest article</span><time datetime="${esc(post.day)}">${esc(post.display)}</time><span>${post.readingMinutes} min read</span></div>
+    <h3>${esc(post.title)}</h3>
+    <p>${esc(post.description)}</p>
+    <span class="article-read">Read article <span aria-hidden="true">↗</span></span>
+  </a>`;
+}
 
 // ── the shell, read out of blog.html so the two cannot drift apart ──
 function chromeOf(source) {
@@ -326,8 +339,13 @@ export default function seo({ root = process.cwd() } = {}) {
     // in the bundle by the time a post page is written
     enforce: 'post',
 
-    // the list is rendered into blog.html for both the dev server and a build
+    // Both the homepage preview and blog list are rendered in dev and builds.
     transformIndexHtml(html) {
+      if (html.includes('id="latest-article"')) {
+        const marker = '<div id="latest-article"></div>';
+        if (!html.includes(marker)) throw new Error('seo.js: could not find the latest article slot in index.html');
+        html = html.replace(marker, `<div id="latest-article">${latestArticle(posts()[0])}</div>`);
+      }
       if (!html.includes('id="post-list"')) return html;
       const all = posts();
       const rows = html

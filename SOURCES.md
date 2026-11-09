@@ -10,6 +10,10 @@ that sounds better than what it says.
 | Source                | Where                                                                      | Authoritative for                                              |
 | --------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------- |
 | Resume                | `Profile.pdf` (repo root)                                                   | The formal record: roles, dates, education                      |
+| Supplied résumé | `public/resume/Mownetharan-AI-Engineer.pdf` (original `AI_Engineer_Mownetharan_25092026.pdf`, provided 10 Nov 2026) | Public résumé download, aerospace degree at IIT Madras, data science electives, and applied AI work used in the introduction. Published unchanged at the user's request. |
+| GitHub avatar | `https://avatars.githubusercontent.com/u/79999567?s=400`, saved as `assets/profile/github-avatar.png` (10 Nov 2026) | The existing pixel identicon used beside the introduction; not a portrait photograph. |
+| rustpyxl benchmark report and raw samples | `mowne67/rustpyxl` at `40befaa8b51b773c5efa7530d0eedee64a2344fc`, `docs/benchmarks.md` and `docs/results.json` (inspected 10 Nov 2026) | Homepage chart: mixed-value, standalone streaming reads; 4.921 s / 0.489 s and 47.1 MiB / 32.8 MiB, rounded from raw medians. Report supplies the 10 Oct 2026 measurement date, environment, methodology and limitations. |
+| pydocx-fast reported benchmark and test | `mowne67/pydocx-fast` at `866aca599ba1bc8969ba322d63208d5a6de84d83`, `README.md` and `test_pydocx_fast.py` (inspected 10 Nov 2026) | Homepage timings for 50,000 paragraphs: write/save 17.6 s / 5.5 s; load/read 1.35 s / 0.41 s. The source does not report hardware or peak memory; these are reported results, not a fresh benchmark run. |
 | Public name           | GitHub profile (https://github.com/mowne67) and the conversation, Oct 2026   | "Mownetharan" as the public form of the name, "Mowne" as the handle. Used in the page titles, the footer, the author byline and the `Person` JSON-LD |
 | LinkedIn export       | `profile_dump.txt`, `profile_dump_utf8.txt` (plain-text dump of the resume) | Same content, greppable. What each role actually involved       |
 | LinkedIn profile      | https://linkedin.com/in/mowne                                               | The live version of the above. Beats the local dump when they differ |
@@ -54,11 +58,20 @@ rather than pick**. Publishing a wrong employment date is worse than waiting.
 
 ## Things no source covers
 
-The resume says nothing about what was built at **ITO Health** or **Indivia
-AI**. Their work cards are now covered by the Health Eligible README and
-Indivia AI backend, respectively (see the table).
+The older `Profile.pdf` says nothing about what was built at **ITO Health** or
+**Indivia AI**. Their work cards are covered by the Health Eligible README and
+Indivia AI backend, respectively (see the table). The supplied September 2026
+résumé also describes the ITO Health work.
 
 See [AGENTS.md](AGENTS.md) for how the site itself is built.
+
+## Supplied résumé, November 2026
+
+The supplied PDF lists ITO Health from May 2026. Mowne explicitly confirmed
+on 10 November 2026 that the portfolio should retain **December 2025**.
+The downloadable PDF is the exact supplied file; its dates and formatting
+have not been edited. The introduction avoids repeating dates or conflicting
+titles. The PDF uses the same public email as the site.
 
 ## Health Eligible tool inventory evidence
 
