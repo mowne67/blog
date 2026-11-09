@@ -54,15 +54,19 @@ a { color: inherit; }
    :focus-visible, so it shows for keyboard users and not on click. */
 :where(a, button, [tabindex]):focus-visible { outline: 3px solid var(--spot); outline-offset: 3px; }
 
-/* Intro rain: covers the page on open, then drains downward and fades.
-   Its own opaque background, so frame one isn't a flash of the page beneath. */
+/* A brief first-visit signature, then a dissolve into the sky. Hidden until
+   JS starts it so return visits and browsers without JS can read the page. */
 #rain-intro {
   /* a canvas is a replaced element: inset alone leaves it at 300x150 */
   position: fixed; inset: 0; width: 100%; height: 100%;
-  z-index: 60; pointer-events: none; background: var(--bg);
-  transition: opacity 1.1s ease;
+  display: none; z-index: 60; pointer-events: none; background: var(--bg);
+  transition: opacity .65s cubic-bezier(.22, 1, .36, 1);
 }
+html[data-rain="pending"] #rain-intro, #rain-intro.playing { display: block; }
 #rain-intro.gone { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  #rain-intro.playing { display: none; transition: none; }
+}
 
 /* ── nav ──
    Sticky, on the ground colour. Over the profile sky it goes transparent

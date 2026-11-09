@@ -7,22 +7,45 @@ import { wireUpi } from './upi.js';
 function introRain() {
   const c = document.getElementById('rain-intro');
   if (!c) return;
-  // an unskippable full-page animation is exactly what reduced-motion means
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return c.remove();
+  delete document.documentElement.dataset.rain;
+  // Deep links go straight to their destination; reduced motion skips the intro.
+  if (location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) return c.remove();
   // once per session; reloads and return visits go straight to the page
   try {
     if (sessionStorage.getItem('rain')) return c.remove();
     sessionStorage.setItem('rain', '1');
   } catch (e) { /* storage blocked: just play it */ }
 
+  c.classList.add('playing');
   const rain = runMatrix(c, { bg: '--bg', prefill: true });
-  setTimeout(() => {
-    // the rain drains downward on its own; the canvas itself never moves, so
-    // there is no edge sliding across the page
+  const events = new AbortController();
+  let revealTimer, cleanupTimer;
+  const finish = () => {
+    clearTimeout(revealTimer);
+    clearTimeout(cleanupTimer);
+    events.abort();
+    rain.stop();
+    c.remove();
+  };
+  // Any intent to use the page clears the decoration immediately. Passive
+  // listeners let the original scroll, tap or key press continue normally.
+  for (const type of ['pointerdown', 'keydown', 'wheel', 'touchstart']) {
+    window.addEventListener(type, finish, { capture: true, passive: true, signal: events.signal });
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) finish();
+  }, { signal: events.signal });
+  window.addEventListener('pagehide', finish, { signal: events.signal });
+  c.addEventListener('transitionend', (event) => {
+    if (event.propertyName === 'opacity') finish();
+  }, { signal: events.signal });
+  revealTimer = setTimeout(() => {
+    // Accelerate the streams while dissolving into the sky; never translate
+    // the canvas itself, which would sweep a hard edge over the page.
     rain.drain();
     c.classList.add('gone');
-    c.addEventListener('transitionend', () => { rain.stop(); c.remove(); }, { once: true });
-  }, 1900);
+    cleanupTimer = setTimeout(finish, 750); // Also clean up if transitionend is lost.
+  }, 750);
 }
 
 function wireCopy() {

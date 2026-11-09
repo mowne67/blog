@@ -60,7 +60,8 @@ flash solid before JS runs.
   hash-routed list left behind, mapped to real pages.
 - `notfound.js` - the 404 page (`404.html`): chrome and sky, like `blog.js`.
 - `post.js` - a post page: the nav and the sheet, nothing else. No sky.
-- `matrix.js` - Tamil matrix rain. Intro overlay only, ~1.9s, then removed.
+- `matrix.js` - Tamil matrix rain. Intro overlay only, ~1.4s including its fade,
+  once per session; skips deep links and reduced motion, and dismisses on input.
   Returns a `stop()`; call it or the rAF loop keeps painting into a detached canvas.
 
 ## Blog URLs and SEO

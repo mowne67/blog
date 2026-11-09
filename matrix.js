@@ -1,71 +1,96 @@
-// Tamil matrix rain. Sized to its container (not the window) and painted from
-// the ground's own CSS variables, so it follows the ink/paper toggle.
-const GLYPHS = 'அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறன0123456789';
-const FONT = 16;
-const TICK = 55;       // ms between rows
-const DRAIN_TICK = 16; // one row per frame once it's leaving
+// Tamil letterforms are wider than monospace Latin. Give each one its own
+// cell, and draw complete trails so the letters stay crisp as they descend.
+const GLYPHS = 'அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறன';
+const FONT = 20;
+const COLUMN = 34;
+const ROW = 28;
+const FRAME = 1000 / 30;
 
-// Returns { stop, drain }. stop() is required for the intro overlay, or its rAF
-// loop keeps painting into a detached canvas after the element is removed.
+// stop() releases both the animation frame and the resize observer.
 export function runMatrix(canvas, { bg = '--panel', prefill = false } = {}) {
   const ctx = canvas.getContext('2d');
-  // asked for no motion: seed a full field, paint it once, never animate
+  if (!ctx) return { stop() {}, drain() {} };
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let drops = [];
+  let width = 0, height = 0, scale = 0;
+  let streams = [];
+  let stopped = false, draining = false, raf = 0;
+  let last = performance.now();
+
+  function paint() {
+    const css = getComputedStyle(document.documentElement);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = css.getPropertyValue(bg).trim();
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = `${FONT}px "Tamil MN", "Noto Sans Tamil", Latha, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    const head = css.getPropertyValue('--ink').trim();
+    const tail = css.getPropertyValue('--spot').trim();
+
+    for (const stream of streams) {
+      const row = Math.floor(stream.row);
+      for (let age = stream.length - 1; age >= 0; age--) {
+        const y = (row - age) * ROW;
+        if (y < -ROW || y > height) continue;
+        ctx.globalAlpha = age === 0 ? 1 : 0.8 * (1 - age / stream.length) ** 1.6;
+        ctx.fillStyle = age === 0 ? head : tail;
+        // A letter stays in its cell until the tail has passed it. Randomizing
+        // every frame made the old trails flicker rather than read as rain.
+        const glyph = ((row - age) % stream.glyphs.length + stream.glyphs.length) % stream.glyphs.length;
+        ctx.fillText(stream.glyphs[glyph], stream.x, y);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
 
   function resize() {
+    if (stopped) return;
+    const bounds = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
-    const { width, height } = canvas.getBoundingClientRect();
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
+    if (bounds.width === width && bounds.height === height && dpr === scale) return;
+    width = bounds.width;
+    height = bounds.height;
+    scale = dpr;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    // Stagger the starts so the field doesn't fall as one solid line. Seeding
-    // down the height instead of above it means the field is already full on
-    // frame one; the intro is too short to wait for rain to fall from the top.
-    const span = still || prefill ? height / FONT : -40;
-    drops = Array.from({ length: Math.ceil(width / FONT) }, () => Math.random() * span);
+    const columns = Math.max(1, Math.floor(width / COLUMN));
+    const inset = (width - columns * COLUMN) / 2;
+    streams = Array.from({ length: columns }, (_, i) => {
+      const length = 6 + Math.floor(Math.random() * 7);
+      return {
+        x: inset + (i + 0.5) * COLUMN,
+        row: still || prefill ? Math.random() * (height / ROW + length) : -Math.random() * height / ROW,
+        speed: 9 + Math.random() * 8,
+        length,
+        glyphs: Array.from({ length: 48 }, () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]),
+      };
+    });
+    paint(); // The short intro starts with complete trails, not a blank field.
   }
-  const ro = new ResizeObserver(resize);
-  ro.observe(canvas);
-  resize();
 
-  // assumes the bg token (--bg by default here) is a 6-digit hex so the trail can append alpha.
-  // If the palette ever moves to oklch(), sample the computed colour instead.
-  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-
-  let last = 0;
-  let stopped = false;
-  let draining = false;
   function frame(now) {
     if (stopped) return;
-    if (!still) requestAnimationFrame(frame); // rAF, not setInterval: pauses with the tab
-    if (now - last < (draining ? DRAIN_TICK : TICK)) return;
+    raf = requestAnimationFrame(frame);
+    if (now - last < FRAME) return;
+    const elapsed = Math.min((now - last) / 1000, 0.08);
     last = now;
-
-    const { width, height } = canvas.getBoundingClientRect();
-    // the wash is the trail: lighter than this and old glyphs never clear, so
-    // the panel fills with static instead of reading as falling columns
-    ctx.fillStyle = css(bg) + '40';
-    ctx.fillRect(0, 0, width, height);
-    ctx.font = `${FONT}px ${css('--mono')}`;
-
-    const head = css('--ink');
-    const tail = css('--spot');
-    for (let i = 0; i < drops.length; i++) {
-      ctx.fillStyle = drops[i] < 1 ? head : tail;
-      ctx.fillText(GLYPHS[Math.floor(Math.random() * GLYPHS.length)], i * FONT, drops[i] * FONT);
-      // Draining: columns fall past the bottom and are never sent back to the
-      // top, so the field empties from the top down. That is what makes the
-      // exit seamless; translating the canvas instead drags its top edge
-      // across the page as a hard line where the glyphs are cut off.
-      if (!draining && drops[i] * FONT > height && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
+    for (const stream of streams) {
+      stream.row += stream.speed * elapsed * (draining ? 2.4 : 1);
+      if (!draining && (stream.row - stream.length) * ROW > height) {
+        stream.row = -Math.random() * 8;
+      }
     }
+    paint();
   }
-  requestAnimationFrame(frame);
+
+  const ro = new ResizeObserver(resize);
+  resize();
+  ro.observe(canvas);
+  if (!still) raf = requestAnimationFrame(frame);
 
   return {
-    stop: () => { stopped = true; ro.disconnect(); },
+    stop: () => { stopped = true; cancelAnimationFrame(raf); ro.disconnect(); },
     drain: () => { draining = true; },
   };
 }
